@@ -19,4 +19,4 @@ class LevelsController extends AppController
 	$this->set('levels', $levels);
 	return $levels;
     }
-}
+} 
