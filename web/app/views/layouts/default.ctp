@@ -9,13 +9,14 @@
 		<?php echo $scripts_for_layout; ?>
 		
 		<?php echo $html->css('cake.generic'); ?>
+		<?php echo $html->css('style'); ?>
 		
 	</head>
 	
 	<body>
 		<div id="container">
 			<div id="header">
-				<span style="font-size: 2.0em;">This is gonna be big.</span>
+				<span style="font-size: 2.0em; margin-right: 40px;">Brick Breaker</span>
 				
 				<?php if(isset($session_username)): ?>
 					<span id="header-username">Logged in as <?php echo $session_username; ?> | 

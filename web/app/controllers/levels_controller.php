@@ -10,7 +10,7 @@ class LevelsController extends AppController
     }
 
     // get a list of the levels associated with the given ID
-    function list($uid)
+    function view($uid)
     {
 	// get all levels with the uid
 	$conditions = array('Level.uid' => $uid);
@@ -19,4 +19,4 @@ class LevelsController extends AppController
 	$this->set('levels', $levels);
 	return $levels;
     }
-} 
+}

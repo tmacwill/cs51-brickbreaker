@@ -82,8 +82,8 @@ class DATABASE_CONFIG {
 		'driver' => 'mysql',
 		'persistent' => false,
 		'host' => 'localhost',
-		'login' => 'brckbrkr_brckbrkr',
-		'password' => 'Morrisett',
+		'login' => 'root',
+		'password' => '',
 		'database' => 'brckbrkr_main',
 		'prefix' => '',
 	);
