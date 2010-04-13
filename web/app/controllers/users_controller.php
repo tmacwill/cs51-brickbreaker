@@ -55,14 +55,14 @@ class UsersController extends AppController
     }
     
     // make sure user is logged in
-    function check_login($url)
+    function check_login()
     {
 	if ($this->action != 'login' && $this->action != 'logout')
 	{
 	    if (!$this->Session->check('session_uid'))
 	    {
 		$this->Session->setFlash('Please log in first');
-		$this->redirect('/users/login/' . $url);
+		$this->redirect('/users/login/');
 		exit();
 	    }
 	    else
