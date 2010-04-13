@@ -1,0 +1,4 @@
+[05-Mar-2010 23:15:26] PHP Parse error:  syntax error, unexpected ';' in /home/tmac721/public_html/startup/app/controllers/books_controller.php on line 24
+[05-Mar-2010 23:33:40] PHP Parse error:  syntax error, unexpected ';', expecting ']' in /home/tmac721/public_html/startup/app/views/books/search.ctp on line 14
+[13-Mar-2010 17:19:19] PHP Parse error:  syntax error, unexpected T_ELSE in /home/tmac721/public_html/startup/app/controllers/transactions_controller.php on line 33
+[13-Mar-2010 22:07:56] PHP Parse error:  syntax error, unexpected ']' in /home/tmac721/public_html/startup/app/controllers/transactions_controller.php on line 17
