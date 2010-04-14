@@ -1,6 +1,2 @@
-<h3>Levels</h3>
-<ul>
-<?php foreach ($levels as $level): ?>
-<li><?php echo $level['Level']['title']; ?></li>
-<?php endforeach; ?>
-</ul>
+<h3><?php echo $level['Level']['title']; ?></h3>
+<h4><?php echo $level['Level']['uid']; ?></h4>
