@@ -6,6 +6,8 @@ App::import('Sanitize');
 class UsersController extends AppController
 {
     public $name = 'Users';
+    // number of results displayed per page
+    private $PAGINATE_LIMIT = 25;
 
     // create new user
     public function add()
@@ -71,6 +73,18 @@ class UsersController extends AppController
 		}
     }
     
+    // view the profile of the given user
+    public function view($id)
+    {
+		// get all levels associated with user
+		$conditions = array('User.id' => $id);
+		$this->paginate = array('conditions' => $conditions, 'limit' => $this->PAGINATE_LIMIT);
+		
+		// send variables to view
+		$this->set('levels', $this->paginate('Level'));
+		return $levels;
+	}
+    
     // log user in and create new session
     public function login()
     {
@@ -93,6 +107,8 @@ class UsersController extends AppController
 				$this->Session->write('session_uid', $user['User']['id']);
 				$this->Session->write('session_username', $user['User']['username']);
 				$this->Session->setFlash('Successfully logged in');
+				$this->redirect('/levels/browse');
+				exit();
 			}
 			else
 				$this->Session->setFlash('Incorrect username or password');
@@ -108,7 +124,7 @@ class UsersController extends AppController
 		
 		// redirect user to login page
 		$this->Session->setFlash('Successfully logged out');
-		$this->redirect('/');
+		$this->redirect('/levels/browse');
 		exit();
     }
 }

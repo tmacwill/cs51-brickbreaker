@@ -22,7 +22,7 @@
 		<?php foreach ($levels as $level): ?>
 			<tr>
 				<td><?php echo $html->link($level['Level']['title'], array('controller' => 'levels', 'action' => 'view', $level['Level']['id'])); ?></td>
-				<td><?php echo $level['User']['username']; ?></td>
+				<td><?php echo $html->link($level['User']['username'], array('controller' => 'users', 'action' => 'view', $level['User']['id'])); ?></td>
 				<td><?php echo $level['Level']['downloads']; ?></td>
 			</tr>
 		<?php endforeach; ?>
