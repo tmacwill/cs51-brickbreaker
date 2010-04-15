@@ -30,6 +30,10 @@ class LevelsController extends AppController
     	    // save data to database
     	    $this->Level->save($this->data);
     	    $this->Session->setFlash('Upload Succeeded');
+    	    
+    	    // redirect user to his profile
+    	    $this->redirect('/users/view/' . $this->Session->read('session_uid'));
+    	    exit();
     	}
     }
 
