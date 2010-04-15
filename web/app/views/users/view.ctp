@@ -11,3 +11,9 @@
 		</tr>
 	<?php endforeach; ?>
 </table>
+<?php echo $paginator->numbers(); ?>
+<br />
+<?php 
+	echo $paginator->prev('Previous', null, null, array('class' => 'disabled'));
+	echo $paginator->next('Next', null, null, array('class' => 'disabled'));
+?>
