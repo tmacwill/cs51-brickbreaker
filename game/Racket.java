@@ -1,3 +1,4 @@
+import java.awt.*;
 
 /**
  * Write a description of class Racket here.
@@ -12,6 +13,7 @@ public class Racket
     private double posY;    // Should be at the bottom of the screen
     private double posX;    // x-coordinate of the middle of the racket
     private double speed = 8.0;
+    private Color color = Color.blue;
 
     /**
      * Constructor for objects of class Racket
@@ -20,18 +22,24 @@ public class Racket
     {
         arenaWidth = screenW;
         width = racketW;
-        posY = screenH - 10;
+        posY = screenH - 30;
         posX = screenW/2.0;
     }
 
     public void moveLeft()
     {
-        posX  = Math.max(0, posX-speed);
+        posX  = Math.max(width/2, posX-speed);
     }
     
     public void moveRight()
     {
-        posX = Math.min(arenaWidth, posX+speed);
+        posX = Math.min(arenaWidth-width/2, posX+speed);
+    }
+    
+    public void draw(Graphics g) {
+        g.setColor(color);
+        int border = GamePanel.BORDER;
+        g.fillRect(getLeft()+border, getY()+border+5, width, 5);
     }
     
     public int getY() { return Math.round((long)posY); }
