@@ -65,6 +65,7 @@ class LevelsController extends AppController
     	exit();
     }
 
+<<<<<<< HEAD:web/app/controllers/levels_controller.php
 	// return results for search query
 	public function results($query)
 	{
@@ -101,5 +102,14 @@ class LevelsController extends AppController
     	// send array to view
     	$this->set('level', $level);
     	return $level;
+=======
+    // get level information for the level of the given id
+    function view($id)
+    {
+	$level = $this->Level->findById($id);
+	// send array to view
+	$this->set('level', $level);
+	return $level;
+>>>>>>> 3ddf17c1bfc1c0fe8087409589c31d511a563201:web/app/controllers/levels_controller.php
     }
 }

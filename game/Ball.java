@@ -1,3 +1,4 @@
+import java.awt.*;
 
 /**
  * Write a description of class Ball here.
@@ -7,12 +8,18 @@
  */
 public class Ball
 {
-    private double posX, posY;  // position relative to the upper left corner of the playing arena
-    private double velX, velY;      // x and y components of the ball's velocity vector
+    public static final double pi = Math.PI;
+    private double posX, posY;  // position of center of the ball
+    private double angle;   // Measured from the horizontal line (+x axis) clockwise
     private double speed;
+    
+    // x and y components of the ball's velocity vector (calculated from angle & speed)
+    private double velX, velY;
     private int radius;
+    private Color color = Color.red;
     
     private boolean inBounds = true;
+    private boolean inPlay = true;
     
     private Racket racket;
     private Level level;
@@ -34,45 +41,108 @@ public class Ball
      */
     public void initRandom()
     {
-        posY = 0;
-        posX = level.WIDTH*Math.random();
+        posY = level.HEIGHT/2;
+        posX = level.WIDTH/2;
         
-        velX = 1+2*Math.random();   // Random value between 1 & 3
-        velY = 1+2*Math.random();   // Random value between 1 & 3
-        speed = Math.sqrt(velX*velX + velY*velY);
+        angle = Math.random()*pi/2. + pi/4.;    // Random value between pi/4 & 3pi/4
+        speed = 4;
+        velX = speed*Math.cos(angle);
+        velY = speed*Math.sin(angle);
+        
+        inBounds = true;
+        inPlay = true;
     }
     
-    public void updatePosition()
+    /**
+     * Updates the position of the ball
+     * Returns the number of points earned (based on the boxes hit)
+     */
+    public int updatePosition()
     {
         posX += velX;
         posY += velY;
         
         //  If the ball is out of bounds, move it back inbounds and change the direction of its velocity
         if (posX < radius) {
-            posX = -posX;
-            velX = -velX;
+            posX = 2*radius-posX;
+            changeAngle(pi-angle);
         }
         else if (posX > (level.WIDTH-radius)) {
             posX = 2*(level.WIDTH-radius)-posX;
-            velX = -velX;
+            changeAngle(pi-angle);
         }
         if (posY < radius) {
-            posY = -posY;
-            velY = -velY;
+            posY = 2*radius-posY;
+            changeAngle(2*pi-angle);
         }
-        else if (posY >= (racket.getY()-radius)) {
-            if (posX >= racket.getLeft() && posX <= racket.getRight()) {
+        else if (posY > (racket.getY()-radius)) {
+            if (posX >= racket.getLeft() && posX <= racket.getRight() && inPlay) {
                 posY = 2*(racket.getY()-radius) - posY;
-                velY = -velY;
+                changeAngle(2*pi-angle);
             }
+            else if (posX >= racket.getLeft()-radius && posX <= racket.getRight()+radius && inPlay) {
+                changeAngle(pi-angle);
+                inPlay = false;
+            }
+            else if (posY < level.HEIGHT-radius) inPlay = false;
             else inBounds = false;
         }
+        else {
+            return level.checkCollision(this);
+        }
+        return 0;
+    }
+
+    
+    public void draw(Graphics g) {
+        g.setColor(color);
+        int border = GamePanel.BORDER;
+        g.fillOval(getX()+border, getY()+border, 2*radius, 2*radius);  
     }
     
-    public int getX() { return Math.round((long)posX); }
-    public int getY() { return Math.round((long)posY); }
+    public int getX() { return Math.round((long)(posX-radius)); }
+    public int getY() { return Math.round((long)(posY-radius)); }
     public int getRad() { return radius; }
     
     public boolean inBounds() { return inBounds; }
     public void reset() { initRandom(); }
+    
+    private void changeAngle(double newAngle) {
+        angle = newAngle % (2*pi);
+        velX = speed*Math.cos(angle);
+        velY=  speed*Math.sin(angle);
+    }
+    
+    /**
+     * Checks if the ball is colliding with the given object
+     * If a collision exists and changeDir is true, it changes the ball's direction
+     */
+    public boolean checkCollision(int[] loc) {
+        int x = loc[0];
+        int y = loc[1];
+        int w = loc[2];
+        int h = loc[3];
+        if ( posY > (y-radius) && posY < (y+h/2) && posX >= x && posX <= (x+w) ) {
+            posY = 2*(y-radius) - posY;
+            changeAngle(-angle);
+            return true;
+        }
+        else if ( posY < (y+h+radius) && posY > (y+h/2) && posX >= x && posX <= (x+w) ) {
+            posY = 2*(y+h+radius) - posY;
+            changeAngle(-angle);
+            return true;
+        }
+        else if ( posX > (x-radius) && posX < (x+w/2) && posY >= y && posY <= (y+h) ) {
+            posX = 2*(x-radius) - posX;
+            changeAngle(pi-angle);
+            return true;
+        }
+        else if ( posX < (x+w+radius) && posX > (x+w/2) && posY >= y && posY <= (y+h) ) {
+            posX = 2*(x+w+radius) - posX;
+            changeAngle(pi-angle);
+            return true;
+        }
+        return false;
+    }
+        
 }

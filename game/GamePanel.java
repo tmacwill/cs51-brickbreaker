@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-//import java.awt.image.*;
 import java.util.*;
 
 
@@ -11,10 +10,14 @@ import java.util.*;
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class GamePanel extends JPanel implements Runnable, ActionListener, KeyListener
+public class GamePanel extends JPanel implements ActionListener, KeyListener
 {
-    private static final int PWIDTH = 1200;  // Size of panel
-    private static final int PHEIGHT = 700;
+    public static final int PWIDTH = 1200;  // Size of panel
+    public static final int PHEIGHT = 700;
+    public static final int BORDER = 10;
+    public static final int ARENA_WIDTH = PWIDTH - 2*BORDER;
+    public static final int ARENA_HEIGHT = PHEIGHT - 2*BORDER;
+    
     
     private static final String GAMEOVER = "GAME OVER";
     
@@ -28,8 +31,10 @@ public class GamePanel extends JPanel implements Runnable, ActionListener, KeyLi
     private Image dbImage = null;
 
     private Level lev;
-    private Racket rack;
-    private Ball ball;
+    private boolean rightDown = false;
+    private boolean leftDown = false;
+    
+    private int totalScore;
     
     public GamePanel()
     {
@@ -41,11 +46,22 @@ public class GamePanel extends JPanel implements Runnable, ActionListener, KeyLi
         requestFocus();    // the JPanel now has focus, so receives key events
 //        readyForTermination();    // Why won't this work???
         
-        lev  = new Level(PWIDTH, PHEIGHT, 20);
-        rack = new Racket(PWIDTH, PHEIGHT, 80);
-        ball = new Ball(lev, rack, 15);
-        
+        initGame();
     }   // end of GamePanel()
+    
+    private void initGame() {
+        lev  = newLevel();
+    }
+    
+    private Level newLevel() {
+        Brick[][] levelBoxes = new Brick[25][25];
+        for (int x = 0; x < levelBoxes.length; x++) {
+            for (int y = 0; y < levelBoxes[0].length; y++) {
+                if (y < 11) levelBoxes[x][y] = new StandardBrick();                
+            }
+        }
+        return new Level(levelBoxes);
+    }
 
     /* Wait for the JPanel to be added to the
      * JFrame/JAplet before starting.    */
@@ -58,15 +74,21 @@ public class GamePanel extends JPanel implements Runnable, ActionListener, KeyLi
     // initialize and start the thread
     private void startGame()
     {
+        totalScore = 0;
         if (clock == null) 
             clock = new javax.swing.Timer(delay,this);
+        isPaused = false;
+        gameOver = false;
         running = true;
         clock.start();
     }
     
     // called by the user to stop execution
     public void stopGame()
-    {   running = false; }
+    {   
+        running = false;
+        clock.stop();
+    }
     
     public void pauseGame()
     {   isPaused = true;    }
@@ -74,37 +96,30 @@ public class GamePanel extends JPanel implements Runnable, ActionListener, KeyLi
     public void resumeGame()
     {   isPaused = false;   }
     
+    // Repeatedly update, render, sleep
     public void actionPerformed (ActionEvent e)
     {
         if (running) {
+            //long t0 = System.currentTimeMillis(); 
             gameUpdate();
+            //long t1 = System.currentTimeMillis();
+            //long d1 = Math.round(10*(t1 - t0))/10; 
             gameRender();
+            //long t2 = System.currentTimeMillis();
+            //long d2 = Math.round(10*(t2 - t1))/10; 
             paintScreen();
+            //long t3 = System.currentTimeMillis();
+            //long d3 = Math.round(10*(t3 - t2))/10; 
+            //long dTot = Math.round(10*(t3 - t0))/10; 
+            //System.out.println(d1 + " + " + d2 + " + " + d3 + " = " + dTot + " ms");
         }
     }
-    
-    // Repeatedly update, render, sleep
-    public void run()
-    {
-        running = true;
-        while (running) {
-            gameUpdate();   // game state is updated
-            gameRender();   // render to a buffer
-            paintScreen();     // paint with the buffer
-            
-            try {
-                Thread.sleep(20);
-            }
-            catch(InterruptedException ex) {}
-        }
-        System.exit(0);     // So enclosing JFrame/JApplet exits
-    }   // end of run()
     
     private void gameUpdate()
     {
         if (!isPaused && !gameOver) {
-            ball.updatePosition();
-            if (!ball.inBounds()) stopGame();
+            totalScore += lev.update(rightDown, leftDown);
+            if (!lev.ballInBounds()) stopGame();
         }
     }
     
@@ -124,12 +139,17 @@ public class GamePanel extends JPanel implements Runnable, ActionListener, KeyLi
         dbg.setColor(Color.white);
         dbg.fillRect(0, 0, PWIDTH, PHEIGHT);
         
+        // Draws a thick black border around the playing arena
+        dbg.setColor(Color.black);
+        dbg.drawRect(BORDER,BORDER, PWIDTH-2*BORDER, PHEIGHT-2*BORDER);
+        dbg.drawRect(BORDER-1,BORDER-1, PWIDTH-2*BORDER+2, PHEIGHT-2*BORDER+2);
+        dbg.drawRect(BORDER-2,BORDER-2, PWIDTH-2*BORDER+4, PHEIGHT-2*BORDER+4);
+        
+        lev.drawComponents(dbg);
         
         dbg.setColor(Color.blue);
-        dbg.fillRect(rack.getLeft(), rack.getY(), rack.getWidth(), 5);
-        
-        dbg.setColor(Color.red);
-        dbg.fillOval(ball.getX(), ball.getY(), ball.getRad(), ball.getRad());        
+        dbg.setFont(new Font("Arial", Font.BOLD, 20));
+        dbg.drawString( Integer.toString(totalScore), PWIDTH-100, BORDER+20);
         
         if (gameOver)
             gameOverMessage(dbg);
@@ -158,35 +178,25 @@ public class GamePanel extends JPanel implements Runnable, ActionListener, KeyLi
         g.drawString (GAMEOVER, x, y);
     }
     
-    public void paintComponent(Graphics g)
-    {
-        super.paintComponent(g);
-        if (dbImage != null)
-            g.drawImage(dbImage, 0, 0, null);
-    }
-    
     /**
      * Methods for processing keyboard input
      */
     public void keyPressed(KeyEvent e)
     {
         int code = e.getKeyCode();
-        if (code == KeyEvent.VK_RIGHT) {
-            rack.moveRight();
-        }
-        else if (code == KeyEvent.VK_LEFT) {
-            rack.moveLeft();
+        if (code == KeyEvent.VK_RIGHT) { rightDown = true; }
+        else if (code == KeyEvent.VK_LEFT) { leftDown = true; }
+        
+        else if (code == KeyEvent.VK_F2) {
+            initGame();
+            startGame();
         }
     }
     
-    public void keyReleased(KeyEvent e) { }
-    public void keyTyped(KeyEvent e) {
+    public void keyReleased(KeyEvent e) {
         int code = e.getKeyCode();
-        if (code == KeyEvent.VK_RIGHT) {
-            rack.moveRight();
-        }
-        else if (code == KeyEvent.VK_LEFT) {
-            rack.moveLeft();
-        }
+        if (code == KeyEvent.VK_RIGHT) { rightDown = false; }
+        else if (code == KeyEvent.VK_LEFT) { leftDown = false; }
     }
+    public void keyTyped(KeyEvent e) { }
 }
