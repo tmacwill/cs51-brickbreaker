@@ -1,0 +1,4 @@
+[14-Apr-2010 21:29:12] PHP Parse error:  syntax error, unexpected ';' in /home/brckbrkr/public_html/app/controllers/levels_controller.php on line 92
+[14-Apr-2010 21:29:53] PHP Fatal error:  Call to a member function findById() on a non-object in /home/brckbrkr/public_html/app/controllers/users_controller.php on line 104
+[14-Apr-2010 21:29:59] PHP Fatal error:  Call to a member function findById() on a non-object in /home/brckbrkr/public_html/app/controllers/users_controller.php on line 104
+[14-Apr-2010 22:25:33] PHP Parse error:  syntax error, unexpected T_VAR in /home/brckbrkr/public_html/app/controllers/levels_controller.php on line 49

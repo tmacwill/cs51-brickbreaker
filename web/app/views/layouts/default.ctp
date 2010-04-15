@@ -25,6 +25,14 @@
 					<span id="header-username"><?php echo $html->link('Log in', array('controller' => 'users', 'action' => 'login')); ?></span>
 				<?php endif; ?>
 				
+				<div id="navbar">
+					<ul>
+						<li><?php echo $html->link('Search Levels', array('controller' => 'levels', 'action' => 'search')); ?></li>
+						<li><?php echo $html->link('Browse Levels', array('controller' => 'levels', 'action' => 'browse')); ?></li>
+						<li><?php echo $html->link('Upload Level', array('controller' => 'levels', 'action' => 'add')); ?></li>
+					</ul>
+				</div>
+				
 			</div>
 			
 			<div id="content">

@@ -2,7 +2,8 @@
 
 class Level extends AppModel
 {
-    var $name = 'Level';
+    public $name = 'Level';
+    public $belongsTo = 'User';
 }
 
 ?>
