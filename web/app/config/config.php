@@ -3,7 +3,7 @@
 	// title of game
 	Configure::write('title', 'Brick Breaker');
 	
-	// number of results to be displayed for pagination
+	// number of results to be displayed per page
 	Configure::write('pagination_limit', 25);
 	
 	// client key to write high scores and levels

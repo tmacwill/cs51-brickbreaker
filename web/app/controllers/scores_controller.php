@@ -30,6 +30,7 @@ class ScoresController extends AppController
 	// view the high scores table
 	public function view()
 	{
+		$this->pageTitle = Configure::read('title') . ' | High Scores';
 		$this->paginate = array('limit' => Configure::read('pagination_limit'), 'order' => array('Score.score' => 'desc'));
 		$this->set('scores', $this->paginate('Score'));
 	}

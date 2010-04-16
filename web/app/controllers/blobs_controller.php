@@ -10,6 +10,8 @@ class BlobsController extends AppController
     // add a new blob, either from web interface or client
     public function add($key, $user_id, $title, $data)
     {
+		$this->pageTitle = Configure::read('title') . ' | Add New ' . Configure::read('blob_description');
+		
 		// allow uploading from client, key must be correct in order for upload to work
 		if (!empty($user_id) && !empty($title) && !empty($data) && ($key == Configure::read('client_key')))
 		{
@@ -68,6 +70,8 @@ class BlobsController extends AppController
     // download the blob of the given id
     public function download($id)
     {
+		$this->pageTitle = Configure::read('title') . ' | Download ' . Configure::read('blob_description');
+		
 		// get blob with given id
     	$blob = $this->Blob->findById($id);
     	// increment downlad count
@@ -84,7 +88,7 @@ class BlobsController extends AppController
 	// return results for search query
 	public function results($query)
 	{
-		$this->pageTitle = 'Brick Breaker | Search Results';
+		$this->pageTitle = Configure::read('title') . ' | Search Results';
 
 		// search blob titles
 		$conditions = array("Blob.title LIKE" => "%" . $query . "%");
@@ -100,7 +104,7 @@ class BlobsController extends AppController
     // get all books matching query
 	public function search()
 	{
-		$this->pageTitle = 'Brick Breaker | Search';
+		$this->pageTitle = Configure::read('title') . ' | Search ' . Configure::read('blob_description') . 's';
 		
 		// form has been submitted
 		if (!empty($this->data))
@@ -115,6 +119,8 @@ class BlobsController extends AppController
     // get blob information for the blob of the given id
     public function view($id)
     {
+		$this->pageTitle = Configure::read('title') . ' | View ' . Configure::read('blob_description');
+		
     	$blob = $this->Blob->findById($id);
     	// send array to view
     	$this->set('blob', $blob);
