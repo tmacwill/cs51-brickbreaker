@@ -5,7 +5,7 @@ class ScoresController extends AppController
 	public $name = 'Scores';
 	
 	// add a high score, only from desktop client
-	public function add($user_id, $score)
+	public function add($key, $user_id, $score)
 	{
 		// uploading only from client, key must be correct in order for upload to work
 		if (!empty($user_id) && !empty($score)&& ($key == Configure::read('client_key')))
