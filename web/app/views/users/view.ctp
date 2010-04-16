@@ -1,3 +1,4 @@
+<?php $paginator->options(array('url' => $this->passedArgs)); ?>
 <h3><?php echo $levels[0]['User']['username']; ?>'s levels</h3>
 <table>
 	<tr>
@@ -11,6 +12,7 @@
 		</tr>
 	<?php endforeach; ?>
 </table>
+
 <?php echo $paginator->numbers(); ?>
 <br />
 <?php 

@@ -13,6 +13,7 @@
 		<h3>No levels found</h3>
 	<?php endif; ?>
 		
+	<?php $paginator->options(array('url' => $this->passedArgs)); ?>
 	<table>
 		<tr>
 			<th><?php echo $paginator->sort('Title', 'title'); ?></th>
