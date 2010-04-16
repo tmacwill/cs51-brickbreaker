@@ -24,6 +24,10 @@
  * @lastmodified  $Date$
  * @license       http://www.opensource.org/licenses/mit-license.php The MIT License
  */
+
+// keep application-specific configuration separate
+require_once('config.php');
+
 /**
  * CakePHP Debug Level:
  *

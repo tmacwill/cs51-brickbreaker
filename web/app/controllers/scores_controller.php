@@ -3,14 +3,12 @@
 class ScoresController extends AppController
 {
 	public $name = 'Scores';
-	// number of results displayed per page
-    private $PAGINATE_LIMIT = 25;
 	
 	// add a high score, only from desktop client
 	public function add($user_id, $score)
 	{
 		// uploading only from client, key must be correct in order for upload to work
-		if (!empty($user_id) && !empty($score)&& ($key == '2d4d4bb4ef2948f7974e072b0c613d97'))
+		if (!empty($user_id) && !empty($score)&& ($key == Configure::read('client_key')))
 		{
 			// sanitize database input
 			$this->data['Score']['user_id'] = Sanitize::paranoid($user_id, array(' '));
@@ -32,7 +30,7 @@ class ScoresController extends AppController
 	// view the high scores table
 	public function view()
 	{
-		$this->paginate = array('limit' => $this->PAGINATE_LIMIT, 'order' => array('Score.score' => 'desc'));
+		$this->paginate = array('limit' => Configure::read('pagination_limit'), 'order' => array('Score.score' => 'desc'));
 		$this->set('scores', $this->paginate('Score'));
 	}
 }

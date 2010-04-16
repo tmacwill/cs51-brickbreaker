@@ -6,14 +6,12 @@ App::import('Sanitize');
 class LevelsController extends AppController
 {
     public $name = 'Levels';
-    // number of results displayed per page
-    private $PAGINATE_LIMIT = 25;
 
     // add a new level, either from web interface or client
     public function add($key, $user_id, $title, $data)
     {
 		// allow uploading from client, key must be correct in order for upload to work
-		if (!empty($user_id) && !empty($title) && !empty($data) && ($key == '2d4d4bb4ef2948f7974e072b0c613d97'))
+		if (!empty($user_id) && !empty($title) && !empty($data) && ($key == Configure::read('client_key')))
 		{
 			// sanitize database input
 			$this->data['Level']['user_id'] = Sanitize::paranoid($user_id, array(' '));
@@ -61,7 +59,7 @@ class LevelsController extends AppController
     public function browse()
     {
 		// reset pagination filter
-		$this->paginate = array('limit' => $this->PAGINATE_LIMIT, 'order' => array('Level.downloads' => 'desc'));
+		$this->paginate = array('limit' => Configure::read('pagination_limit'), 'order' => array('Level.downloads' => 'desc'));
 		// browsing is same as a blank search
 		$this->redirect('/levels/results/');
 	}
@@ -89,7 +87,7 @@ class LevelsController extends AppController
 
 		// search level titles
 		$conditions = array("Level.title LIKE" => "%" . $query . "%");
-		$this->paginate = array('conditions' => $conditions, 'limit' => $this->PAGINATE_LIMIT, 'order' => array('Level.downloads' => 'desc'));
+		$this->paginate = array('conditions' => $conditions, 'limit' => Configure::read('pagination_limit'), 'order' => array('Level.downloads' => 'desc'));
 		
 		// send variables to view
 		$this->set('query', $query);
