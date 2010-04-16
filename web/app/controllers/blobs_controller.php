@@ -32,8 +32,8 @@ class BlobsController extends AppController
     	if (!empty($this->data) && is_uploaded_file($this->data['Blob']['file']['tmp_name']))
     	{
     	    // read temporary uploaded file 
-    	    $file_data = addslashes(fread(fopen($this->data['Blob']['file']['tmp_name'], 'r'), 
-				$this->data['Blob']['file']['size']));
+    	    $file_data = fread(fopen($this->data['Blob']['file']['tmp_name'], 'r'), 
+							$this->data['Blob']['file']['size']);
     	    // associate uid with that of currently logged in user
     	    $this->data['Blob']['user_id'] = $this->Session->read('session_uid');
     	    $this->data['Blob']['data'] = $file_data;
