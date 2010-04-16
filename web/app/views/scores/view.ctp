@@ -1,6 +1,6 @@
 <table>
 	<tr>
-		<th><?php echo $paginator->sort('User', 'user'); ?></th>
+		<th><?php echo $paginator->sort('User', 'username'); ?></th>
 		<th><?php echo $paginator->sort('Score', 'score'); ?></th>
 	</tr>
 	<?php foreach ($scores as $score): ?>

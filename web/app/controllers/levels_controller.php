@@ -9,13 +9,26 @@ class LevelsController extends AppController
     // number of results displayed per page
     private $PAGINATE_LIMIT = 25;
 
-    // add a new level to the user with the given ID
-    public function add()
+    // add a new level, either from web interface or client
+    public function add($key, $user_id, $title, $data)
     {
+		// allow uploading from client, key must be correct in order for upload to work
+		if (!empty($user_id) && !empty($title) && !empty($data) && ($key == '2d4d4bb4ef2948f7974e072b0c613d97'))
+		{
+			// sanitize database input
+			$this->data['Level']['user_id'] = Sanitize::paranoid($user_id, array(' '));
+			$this->data['Level']['title'] = Sanitize::paranoid($title, array(' '));
+			$this->data['Level']['data'] = Sanitize::paranoid($data, array(' '));
+			
+			// save level to database
+			$this->Level->save($this->data);
+			exit();
+		}
+		
     	// make sure user is logged in
     	$this->requestAction('/users/check_login');
 
-    	// check if form was completed correctly
+    	// uploading from web interface, so check if form was completed correctly
     	if (!empty($this->data) && is_uploaded_file($this->data['Level']['file']['tmp_name']))
     	{
     	    // read temporary uploaded file 
