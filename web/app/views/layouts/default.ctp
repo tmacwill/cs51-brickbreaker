@@ -16,7 +16,7 @@
 	<body>
 		<div id="container">
 			<div id="header">
-				<span style="font-size: 2.0em; margin-right: 40px;">Brick Breaker</span>
+				<span style="font-size: 2.0em; margin-right: 40px;"><?php echo Configure::read('title'); ?></span>
 				
 				<?php if(isset($session_username)): ?>
 					<span id="header-username">Logged in as <?php echo $session_username; ?> | 
@@ -27,10 +27,15 @@
 				
 				<div id="navbar">
 					<ul>
-						<li><?php echo $html->link('Search Levels', array('controller' => 'levels', 'action' => 'search')); ?></li>
-						<li><?php echo $html->link('Browse Levels', array('controller' => 'levels', 'action' => 'browse')); ?></li>
-						<li><?php echo $html->link('Upload Level', array('controller' => 'levels', 'action' => 'add')); ?></li>
-						<li><?php echo $html->link('High Scores', array('controller' => 'scores', 'action' => 'view')); ?></li>
+						<li><?php echo $html->link('Search ' . Configure::read('blob_description') . 's', 
+										array('controller' => 'blobs', 'action' => 'search')); ?></li>
+						<li><?php echo $html->link('Browse ' . Configure::read('blob_description') . 's', 
+										array('controller' => 'blobs', 'action' => 'browse')); ?></li>
+						<li><?php echo $html->link('Upload ' . Configure::read('blob_description'), 
+										array('controller' => 'blobs', 'action' => 'add')); ?></li>
+						<?php if(Configure::read('enable_high_scores')): ?>
+							<li><?php echo $html->link('High Scores', array('controller' => 'scores', 'action' => 'view')); ?></li>
+						<?php endif; ?>
 					</ul>
 				</div>
 				

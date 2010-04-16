@@ -25,7 +25,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- Table structure for table `levels`
 --
 
-CREATE TABLE IF NOT EXISTS `levels` (
+CREATE TABLE IF NOT EXISTS `blobs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,

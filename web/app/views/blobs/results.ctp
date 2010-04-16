@@ -1,16 +1,16 @@
 <?php 
-	echo $form->create('Level', array('action' => 'search'));
-	echo $form->input('query', array('label' => 'Search for levels', 'default' => $query));
+	echo $form->create('Blob', array('action' => 'search'));
+	echo $form->input('query', array('label' => 'Search for ' . Configure::read('blob_description') . 's', 'default' => $query));
 	echo $form->end('Search');
 ?>
 	
-<?php if (isset($levels)): ?>
+<?php if (isset($blobs)): ?>
 	<?php if ($query != ""): ?>
 		<h2>Results for "<?php echo $query?>"</h2>
 	<?php endif;?>
 	
-	<?php if($levels == null): ?>
-		<h3>No levels found</h3>
+	<?php if($blobs == null): ?>
+		<h3>No <?php echo Configure::read('blob_description') . 's'; ?> found</h3>
 	<?php endif; ?>
 		
 	<?php $paginator->options(array('url' => $this->passedArgs)); ?>
@@ -20,11 +20,11 @@
 			<th><?php echo $paginator->sort('Username', 'username'); ?></th>
 			<th><?php echo $paginator->sort('Downloads', 'downloads'); ?></th>
 		</tr>
-		<?php foreach ($levels as $level): ?>
+		<?php foreach ($blobs as $blob): ?>
 			<tr>
-				<td><?php echo $html->link($level['Level']['title'], array('controller' => 'levels', 'action' => 'view', $level['Level']['id'])); ?></td>
-				<td><?php echo $html->link($level['User']['username'], array('controller' => 'users', 'action' => 'view', $level['User']['id'])); ?></td>
-				<td><?php echo $level['Level']['downloads']; ?></td>
+				<td><?php echo $html->link($blob['Blob']['title'], array('controller' => 'blobs', 'action' => 'view', $blob['Blob']['id'])); ?></td>
+				<td><?php echo $html->link($blob['User']['username'], array('controller' => 'users', 'action' => 'view', $blob['User']['id'])); ?></td>
+				<td><?php echo $blob['Blob']['downloads']; ?></td>
 			</tr>
 		<?php endforeach; ?>
 	</table>

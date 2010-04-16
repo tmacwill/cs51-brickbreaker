@@ -1,14 +1,14 @@
 <?php $paginator->options(array('url' => $this->passedArgs)); ?>
-<h3><?php echo $levels[0]['User']['username']; ?>'s levels</h3>
+<h3><?php echo $blobs[0]['User']['username']; ?>'s <?php echo Configure::read('blob_description') . 's'; ?></h3>
 <table>
 	<tr>
 		<th><?php echo $paginator->sort('Title', 'title'); ?></th>
 		<th><?php echo $paginator->sort('Downloads', 'downloads'); ?></th>
 	</tr>
-	<?php foreach ($levels as $level): ?>
+	<?php foreach ($blobs as $blob): ?>
 		<tr>
-			<td><?php echo $html->link($level['Level']['title'], array('controller' => 'levels', 'action' => 'view', $level['Level']['id'])); ?></td>
-			<td><?php echo $level['Level']['downloads']; ?></td>
+			<td><?php echo $html->link($blob['Blob']['title'], array('controller' => 'blobs', 'action' => 'view', $blob['Blob']['id'])); ?></td>
+			<td><?php echo $blob['Blob']['downloads']; ?></td>
 		</tr>
 	<?php endforeach; ?>
 </table>
