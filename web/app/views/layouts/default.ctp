@@ -18,23 +18,29 @@
 			<div id="header">
 				<span style="font-size: 2.0em; margin-right: 40px;"><?php echo Configure::read('title'); ?></span>
 				
-				<?php if(isset($session_username)): ?>
-					<span id="header-username">Logged in as <?php echo $session_username; ?> | 
-					<?php echo $html->link('Log out', array('controller' => 'users', 'action' => 'logout')); ?></span>
-				<?php else: ?>
-					<span id="header-username"><?php echo $html->link('Log in', array('controller' => 'users', 'action' => 'login')); ?></span>
-				<?php endif; ?>
-				
 				<div id="navbar">
 					<ul>
+						<!-- links to browse or search levels -->
 						<li><?php echo $html->link('Search ' . Configure::read('blob_description') . 's', 
 										array('controller' => 'blobs', 'action' => 'search')); ?></li>
 						<li><?php echo $html->link('Browse ' . Configure::read('blob_description') . 's', 
 										array('controller' => 'blobs', 'action' => 'browse')); ?></li>
-						<li><?php echo $html->link('Upload ' . Configure::read('blob_description'), 
-										array('controller' => 'blobs', 'action' => 'add')); ?></li>
-						<?php if(Configure::read('enable_high_scores')): ?>
-							<li><?php echo $html->link('High Scores', array('controller' => 'scores', 'action' => 'view')); ?></li>
+										
+						<!-- only show link for login if user is not logged in -->
+						<?php if(!isset($session_username)): ?>
+							<li><?php echo $html->link('Log in', array('controller' => 'users', 'action' => 'login')); ?></li>
+							
+						<!-- display level upload, etc. actions if user is logged in
+						<?php else: ?>				
+							<li><?php echo $html->link('My ' . Configure::read('blob_description') . 's', 
+													array('controller' => 'users', 'action' => 'view', $session_uid)); ?></li>
+							<li><?php echo $html->link('Upload ' . Configure::read('blob_description'), 
+											array('controller' => 'blobs', 'action' => 'add')); ?></li>
+							<?php if(Configure::read('enable_high_scores')): ?>
+								<li><?php echo $html->link('High Scores', array('controller' => 'scores', 'action' => 'view')); ?></li>
+							<?php endif; ?>
+							<li>Logged in as <?php echo $session_username; ?> | 
+								<?php echo $html->link('Log out', array('controller' => 'users', 'action' => 'logout')); ?></li>
 						<?php endif; ?>
 					</ul>
 				</div>

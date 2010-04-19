@@ -9,7 +9,7 @@ class BlobsController extends AppController
     public $components = array('RequestHandler');
 
     // add a new blob, either from web interface or client
-    public function add($key, $user_id, $title, $data)
+    public function add($key = '', $user_id = '', $title = '', $data = '')
     {
 		$this->pageTitle = Configure::read('title') . ' | Add New ' . Configure::read('blob_description');
 		
@@ -85,9 +85,9 @@ class BlobsController extends AppController
     	// need to exit to avoid 404
     	exit();
     }
-
+    
 	// return results for search query
-	public function results($query)
+	public function results($query = '')
 	{
 		$this->pageTitle = Configure::read('title') . ' | Search Results';
 		// send query to view
