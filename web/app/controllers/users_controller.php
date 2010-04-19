@@ -6,6 +6,7 @@ App::import('Sanitize');
 class UsersController extends AppController
 {
     public $name = 'Users';
+    public $components = array('RequestHandler');
 
     // create new user
     public function add()
@@ -82,9 +83,7 @@ class UsersController extends AppController
 			$this->data['User']['username'] = Sanitize::paranoid($this->data['User']['username'], array(' '));
 			$this->data['User']['password'] = Sanitize::paranoid($this->data['User']['password'], array(' '));
 			
-			// get data from given username
-			$conditions = array('User.username' => $this->data['User']['username']);
-			$user = $this->User->find('first', array('conditions' => $conditions));
+			$user = $this->User->findByUsername($this->data['User']['username']);
 			
 			// make sure user exists and passwords match
 			if ($user != null && $user['User']['password'] == md5($this->data['User']['password']))
@@ -126,6 +125,17 @@ class UsersController extends AppController
 		// send variables to view
 		$this->set('blobs', $this->paginate('Blob'));
 		return $blobs;
+	}
+	
+	// verify if the user's credentials are valid, used by client
+	// returns empty <users> element if credentials are not valid
+	public function verify($username, $password)
+	{
+		$user = $this->User->findByUsername($username);
+		
+		// make sure user exists and passwords match
+		if ($user != null && $user['User']['password'] == md5($password))
+			$this->set('user', $user);
 	}
 }
 

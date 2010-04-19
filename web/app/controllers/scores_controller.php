@@ -3,6 +3,7 @@
 class ScoresController extends AppController
 {
 	public $name = 'Scores';
+	public $components = array('RequestHandler');
 	
 	// add a high score, only from desktop client
 	public function add($key, $user_id, $score)
@@ -32,6 +33,12 @@ class ScoresController extends AppController
 	{
 		$this->pageTitle = Configure::read('title') . ' | High Scores';
 		$this->paginate = array('limit' => Configure::read('pagination_limit'), 'order' => array('Score.score' => 'desc'));
-		$this->set('scores', $this->paginate('Score'));
+		
+		// format xml request from client
+		if ($this->params['url']['ext'] == 'xml')
+			$this->set('scores', $this->Score->find('all'));
+		// web html response
+		else
+			$this->set('scores', $this->paginate('Score'));
 	}
 }

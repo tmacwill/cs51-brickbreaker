@@ -6,6 +6,7 @@ App::import('Sanitize');
 class BlobsController extends AppController
 {
     public $name = 'Blobs';
+    public $components = array('RequestHandler');
 
     // add a new blob, either from web interface or client
     public function add($key, $user_id, $title, $data)
@@ -89,16 +90,25 @@ class BlobsController extends AppController
 	public function results($query)
 	{
 		$this->pageTitle = Configure::read('title') . ' | Search Results';
+		// send query to view
+		$this->set('query', $query);
 
 		// search blob titles
 		$conditions = array("Blob.title LIKE" => "%" . $query . "%");
-		$this->paginate = array('conditions' => $conditions, 'limit' => Configure::read('pagination_limit'), 
-			'order' => array('Blob.downloads' => 'desc'));
 		
-		// send variables to view
-		$this->set('query', $query);
-		$this->set('blobs', $this->paginate('Blob'));
-		return $blobs;
+		// format xml request from client
+		if ($this->params['url']['ext'] == 'xml')
+		{
+			$blobs = $this->Blob->find('all', array('conditions' => $conditions));
+			$this->set('blobs', $blobs);
+		}
+		// web html response
+		else
+		{
+			$this->paginate = array('conditions' => $conditions, 'limit' => Configure::read('pagination_limit'), 
+				'order' => array('Blob.downloads' => 'desc'));
+			$this->set('blobs', $this->paginate('Blob'));
+		}
 	}
     
     // get all books matching query
