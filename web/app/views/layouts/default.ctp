@@ -29,8 +29,8 @@
 						<!-- only show link for login if user is not logged in -->
 						<?php if(!isset($session_username)): ?>
 							<li><?php echo $html->link('Log in', array('controller' => 'users', 'action' => 'login')); ?></li>
-							
-						<!-- display level upload, etc. actions if user is logged in
+						
+						<!-- display level upload, etc. actions if user is logged in -->							
 						<?php else: ?>				
 							<li><?php echo $html->link('My ' . Configure::read('blob_description') . 's', 
 													array('controller' => 'users', 'action' => 'view', $session_uid)); ?></li>

@@ -68,6 +68,31 @@ class BlobsController extends AppController
 		$this->redirect('/blobs/results/');
 	}
 
+	// delete blob of the given id
+	// if correct key is given, blob will be deleted without checking session credentials
+	public function delete($id, $key = '')
+	{
+		// client request with correct key, so okay to delete blob of given id
+		if ($key == Configure::read('client_key'))
+			$this->Blob->delete($id);
+		// web request
+		else
+		{
+			// make sure user is logged in
+			$this->requestAction('/users/check_login');
+			
+			// make sure user id of blob matches the logged in user before deleting
+			$blob = $this->Blob->findById($id);
+			if ($blob['User']['id'] == $this->Session->read('session_uid'))
+				$this->Blob->delete($id);
+			else
+				$this->Session->setFlash('Cannot delete level');
+				
+			// redirect user to his blob library
+			$this->redirect('/users/view' . $this->Session->read('session_uid'));
+		}
+	}
+
     // download the blob of the given id
     public function download($id)
     {
@@ -85,6 +110,53 @@ class BlobsController extends AppController
     	// need to exit to avoid 404
     	exit();
     }
+    
+    // edit blob of the given id
+	// if correct key is given, blob will be edited without checking session credentials
+    public function edit($id, $key = '', $title = '', $data = '')
+    {
+		// client request with correct key, so okay to edit blob of given id
+		if ($key == Configure::read('client_key'))
+		{
+			// get blob, then replace information
+			$blob = $this->Blob->findById($id);
+			$blob['Blob']['title'] = Sanitize::paranoid($title, array(' '));
+			$blob['Blob']['data'] = Sanitize::paranoid($data, array(' '));
+			$this->Blob->save($blob);
+			
+			// don't redirect client request
+			exit();
+		}
+		// web request
+		else
+		{
+			// make sure user is logged in
+			$this->requestAction('/users/check_login');
+			$blob = $this->Blob->findById($id);
+			
+			// do not edit blob if user id doesn't match id of logged in user
+			if ($blob['User']['id'] != $this->Session->read('session_uid'))
+			{
+				$this->Session->setFlash('Cannot edit level');
+				// redirect user to his blob library
+				$this->redirect('/users/view/' . $this->Session->read('session_uid'));
+			}
+			
+			// form submitted, so process data
+			if (!empty($this->data))
+			{
+				$blob['Blob']['title'] = Sanitize::paranoid($title, array(' '));
+				$blob['Blob']['data'] = Sanitize::paranoid($data, array(' '));
+				$this->Blob->save($blob);
+				
+				// redirect user to his blob library
+				$this->redirect('/users/view/' . $this->Session->read('session_uid'));
+			}
+			else
+				// form not submitted, so send data to view
+				$this->set('blob', $this->Blob->findById($id));
+		}
+	}
     
 	// return results for search query
 	public function results($query = '')
