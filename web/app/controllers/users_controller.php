@@ -122,9 +122,12 @@ class UsersController extends AppController
 		$conditions = array('User.id' => $id);
 		$this->paginate = array('conditions' => $conditions, 'limit' => Configure::read('pagination_limit'));
 		
-		// send variables to view
-		$this->set('blobs', $this->paginate('Blob'));
-		return $blobs;
+		// format xml request from client
+		if ($this->params['url']['ext'] == 'xml')
+			$this->set('blobs', $this->User->findAllById($id));
+		// web html response
+		else
+			$this->set('blobs', $this->paginate('Blob'));
 	}
 	
 	// verify if the user's credentials are valid, used by client
