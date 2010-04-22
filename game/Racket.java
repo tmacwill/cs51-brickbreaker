@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.io.Serializable;
 
 /**
  * Abstract class Racket - write a description of the class here
@@ -6,9 +7,11 @@ import java.awt.*;
  * @author (your name here)
  * @version (version number or date here)
  */
-public abstract class Racket
+public abstract class Racket implements Serializable
 {
-    protected int range;  // Size of the area over which the racket can move
+	private static final long serialVersionUID = 1L;
+	
+	protected int range;  // Size of the area over which the racket can move
     protected int width;  // Size of racket
     
     // Position of the center of the racket

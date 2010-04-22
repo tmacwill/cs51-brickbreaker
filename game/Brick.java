@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.io.Serializable;
 
 /**
  * Abstract class Brick - write a description of the class here
@@ -6,9 +7,11 @@ import java.awt.*;
  * @author (your name here)
  * @version (version number or date here)
  */
-public abstract class Brick
+public abstract class Brick implements Serializable
 {
-    private int points;
+	private static final long serialVersionUID = 1L;
+	
+	private int points;
     private boolean destructible = true;
     private int hitsToRemove;
     private boolean removed = false;

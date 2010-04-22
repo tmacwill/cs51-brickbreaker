@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.io.Serializable;
 
 /**
  * Write a description of class Ball here.
@@ -6,9 +7,11 @@ import java.awt.*;
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Ball
+public class Ball implements Serializable
 {
-    public static final double pi = Math.PI;
+	private static final long serialVersionUID = 1L;
+	
+	public static final double pi = Math.PI;
     private double posX, posY;  // position of center of the ball
     private double angle;   // Measured from the horizontal line (+x axis) clockwise
     public static double speed;

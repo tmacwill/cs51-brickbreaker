@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.io.Serializable;
 
 /**
  * Write a description of class Level here.
@@ -7,9 +8,11 @@ import java.awt.event.*;
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Level
+public class Level implements Serializable
 {
-    public static int WIDTH = GamePanel.ARENA_WIDTH;
+	private static final long serialVersionUID = 1L;
+	
+	public static int WIDTH = GamePanel.ARENA_WIDTH;
     public static int HEIGHT = GamePanel.ARENA_HEIGHT;
     private int numRows, numCols;
     private int brickWidth, brickHeight;
