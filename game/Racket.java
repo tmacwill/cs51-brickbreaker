@@ -1,50 +1,82 @@
 import java.awt.*;
 
 /**
- * Write a description of class Racket here.
+ * Abstract class Racket - write a description of the class here
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author (your name here)
+ * @version (version number or date here)
  */
-public class Racket
+public abstract class Racket
 {
-    private int arenaWidth;
-    private int width;  // width of racket
-    private double posY;    // Should be at the bottom of the screen
-    private double posX;    // x-coordinate of the middle of the racket
-    private double speed = 8.0;
-    private Color color = Color.blue;
-
-    /**
-     * Constructor for objects of class Racket
-     */
-    public Racket(int screenW, int screenH, int racketW)
-    {
-        arenaWidth = screenW;
-        width = racketW;
-        posY = screenH - 30;
-        posX = screenW/2.0;
-    }
-
-    public void moveLeft()
-    {
-        posX  = Math.max(width/2, posX-speed);
+    protected int range;  // Size of the area over which the racket can move
+    protected int width;  // Size of racket
+    
+    // Position of the center of the racket
+    // Coordinates are relative to the racket (i.e. in side rackets, coordinates are switched
+    protected double posX, posY;
+    public static final double maxSpeed = 8.0;
+    private double speed = 0;
+    protected Color color = Color.blue;
+    public static int thickness = 5;
+    
+    boolean moving = false;
+    
+    public void setMovingLeft() {
+        if (!moving) {
+            speed = -maxSpeed/2;
+            moving = true;
+        }
+        else speed = -maxSpeed;
     }
     
-    public void moveRight()
-    {
-        posX = Math.min(arenaWidth-width/2, posX+speed);
+    public void setMovingRight() {
+        if (!moving) {
+            speed = 3*maxSpeed/4;
+            moving = true;
+        }
+        else speed = maxSpeed;
     }
     
-    public void draw(Graphics g) {
-        g.setColor(color);
-        int border = GamePanel.BORDER;
-        g.fillRect(getLeft()+border, getY()+border+5, width, 5);
+    public void stop() {
+        moving = false;
+        speed = 0;
     }
     
-    public int getY() { return Math.round((long)posY); }
+    public void updatePos() {
+        if (moving) {
+            posX += speed;
+            if (posX < width/2) posX = width/2;
+            if (posX > (range-width/2)) posX = range-width/2;
+        }
+    }
+    
+    // Move the racket left/up
+    public  void moveLeft() {
+        posX = Math.max(width/2., posX-speed);
+    }
+    
+    // Move the racket right/down
+    public  void moveRight() {
+        posX = Math.min(range-width/2., posX+speed);
+    }
+    
+    public int getLeft() { return Math.round((long)(posX-width/2.)); }
+    public int getRight() { return Math.round((long)(posX+width/2)); }
     public int getX() { return Math.round((long)posX); }
-    public int getLeft() { return Math.round((long)(posX - width/2.0)); }
-    public int getRight() { return Math.round((long)(posX + width/2.0)); }
+    public int getY() { return Math.round((long)posY); }
     public int getWidth() { return width; }
+    
+    // Draw the racket on the screen
+    public abstract void draw(Graphics g);
+    
+    // Checks if the ball collides with the racket and updates the ball
+    public abstract Ball checkCollision(Ball ball);
+    
+    // Checks if the ball is past the racket (and thus out of play)
+    public abstract boolean checkPast(Ball ball);
+    
+    public boolean isLeft() { return false; }
+    public boolean isRight() { return false; }
+    public boolean isTop() { return false; }
+    public boolean isBottom() { return false; }
 }

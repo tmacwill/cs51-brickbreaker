@@ -16,4 +16,6 @@ public class PermanentBrick extends Brick
     {
         super(0, -1, new Color(100,150,240));
     }
+
+    public boolean permanent() { return true; }
 }

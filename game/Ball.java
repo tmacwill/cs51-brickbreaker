@@ -11,7 +11,9 @@ public class Ball
     public static final double pi = Math.PI;
     private double posX, posY;  // position of center of the ball
     private double angle;   // Measured from the horizontal line (+x axis) clockwise
-    private double speed;
+    public static double speed;
+    public static int powerLevel = 0;
+    public static double ptMultiplier = 1;
     
     // x and y components of the ball's velocity vector (calculated from angle & speed)
     private double velX, velY;
@@ -21,36 +23,36 @@ public class Ball
     private boolean inBounds = true;
     private boolean inPlay = true;
     
-    private Racket racket;
-    private Level level;
+    private Racket[] rackets;
+    private LevelPlayer level;
 
-    /**
-     * Constructor for objects of class Ball
-     */
-    public Ball(Level l, Racket r, int radius)
+    public Ball(Racket[] r, int radius)
+    {
+        rackets = r;
+        this.radius = radius;
+    }
+    
+    public Ball(LevelPlayer l, Racket[] r, int radius)
     {
         level = l;
-        racket = r;
+        rackets = r;
         this.radius = radius;
-        initRandom();
     }
-
-    /**
-     * Initializes the ball in a random position along the top of the screen, 
-     * moving in a random downward direction
-     */
-    public void initRandom()
-    {
-        posY = level.HEIGHT/2;
-        posX = level.WIDTH/2;
-        
-        angle = Math.random()*pi/2. + pi/4.;    // Random value between pi/4 & 3pi/4
-        speed = 4;
+    
+    public void setLoc(double x, double y, double angle) {
+        posX = x;
+        posY = y;
+        this.angle = angle;
+        speed = 3;
         velX = speed*Math.cos(angle);
         velY = speed*Math.sin(angle);
         
         inBounds = true;
         inPlay = true;
+    }
+    
+    public void setLevel(LevelPlayer lev) {
+        level = lev;
     }
     
     /**
@@ -64,51 +66,55 @@ public class Ball
         
         //  If the ball is out of bounds, move it back inbounds and change the direction of its velocity
         if (posX < radius) {
-            posX = 2*radius-posX;
-            changeAngle(pi-angle);
+            if (!inPlay) inBounds = false;
+            else bounce(radius, false);
         }
-        else if (posX > (level.WIDTH-radius)) {
-            posX = 2*(level.WIDTH-radius)-posX;
-            changeAngle(pi-angle);
+        else if (posX > (level.WIDTH-radius))  {
+            if (!inPlay) inBounds = false;
+            else bounce(level.WIDTH-radius, false);
         }
-        if (posY < radius) {
-            posY = 2*radius-posY;
-            changeAngle(2*pi-angle);
+        if (posY < radius)  {
+            if (!inPlay) inBounds = false;
+            else bounce (radius, true);
         }
-        else if (posY > (racket.getY()-radius)) {
-            if (posX >= racket.getLeft() && posX <= racket.getRight() && inPlay) {
-                posY = 2*(racket.getY()-radius) - posY;
-                changeAngle(2*pi-angle);
+        else if (posY > (level.HEIGHT-radius))  {
+            if (!inPlay) inBounds = false;
+            bounce(level.HEIGHT-radius, true);
+        }
+            
+        if (inPlay) {
+            for (int i = 0; i < rackets.length; i++) {
+                rackets[i].checkCollision(this);
+                if (rackets[i].checkPast(this)) inPlay = false;
             }
-            else if (posX >= racket.getLeft()-radius && posX <= racket.getRight()+radius && inPlay) {
-                changeAngle(pi-angle);
-                inPlay = false;
-            }
-            else if (posY < level.HEIGHT-radius) inPlay = false;
-            else inBounds = false;
         }
-        else {
-            return level.checkCollision(this);
-        }
-        return 0;
+        return level.checkCollision(this);
     }
 
-    
     public void draw(Graphics g) {
         g.setColor(color);
         int border = GamePanel.BORDER;
-        g.fillOval(getX()+border, getY()+border, 2*radius, 2*radius);  
+        g.fillOval(getX()-radius+border, getY()-radius+border, 2*radius, 2*radius);  
     }
     
-    public int getX() { return Math.round((long)(posX-radius)); }
-    public int getY() { return Math.round((long)(posY-radius)); }
+    public int getX() { return Math.round((long)posX); }
+    public int getY() { return Math.round((long)posY); }
     public int getRad() { return radius; }
     
+    public void setX(double x) { posX = x; }
+    public void setY(double y) { posY = y; }
+    
     public boolean inBounds() { return inBounds; }
-    public void reset() { initRandom(); }
+    
+    // Resets the static variables in this class
+    public static void resetVars() {
+        powerLevel = 0;
+        ptMultiplier = 1;
+    }
     
     private void changeAngle(double newAngle) {
         angle = newAngle % (2*pi);
+        while (angle < 0) angle += 2*pi;
         velX = speed*Math.cos(angle);
         velY=  speed*Math.sin(angle);
     }
@@ -123,26 +129,36 @@ public class Ball
         int w = loc[2];
         int h = loc[3];
         if ( posY > (y-radius) && posY < (y+h/2) && posX >= x && posX <= (x+w) ) {
-            posY = 2*(y-radius) - posY;
-            changeAngle(-angle);
+            bounce(y-radius, true);
             return true;
         }
         else if ( posY < (y+h+radius) && posY > (y+h/2) && posX >= x && posX <= (x+w) ) {
-            posY = 2*(y+h+radius) - posY;
-            changeAngle(-angle);
+            bounce(y+h+radius, true);
             return true;
         }
         else if ( posX > (x-radius) && posX < (x+w/2) && posY >= y && posY <= (y+h) ) {
-            posX = 2*(x-radius) - posX;
-            changeAngle(pi-angle);
+            bounce(x-radius, false);
             return true;
         }
         else if ( posX < (x+w+radius) && posX > (x+w/2) && posY >= y && posY <= (y+h) ) {
-            posX = 2*(x+w+radius) - posX;
-            changeAngle(pi-angle);
+            bounce(x+w+radius, false);
             return true;
         }
         return false;
+    }
+    
+    // Returns the updated ball after bouncing off the wall
+    // The wall is either horizontal or vertical 
+    public void bounce(int x, boolean horizontal)
+    {
+        if (horizontal) {
+            posY = 2*x - posY;
+            changeAngle(-angle);
+        }
+        else {
+            posX = 2*x - posX;
+            changeAngle(pi-angle);
+        }
     }
         
 }

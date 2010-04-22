@@ -16,4 +16,9 @@ public class StandardBrick extends Brick
     {
         super(10, 1, new Color(250,190,70));
     }
+    
+    public StandardBrick(int pts, int hits, Color c)
+    {
+        super(pts,hits,c);
+    }
 }

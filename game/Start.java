@@ -5,6 +5,8 @@ import java.awt.event.*;
 
 public class Start extends JFrame implements WindowListener
 {
+    public static int WIDTH = 1200;
+    public static int HEIGHT = 700;
   private GamePanel gp;        // where the game is drawn
 
   public Start ()
@@ -22,7 +24,7 @@ public class Start extends JFrame implements WindowListener
   {
     Container c = getContentPane();    // default BorderLayout used
 
-    gp = new GamePanel();
+    gp = new GamePanel(1);
     c.add(gp, "Center");
 
 //     JPanel ctrls = new JPanel();   // a row of textfields

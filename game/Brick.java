@@ -29,14 +29,15 @@ public abstract class Brick
         height = hgt;
     }
     
-    public int hit()
+    public int bounce(Ball ball)
     {
+        powerUp(ball);
         if (!destructible) return 0;
         else {
             hitsToRemove--;
             if (hitsToRemove == 0) {
                 removed = true;
-                return points;
+                return (int)(points*ball.ptMultiplier);
             }
             else return 0;
         }
@@ -49,6 +50,10 @@ public abstract class Brick
         int[] loc = {x, y, width, height};
         return loc;
     }
+    
+    public void powerUp(Ball b) {}
+    
+    public boolean permanent() { return false; }
     
     public void draw(Graphics g) {
         g.setColor(color);

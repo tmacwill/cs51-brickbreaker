@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.event.*;
 
 /**
  * Write a description of class Level here.
@@ -13,13 +14,13 @@ public class Level
     private int numRows, numCols;
     private int brickWidth, brickHeight;
     private Brick [][] bricks; // true indicates a box is present
-    private Racket racket;
-    private Ball ball;
+    private Racket[] rackets;
+    private Ball[] balls;
 
     /**
      * Default constructor: takes arguments for the width and height of the screen and the 
      */
-    public Level(Brick [][] bricks)
+    public Level(Brick [][] bricks, int numPlayers)
     {
         numRows = bricks.length;
         numCols = bricks[0].length;
@@ -27,14 +28,32 @@ public class Level
         brickHeight = HEIGHT/numRows;
         
         initBricks(bricks);
-        racket = new Racket(WIDTH, HEIGHT, 80);
-        ball = new Ball(this, racket, 8);
+        
+        if (numPlayers < 1 || numPlayers > 4) {
+            System.out.print("Error! only 1-4 players allowed!");
+            if (numPlayers < 1) {
+                System.out.println("  Creating 1 player");
+                numPlayers = 1;
+            }
+            else {
+                System.out.println("  Creating 4 players");
+                numPlayers = 4;
+            }
+        }
+        rackets = new Racket[numPlayers];
+        rackets[0] = new HorizontalRacket(WIDTH, HEIGHT, 80, false);
+        if (numPlayers > 1) rackets[1] = new HorizontalRacket(WIDTH, HEIGHT, 80, true);
+        if (numPlayers > 2) rackets[2] = new VerticalRacket(WIDTH, HEIGHT, 80, false);
+        if (numPlayers > 3) rackets[3] = new VerticalRacket(WIDTH, HEIGHT, 80, true);
+        
+        balls = new Ball[2];
+        balls[0] = new Ball(rackets, 8);
+        balls[0].setLoc(WIDTH/2, HEIGHT/2-100, Math.random()*Math.PI/2 + 5*Math.PI/4);
+        balls[1] = new Ball(rackets, 8);
+        balls[1].setLoc(WIDTH/2, HEIGHT/2+50, Math.random()*Math.PI/2 + Math.PI/4);
     }
     
-    /**
-     * Default constructor: takes arguments for the width and height of the screen and the 
-     */
-    public Level(Brick [][] bricks, Ball ball, Racket rack)
+    public Level(Brick [][] bricks, Ball[] balls, Racket[] rack)
     {
         numRows = bricks.length;
         numCols = bricks[0].length;
@@ -42,8 +61,8 @@ public class Level
         brickHeight = HEIGHT/numRows;
         
         initBricks(bricks);
-        this.ball = ball;
-        racket = rack;
+        rackets = rack;
+        this.balls = balls;
     }
     
     public void initBricks(Brick[][] bricks) {
@@ -56,74 +75,16 @@ public class Level
         }
     }
     
-    /**
-     * Updates the components in the level and returns the score earned
-     */
-    public int update(boolean right, boolean left) {
-        if (right) racket.moveRight();
-        if (left) racket.moveLeft();
-        return ball.updatePosition();
-    }
-    
-    public void drawComponents(Graphics g) {
-        for (int x = 0; x < bricks.length; x++) {
-            for (int y = 0; y < bricks[0].length; y++) {
-                if (bricks[x][y] != null) bricks[x][y].draw(g);
-            }
-        }
-        racket.draw(g);
-        ball.draw(g);
-    }
-
-    public boolean ballInBounds() { return ball.inBounds(); }
-    
-    /**
-     * Returns true if the box at (x,y) is filled
-     */
-    public boolean isFilled (int x, int y) {
-        if (x < 0 || y < 0 || x >= numRows || y >= numCols) return false;
-        return (bricks[x][y] != null);
-    }
-    
-    /**
-     * Removes the box at (x,y)
-     * Returns the number of points earned
-     */
-    public int removeBrick (int x, int y) {
-        if (x < 0 || y < 0 || x >= numRows || y >= numCols) return 0;
-        if (bricks[x][y] == null) return 0;
-        else {
-            int pts = bricks[x][y].hit();
-            if (bricks[x][y].removed()) bricks[x][y] = null;
-            return pts;
-        }
-    }
-    
-    /**
-     * Returns the coordinates of the center of the box that contains the point (x,y) 
-     */
-    public Point getCenter(int x, int y) {
-        int xC = (int)(x/brickWidth)*brickWidth + brickWidth/2;
-        int yC = (int)(y/brickHeight)*brickHeight + brickHeight/2;
-        return new Point(xC,yC);
-    }
-    
+    public Racket[] getRackets() { return rackets; }
+    public Ball[] getBalls() { return balls; }
+    public Brick[][] getBricks() { return bricks; }
     public int brickWidth() { return brickWidth; }    
     public int brickHeight() { return brickHeight; }
     public int numCols() { return numCols; }
     public int numRows() { return numRows; }
     
-    public int checkCollision(Ball b) {
-        int boxX = (int)b.getX()/brickWidth;
-        int boxY= (int)b.getY()/brickHeight;
-        for (int i = -1; i <= 1; i++) {
-            for (int j = -1; j <= 1; j++) {
-                if (isFilled(boxX+i,boxY+j)) {
-                    if (b.checkCollision(bricks[boxX+i][boxY+j].getLoc()))
-                        return removeBrick(boxX+i,boxY+j);                    
-                }
-            }
-        }
-        return 0;
-    }
+    
+    
+    
+        
 }

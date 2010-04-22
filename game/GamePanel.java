@@ -18,7 +18,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
     public static final int ARENA_WIDTH = PWIDTH - 2*BORDER;
     public static final int ARENA_HEIGHT = PHEIGHT - 2*BORDER;
     
-    
     private static final String GAMEOVER = "GAME OVER";
     
     private static final int delay = 10; // milliseconds
@@ -26,17 +25,17 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
     private boolean running  = false;   // stops the animation
     private volatile boolean isPaused = false;
     private volatile boolean gameOver = false;  // for game termination
-
+    
     private Graphics dbg;
     private Image dbImage = null;
 
-    private Level lev;
-    private boolean rightDown = false;
-    private boolean leftDown = false;
+    private Level[] levels;
+    private LevelPlayer levelPlayer;
+    private int currLevel;
     
     private int totalScore;
     
-    public GamePanel()
+    public GamePanel(int numPlayers)
     {
         setBackground(Color.white);
         setPreferredSize(new Dimension(PWIDTH, PHEIGHT));
@@ -46,21 +45,13 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
         requestFocus();    // the JPanel now has focus, so receives key events
 //        readyForTermination();    // Why won't this work???
         
-        initGame();
+        initGame(numPlayers);
     }   // end of GamePanel()
     
-    private void initGame() {
-        lev  = newLevel();
-    }
-    
-    private Level newLevel() {
-        Brick[][] levelBoxes = new Brick[25][25];
-        for (int x = 0; x < levelBoxes.length; x++) {
-            for (int y = 0; y < levelBoxes[0].length; y++) {
-                if (y < 11) levelBoxes[x][y] = new StandardBrick();                
-            }
-        }
-        return new Level(levelBoxes);
+    private void initGame(int numPlayers) {
+        levels = LevelInitializer.generateLevels(numPlayers);
+        currLevel = 0;
+        levelPlayer = new LevelPlayer(levels[0]);
     }
 
     /* Wait for the JPanel to be added to the
@@ -74,6 +65,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
     // initialize and start the thread
     private void startGame()
     {
+        Ball.resetVars();
         totalScore = 0;
         if (clock == null) 
             clock = new javax.swing.Timer(delay,this);
@@ -87,6 +79,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
     public void stopGame()
     {   
         running = false;
+        gameOver = true;
         clock.stop();
     }
     
@@ -100,26 +93,22 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
     public void actionPerformed (ActionEvent e)
     {
         if (running) {
-            //long t0 = System.currentTimeMillis(); 
             gameUpdate();
-            //long t1 = System.currentTimeMillis();
-            //long d1 = Math.round(10*(t1 - t0))/10; 
             gameRender();
-            //long t2 = System.currentTimeMillis();
-            //long d2 = Math.round(10*(t2 - t1))/10; 
             paintScreen();
-            //long t3 = System.currentTimeMillis();
-            //long d3 = Math.round(10*(t3 - t2))/10; 
-            //long dTot = Math.round(10*(t3 - t0))/10; 
-            //System.out.println(d1 + " + " + d2 + " + " + d3 + " = " + dTot + " ms");
         }
     }
     
     private void gameUpdate()
     {
         if (!isPaused && !gameOver) {
-            totalScore += lev.update(rightDown, leftDown);
-            if (!lev.ballInBounds()) stopGame();
+            totalScore += levelPlayer.update();
+            if (!levelPlayer.ballsInBounds()) stopGame();
+            if (levelPlayer.cleared()) {
+                Ball.resetVars();
+                currLevel = (currLevel+1)%levels.length;
+                levelPlayer = new LevelPlayer(levels[currLevel]);
+            }
         }
     }
     
@@ -145,11 +134,13 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
         dbg.drawRect(BORDER-1,BORDER-1, PWIDTH-2*BORDER+2, PHEIGHT-2*BORDER+2);
         dbg.drawRect(BORDER-2,BORDER-2, PWIDTH-2*BORDER+4, PHEIGHT-2*BORDER+4);
         
-        lev.drawComponents(dbg);
+        levelPlayer.drawComponents(dbg);
         
         dbg.setColor(Color.blue);
         dbg.setFont(new Font("Arial", Font.BOLD, 20));
         dbg.drawString( Integer.toString(totalScore), PWIDTH-100, BORDER+20);
+        
+        dbg.drawString( "Level " + (currLevel+1), 50, BORDER+30);
         
         if (gameOver)
             gameOverMessage(dbg);
@@ -174,7 +165,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
     private void gameOverMessage(Graphics g)
     {   
         int x = (int)(PWIDTH/2 - 100);
-        int y = (int)(PHEIGHT/2 - 50);
+        int y = (int)(PHEIGHT/2 + 50);
         g.drawString (GAMEOVER, x, y);
     }
     
@@ -184,19 +175,22 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
     public void keyPressed(KeyEvent e)
     {
         int code = e.getKeyCode();
-        if (code == KeyEvent.VK_RIGHT) { rightDown = true; }
-        else if (code == KeyEvent.VK_LEFT) { leftDown = true; }
         
-        else if (code == KeyEvent.VK_F2) {
-            initGame();
+        if (code == KeyEvent.VK_F1) {
+            initGame(1);
             startGame();
         }
+        else if (code == KeyEvent.VK_F2) {
+            initGame(2);
+            startGame();
+        }
+        
+        else levelPlayer.keyPressed(code);
     }
     
     public void keyReleased(KeyEvent e) {
         int code = e.getKeyCode();
-        if (code == KeyEvent.VK_RIGHT) { rightDown = false; }
-        else if (code == KeyEvent.VK_LEFT) { leftDown = false; }
+        levelPlayer.keyReleased(code);
     }
     public void keyTyped(KeyEvent e) { }
 }
