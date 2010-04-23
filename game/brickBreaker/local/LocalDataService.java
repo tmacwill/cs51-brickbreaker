@@ -13,6 +13,9 @@ import java.util.Map;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
+
 import brickBreaker.Level;
 
 /**
@@ -52,7 +55,7 @@ public class LocalDataService {
 	 * 
 	 * @return a list of all loaded levels
 	 */
-	public static Map<String, Level> loadAllLevelsFromDisk( ) {
+	public static BiMap<String, Level> loadAllLevelsFromDisk( ) {
 		Map<String, Level> levels = new LinkedHashMap<String, Level>( );
 		
 		File levelsDir;
@@ -87,6 +90,6 @@ public class LocalDataService {
 			throw new RuntimeException( e );
 		}
 		
-		return levels;
+		return HashBiMap.create( levels );
 	}
 }

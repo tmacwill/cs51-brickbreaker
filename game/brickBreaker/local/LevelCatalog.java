@@ -5,16 +5,17 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.codec.digest.DigestUtils;
+
+import com.google.common.collect.BiMap;
 
 import brickBreaker.Level;
 
 public class LevelCatalog {
 	private static final LevelCatalog INSTANCE = new LevelCatalog( );
 	
-	private Map<String, Level> levelData;
+	private BiMap<String, Level> levelData;
 	
 	private LevelCatalog( ) {
 		levelData = LocalDataService.loadAllLevelsFromDisk( );
@@ -52,5 +53,9 @@ public class LevelCatalog {
 		
 		// Add the level to the catalog
 		levelData.put( levelID, level );
+	}
+	
+	public String getLevelID( Level level ) {
+		return levelData.inverse( ).get( level );
 	}
 }
