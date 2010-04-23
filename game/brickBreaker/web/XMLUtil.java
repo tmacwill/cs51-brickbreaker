@@ -1,4 +1,4 @@
-package web;
+package brickBreaker.web;
 
 import java.io.IOException;
 import java.io.StringReader;

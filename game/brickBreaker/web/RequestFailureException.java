@@ -1,4 +1,4 @@
-package web;
+package brickBreaker.web;
 
 /**
  * This class provides an application-specific wrapper for runtime exceptions

@@ -1,8 +1,9 @@
-package web;
+package brickBreaker.web;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import org.apache.commons.codec.binary.Base64;
@@ -10,6 +11,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import brickBreaker.Level;
 
 /**
  * This class provides web-based services for interacting with a remote server.
@@ -141,6 +144,11 @@ public class WebService {
 	 * @return the encoded URL fragment
 	 */
 	private static String encodeURLComponent( String url ) {
-		return URLEncoder.encode( url, ENCODING_SCHEME );
+		try {
+			return URLEncoder.encode( url, ENCODING_SCHEME );
+		} catch( UnsupportedEncodingException e ) {
+			// Should never happen
+			throw new RuntimeException( e );
+		}
 	}
 }

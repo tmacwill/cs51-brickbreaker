@@ -1,4 +1,4 @@
-package local;
+package brickBreaker.local;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,8 +8,12 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import org.apache.commons.codec.digest.DigestUtils;
+
+import brickBreaker.Level;
 
 /**
  * This class provides methods for persisting and loading levels by using the
@@ -48,8 +52,8 @@ public class LocalDataService {
 	 * 
 	 * @return a list of all loaded levels
 	 */
-	public static List<Level> loadAllLevelsFromDisk( ) {
-		List<Level> levels = new ArrayList<Level>( );
+	public static Map<String, Level> loadAllLevelsFromDisk( ) {
+		Map<String, Level> levels = new LinkedHashMap<String, Level>( );
 		
 		File levelsDir;
 		try {
@@ -64,9 +68,10 @@ public class LocalDataService {
 				ObjectInputStream levelStream = new ObjectInputStream(
 						new FileInputStream( levelFile ) );
 				Level level = (Level)levelStream.readObject( );
+				String levelID = DigestUtils.md5Hex( levelStream );
 				levelStream.close( );
 				
-				levels.add( level );
+				levels.put( levelID, level );
 			}
 		} catch( URISyntaxException e ) {
 			// FIXME: Rethrow better exception

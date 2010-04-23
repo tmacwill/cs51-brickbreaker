@@ -1,4 +1,4 @@
-package web;
+package brickBreaker.web;
 
 /**
  * This singleton class provides a centralized means of storing user
