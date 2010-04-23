@@ -1,3 +1,5 @@
+package brickBreaker;
+
 import java.awt.*;
 /**
  * Includes methods for initializing a number of default levels for 1, 2 or 4 players
