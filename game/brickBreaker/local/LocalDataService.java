@@ -37,14 +37,22 @@ public class LocalDataService {
 	 */
 	public static void saveLevel( Level level, String filename ) {
 		try {
+			File levelsDir = new File( Thread
+					.currentThread( )
+					.getContextClassLoader( )
+					.getResource( LEVELS_DIR )
+					.toURI( ) );
 			ObjectOutputStream levelStream = new ObjectOutputStream(
-					new FileOutputStream( LEVELS_DIR + "/" + filename ) );
+					new FileOutputStream( new File( levelsDir, filename ) ) );
 			levelStream.writeObject( level );
 			levelStream.close( );
 		} catch( FileNotFoundException e ) {
 			// FIXME: Rethrow better exception
 			throw new RuntimeException( e );
 		} catch( IOException e ) {
+			// FIXME: Rethrow better exception
+			throw new RuntimeException( e );
+		} catch( URISyntaxException e ) {
 			// FIXME: Rethrow better exception
 			throw new RuntimeException( e );
 		}
