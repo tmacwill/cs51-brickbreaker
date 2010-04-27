@@ -2,6 +2,7 @@
 
 // import sanitize helper to prevent sql attacks
 App::import('Sanitize'); 
+App::import('Xml');
 
 class UsersController extends AppController
 {
@@ -132,13 +133,18 @@ class UsersController extends AppController
 	
 	// verify if the user's credentials are valid, used by client
 	// returns empty <users> element if credentials are not valid
-	public function verify($username, $password)
+	public function verify()
 	{
-		$user = $this->User->findByUsername($username);
+		$postdata = $_POST['postdata'];
+		// parse xml request
+		$xml = new Xml($postdata);
+		$xml_array = $xml->toArray();
+
+		$user = $this->User->findByUsername($xml_array['User']['username']);
 		
 		// make sure user exists and passwords match
-		if ($user != null && $user['User']['password'] == md5($password))
-			$this->set('user', $user);
+		if ($user != null && $user['User']['password'] == md5($xml_array['User']['password']))
+			$this->set('user', $user['User']);
 	}
 }
 

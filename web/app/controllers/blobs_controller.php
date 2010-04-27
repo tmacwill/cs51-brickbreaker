@@ -2,6 +2,7 @@
 
 // import sanitize helper to prevent sql attacks
 App::import('Sanitize');
+App::import('Xml');
 
 class BlobsController extends AppController
 {
@@ -12,18 +13,36 @@ class BlobsController extends AppController
     public function add($key = '', $user_id = '', $title = '', $data = '')
     {
 		$this->pageTitle = Configure::read('title') . ' | Add New ' . Configure::read('blob_description');
-		
-		// allow uploading from client, key must be correct in order for upload to work
-		if (!empty($user_id) && !empty($title) && !empty($data) && ($key == Configure::read('client_key')))
+	
+		// POST request from client
+		if (!empty($_POST['postdata']))
 		{
-			// sanitize database input
-			$this->data['Blob']['user_id'] = Sanitize::paranoid($user_id, array(' '));
-			$this->data['Blob']['title'] = Sanitize::paranoid($title, array(' '));
-			$this->data['Blob']['data'] = Sanitize::paranoid($data, array(' '));
+			$postdata = $_POST['postdata'];
+			// parse XML request
+			$xml = new Xml($postdata);
+			$xml_array = $xml->toArray();
 			
-			// save blob to database
-			$this->Blob->save($this->data);
-			exit();
+			// make sure keys match
+			if ($xml_array['Blob']['client-key'] == Configure::read('client_key'))
+			{
+				// sanitize database input from POST request
+				$this->data['Blob']['user_id'] = Sanitize::paranoid($xml_array['Blob']['user-id'], array(' '));
+				$this->data['Blob']['title'] = Sanitize::paranoid($xml_array['Blob']['title'], array(' '));
+				$this->data['Blob']['data'] = base64_decode($xml_array['Blob']['data']);
+				$this->data['Blob']['id'] = md5(base64_decode($xml_array['Blob']['data']));
+			
+				// make sure blob with given id does not exist
+				$blob = $this->Blob->findById($this->data['Blob']['id']);
+				if (!$blob)
+				{
+					// save blob to database
+					$this->Blob->save($this->data);
+					exit();
+				}
+			}
+			// wrong key, so do nothing
+			else
+				exit();
 		}
 		
     	// make sure user is logged in
@@ -35,16 +54,25 @@ class BlobsController extends AppController
     	    // read temporary uploaded file 
     	    $file_data = fread(fopen($this->data['Blob']['file']['tmp_name'], 'r'), 
 							$this->data['Blob']['file']['size']);
+							
     	    // associate uid with that of currently logged in user
     	    $this->data['Blob']['user_id'] = $this->Session->read('session_uid');
-    	    $this->data['Blob']['data'] = $file_data;
-
 			// sanitize database input
 			$this->data['Blob']['title'] = Sanitize::paranoid($this->data['Blob']['title'], array(' '));
+    	    $this->data['Blob']['data'] = $file_data;
+    	    $this->data['Blob']['id'] = md5(base64_decode($file_data));
 
-    	    // save data to database
-    	    $this->Blob->save($this->data);
-    	    $this->Session->setFlash('Upload Succeeded');
+			// make sure blob with given id does not exist
+			$blob = $this->Blob->findById($this->data['Blob']['id']);
+			if (!$blob)
+			{
+				// save blob to database
+				$this->Blob->save($this->data);
+	    	    $this->Session->setFlash('Upload Succeeded');
+			}
+			// do not save new blob if already existing
+			else
+				$this->Session->setFlash('Blob already exists');
     	    
     	    // redirect user to his profile
     	    $this->redirect('/users/view/' . $this->Session->read('session_uid'));

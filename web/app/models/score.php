@@ -3,5 +3,5 @@
 class Score extends AppModel
 {
 	public $name = 'Score';
-	public $belongsTo = 'User';
+	public $belongsTo = array('User', 'Blob');
 }

@@ -1,19 +1,32 @@
 <?php
 
+App::import('Sanitize');
+App::import('Xml');
+
 class ScoresController extends AppController
 {
 	public $name = 'Scores';
 	public $components = array('RequestHandler');
 	
 	// add a high score, only from desktop client
-	public function add($key, $user_id, $score)
+	public function add()
 	{
-		// uploading only from client, key must be correct in order for upload to work
-		if (!empty($user_id) && !empty($score)&& ($key == Configure::read('client_key')))
-		{
-			// sanitize database input
-			$this->data['Score']['user_id'] = Sanitize::paranoid($user_id, array(' '));
-			$this->data['Score']['score'] = Sanitize::paranoid($title, array(' '));
+		// decrypt post request
+		$postdata_encrypted = $_POST['postdata'];
+		$key = file_get_contents('brickbreaker_x10hosting_com_private.pem');
+		openssl_private_decrypt(base64_decode($postdata_encrypted), $postdata, $key);
+		
+		// parse XML request
+		$xml = new Xml($postdata);
+		$xml_array = $xml->toArray();
+		
+		// make sure keys match
+		if ($xml_array['Score']['client-key'] == Configure::read('client_key'))
+		{	
+			// sanitize database input from POST request
+			$this->data['Score']['user_id'] = Sanitize::paranoid($xml_array['Score']['user-id'], array(' '));
+			$this->data['Score']['blob_id'] = $xml_array['Score']['blob-id'];
+			$this->data['Score']['score'] = Sanitize::paranoid($xml_array['Score']['score'], array(' '));
 			
 			// save score to database
 			$this->Score->save($this->data);
