@@ -14,7 +14,7 @@ class Blob extends AppModel
 {
     public $name = 'Blob';
     // user_id is foreign key found in this model 
-    public $belongsTo = 'User';
+    public $belongsTo = array('User' => array('fields' => array('id', 'username')));
 }
 
 ?>
