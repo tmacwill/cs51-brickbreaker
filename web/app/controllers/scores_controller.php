@@ -42,14 +42,20 @@ class ScoresController extends AppController
     }
 	
 	// view the high scores table
-	public function view()
+	public function view($blob_id = '')
 	{
 		$this->pageTitle = Configure::read('title') . ' | High Scores';
-		$this->paginate = array('limit' => Configure::read('pagination_limit'), 'order' => array('Score.score' => 'desc'));
+		
+		// if id given, only list high scores for that level
+		if ($blob_id != '')
+			$conditions = array('Score.blob_id' => $blob_id);
+			
+		$this->paginate = array('conditions' => $conditions, 'limit' => Configure::read('pagination_limit'), 
+								'order' => array('Score.score' => 'desc'));
 		
 		// format xml request from client
 		if ($this->params['url']['ext'] == 'xml')
-			$this->set('scores', $this->Score->find('all'));
+			$this->set('scores', $this->Score->find('all', array('conditions' => $conditions)));
 		// web html response
 		else
 			$this->set('scores', $this->paginate('Score'));

@@ -1,5 +1,12 @@
 <?php $paginator->options(array('url' => $this->passedArgs)); ?>
-<h3><?php echo $blobs[0]['User']['username']; ?>'s <?php echo Configure::read('blob_description') . 's'; ?></h3>
+<h3>
+	<?php
+		if (empty($blobs))
+			echo 'No ' . Configure::read('blob_description') . 's Found';
+		else
+			echo $blobs[0]['User']['username'] . '\'s ' . Configure::read('blob_description') . 's';
+	?>
+</h3>
 <table>
 	<tr>
 		<th><?php echo $paginator->sort('Title', 'title'); ?></th>
@@ -20,7 +27,5 @@
 
 <?php echo $paginator->numbers(); ?>
 <br />
-<?php 
-	echo $paginator->prev('Previous', null, null, array('class' => 'disabled'));
-	echo $paginator->next('Next', null, null, array('class' => 'disabled'));
-?>
+<?php echo $paginator->prev('Previous', null, null, array('class' => 'disabled')); ?> 
+<?php echo $paginator->next('Next', null, null, array('class' => 'disabled')); ?>

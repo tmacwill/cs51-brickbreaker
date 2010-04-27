@@ -21,6 +21,9 @@
 				<div id="navbar">
 					<ul>
 						<!-- links to browse or search levels -->
+						<?php if(Configure::read('enable_high_scores')): ?>
+								<li><?php echo $html->link('High Scores', array('controller' => 'scores', 'action' => 'view')); ?></li>
+						<?php endif; ?>
 						<li><?php echo $html->link('Search ' . Configure::read('blob_description') . 's', 
 										array('controller' => 'blobs', 'action' => 'search')); ?></li>
 						<li><?php echo $html->link('Browse ' . Configure::read('blob_description') . 's', 
@@ -36,9 +39,6 @@
 													array('controller' => 'users', 'action' => 'view', $session_uid)); ?></li>
 							<li><?php echo $html->link('Upload ' . Configure::read('blob_description'), 
 											array('controller' => 'blobs', 'action' => 'add')); ?></li>
-							<?php if(Configure::read('enable_high_scores')): ?>
-								<li><?php echo $html->link('High Scores', array('controller' => 'scores', 'action' => 'view')); ?></li>
-							<?php endif; ?>
 							<li>Logged in as <?php echo $session_username; ?> | 
 								<?php echo $html->link('Log out', array('controller' => 'users', 'action' => 'logout')); ?></li>
 						<?php endif; ?>

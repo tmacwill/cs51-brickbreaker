@@ -144,6 +144,7 @@ class UsersController extends AppController
 		
 		// make sure user exists and passwords match
 		if ($user != null && $user['User']['password'] == md5($xml_array['User']['password']))
+			// send user information or null if credentials are invalid
 			$this->set('user', $user['User']);
 	}
 }

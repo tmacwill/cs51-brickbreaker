@@ -227,7 +227,7 @@ class BlobsController extends AppController
 	}
 
     // get blob information for the blob of the given id
-    public function view($id)
+    public function view($id = '')
     {
 		$this->pageTitle = Configure::read('title') . ' | View ' . Configure::read('blob_description');
 		
