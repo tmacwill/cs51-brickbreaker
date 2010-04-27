@@ -6,8 +6,8 @@
  * 
  */
 
-App::import('Sanitize');
-App::import('Xml');
+App::import('Core', 'Sanitize');
+App::import('Core', 'Xml');
 
 /**
  * Controller for scores.
@@ -65,6 +65,52 @@ class ScoresController extends AppController
     	$this->set('session_username', $this->Session->read('session_username'));
     	$this->set('session_uid', $this->Session->read('session_uid'));
     }
+    
+    
+	/**
+	 * Test controller functionality.
+	 *
+	 */
+	public function test()
+	{
+		// arrays to hold test names and respective results
+		$results = array();
+		$tests = array();
+		
+		// create test score
+		array_push($tests, 'insert score');
+		$this->data['Score']['id'] = -1;
+		$this->data['Score']['user_id'] = 1;
+		$this->data['Score']['blob_id'] = 'test';
+		$this->data['Score']['score'] = 100;
+		
+		// insert test blob into database
+		if ($this->Score->save($this->data))
+			array_push($results, 'pass');
+		else
+			array_push($results, 'fail');
+		
+		// read blob data from database	
+		array_push($tests, 'read score');
+		$score = $this->Score->findById('-1');
+		if ($score['Score']['user_id'] == $this->data['Score']['user_id'] && $score['Score']['blob_id'] == $this->data['Score']['blob_id']
+				&& $score['Score']['score'] == $this->data['Score']['score'])
+			array_push($results, 'pass');
+		else
+			array_push($results, 'fail');
+			
+		// delete blob data from database
+		array_push($tests, 'delete score');
+		if ($this->Score->delete($score))
+			array_push($results, 'pass');
+		else
+			array_push($results, 'fail');
+			
+		// tests complete, send results to view
+		$this->set('tests', $tests);
+		$this->set('results', $results);
+		
+	}
 	
 	/**
 	 * View the high scores table.

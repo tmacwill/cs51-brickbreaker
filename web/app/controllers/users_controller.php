@@ -6,8 +6,8 @@
  * 
  */
 
-App::import('Sanitize'); 
-App::import('Xml');
+App::import('Core', 'Sanitize'); 
+App::import('Core', 'Xml');
 
 /**
  * Controller for users.
@@ -143,6 +143,51 @@ class UsersController extends AppController
 		$this->redirect('/blobs/browse');
 		exit();
     }
+    
+    /**
+	 * Test controller functionality.
+	 *
+	 */
+	public function test()
+	{
+		// arrays to hold test names and respective results
+		$results = array();
+		$tests = array();
+		
+		// create test blob
+		array_push($tests, 'insert user');
+		$this->data['User']['id'] = -1;
+		$this->data['User']['username'] = 'testuser';
+		$this->data['User']['password'] = 'testpass';
+		$this->data['User']['email'] = 'test@example.com';
+		
+		// insert test blob into database
+		if ($this->User->save($this->data))
+			array_push($results, 'pass');
+		else
+			array_push($results, 'fail');
+		
+		// read blob data from database	
+		array_push($tests, 'read user');
+		$user = $this->User->findById('-1');
+		if ($user['User']['username'] == $this->data['User']['username'] && $user['User']['password'] == $this->data['User']['password']
+				&& $user['User']['email'] == $this->data['User']['email'])
+			array_push($results, 'pass');
+		else
+			array_push($results, 'fail');
+			
+		// delete blob data from database
+		array_push($tests, 'delete user');
+		if ($this->User->delete($user))
+			array_push($results, 'pass');
+		else
+			array_push($results, 'fail');
+			
+		// tests complete, send results to view
+		$this->set('tests', $tests);
+		$this->set('results', $results);
+		
+	}
     
     /**
      * View the profile of a user.

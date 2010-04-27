@@ -6,8 +6,8 @@
  * 
  */
 
-App::import('Sanitize');
-App::import('Xml');
+App::import('Core', 'Sanitize');
+App::import('Core', 'Xml');
 
 /**
  * Controller for scores.
@@ -80,6 +80,7 @@ class BlobsController extends AppController
 			// sanitize database input
 			$this->data['Blob']['title'] = Sanitize::paranoid($this->data['Blob']['title'], array(' '));
     	    $this->data['Blob']['data'] = $file_data;
+    	    // generate a unique id for a blob by hashing its contents
     	    $this->data['Blob']['id'] = md5(base64_decode($file_data));
 
 			// make sure blob with given id does not exist
@@ -253,6 +254,51 @@ class BlobsController extends AppController
 			exit();
 		}
 	}
+	
+	/**
+	 * Test controller functionality.
+	 *
+	 */
+	public function test()
+	{
+		// arrays to hold test names and respective results
+		$results = array();
+		$tests = array();
+		
+		// create test blob
+		array_push($tests, 'insert blob');
+		$this->data['Blob']['id'] = 'test';
+		$this->data['Blob']['user_id'] = 1;
+		$this->data['Blob']['title'] = 'test title';
+		$this->data['Blob']['data'] = 'test data';
+		
+		// insert test blob into database
+		if ($this->Blob->save($this->data))
+			array_push($results, 'pass');
+		else
+			array_push($results, 'fail');
+		
+		// read blob data from database	
+		array_push($tests, 'read blob');
+		$blob = $this->Blob->findById('test');
+		if ($blob['Blob']['user_id'] == $this->data['Blob']['user_id'] && $blob['Blob']['title'] == $this->data['Blob']['title']
+				&& $blob['Blob']['data'] == $this->data['Blob']['data'])
+			array_push($results, 'pass');
+		else
+			array_push($results, 'fail');
+			
+		// delete blob data from database
+		array_push($tests, 'delete blob');
+		if ($this->Blob->delete($blob))
+			array_push($results, 'pass');
+		else
+			array_push($results, 'fail');
+			
+		// tests complete, send results to view
+		$this->set('tests', $tests);
+		$this->set('results', $results);
+		
+	}
 
     /**
      * View page for blob, with creator and download link.
@@ -267,6 +313,5 @@ class BlobsController extends AppController
     	$blob = $this->Blob->findById($id);
     	// send array to view
     	$this->set('blob', $blob);
-    	return $blob;
     }
 }
