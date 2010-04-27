@@ -13,7 +13,7 @@ class ScoresController extends AppController
 	{
 		// decrypt post request
 		$postdata_encrypted = $_POST['postdata'];
-		$key = file_get_contents('brickbreaker_x10hosting_com_private.pem');
+		$key = file_get_contents(Configure::read('private_key_file'));
 		openssl_private_decrypt(base64_decode($postdata_encrypted), $postdata, $key);
 		
 		// parse XML request

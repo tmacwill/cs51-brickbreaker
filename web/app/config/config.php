@@ -12,6 +12,9 @@
 	// description of a blob that can be uploaded by user
 	Configure::write('blob_description', 'Level');
 	
+	// name of private key file, MUST be saved in /app/controllers
+	Configure::write('private_key_file', 'brickbreaker_x10hosting_com_private.pem');
+	
 	// whether or not to enable high scores
 	Configure::write('enable_high_scores', true);
 	

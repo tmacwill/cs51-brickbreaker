@@ -1,0 +1,13 @@
+To install the web engine, first copy all files in the /web directory to your web server.
+
+Then, open /web/app/config/database.php and change the appropriate values to match the credientials of your database.
+
+Then, open /web/app/config/config.php and change any values you see fit.
+	title: the title of your game
+	pagination_limit: the number of search results to be displayed per page 
+	client_key: a unique string used to authenticate client-server communication
+	blob_description: a description of what users can upload (e.g. levels, skins, etc.)
+	private_key_file: name of the file containing the private key used to encrypt data sent from the client to the server
+	enable_high_scores: whether or not to enable functionality for users to upload high scores
+	
+That's it! After integrating the client-server communication package into your game, it should be able to communicate with your web server!
