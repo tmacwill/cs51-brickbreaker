@@ -1,14 +1,35 @@
 <?php
 
+/**
+ * @file scores_controller.php
+ * @author Tommy MacWilliam
+ * 
+ */
+
 App::import('Sanitize');
 App::import('Xml');
 
+/**
+ * Controller for scores.
+ * 
+ */
 class ScoresController extends AppController
 {
 	public $name = 'Scores';
 	public $components = array('RequestHandler');
 	
-	// add a high score, only from desktop client
+	/**
+	 * Add a new high score.
+	 * Used by client.
+	 * Format of request POSTDATA:
+	 * <score>
+	 *   <client-key>abcdef123456</client-key>
+	 *   <user-id>123</user-id>
+	 *   <blob-id>123abc456def</blob-id>
+	 *   <score>456789</score>
+	 * </score>
+	 * 
+	 */
 	public function add()
 	{
 		// decrypt post request
@@ -34,14 +55,24 @@ class ScoresController extends AppController
 		}
 	}
 	
-	// send all session variables to view
-    public function beforeRender()
+	/**
+     * Called before rendering of each view.
+     * Used by web interface.
+     * 
+     */
+	public function beforeRender()
     {
     	$this->set('session_username', $this->Session->read('session_username'));
     	$this->set('session_uid', $this->Session->read('session_uid'));
     }
 	
-	// view the high scores table
+	/**
+	 * View the high scores table.
+	 * Used by both web interface and client.
+	 * @param $blob_id Optional. If specified, only view high scores for that blob.
+	 * If not, view all high scores.
+	 * 
+	 */
 	public function view($blob_id = '')
 	{
 		$this->pageTitle = Configure::read('title') . ' | High Scores';

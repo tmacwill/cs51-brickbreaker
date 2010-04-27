@@ -1,16 +1,36 @@
 <?php
 
-// import sanitize helper to prevent sql attacks
+/**
+ * @file blobs_controller.php
+ * @author Tommy MacWilliam
+ * 
+ */
+
 App::import('Sanitize');
 App::import('Xml');
 
+/**
+ * Controller for scores.
+ * 
+ */
 class BlobsController extends AppController
 {
     public $name = 'Blobs';
     public $components = array('RequestHandler');
 
-    // add a new blob, either from web interface or client
-    public function add($key = '', $user_id = '', $title = '', $data = '')
+    /**
+     * Add a new blob.
+     * Used by both web interface and client.
+     * Format of request POSTDATA:
+     * <blob>
+     *   <client-key>abcdef123456</client-key>
+     *   <user-id>123</user-id>
+     *   <title>A Random Title</title>
+     *   <data>Some base64 encoded data</data>
+     * </blob>
+     * 
+     */
+    public function add()
     {
 		$this->pageTitle = Configure::read('title') . ' | Add New ' . Configure::read('blob_description');
 	
@@ -80,14 +100,22 @@ class BlobsController extends AppController
     	}
     }
 
-    // send all session variables to view
-    public function beforeRender()
+	/**
+     * Called before rendering of each view.
+     * Used by web interface.
+     * 
+     */
+	public function beforeRender()
     {
     	$this->set('session_username', $this->Session->read('session_username'));
     	$this->set('session_uid', $this->Session->read('session_uid'));
     }
     
-    // browse all blobs
+    /**
+     * Browse all blobs.
+     * Used by both web interface and client.
+     * 
+     */
     public function browse()
     {
 		// reset pagination filter
@@ -96,32 +124,34 @@ class BlobsController extends AppController
 		$this->redirect('/blobs/results/');
 	}
 
-	// delete blob of the given id
-	// if correct key is given, blob will be deleted without checking session credentials
-	public function delete($id, $key = '')
+	/**
+	 * Delete a blob.
+	 * Used by web interface.
+	 * @param $id The id of the blob to delete.
+	 *
+	 */
+	public function delete($id)
 	{
-		// client request with correct key, so okay to delete blob of given id
-		if ($key == Configure::read('client_key'))
+		// make sure user is logged in
+		$this->requestAction('/users/check_login');
+		
+		// make sure user id of blob matches the logged in user before deleting
+		$blob = $this->Blob->findById($id);
+		if ($blob['User']['id'] == $this->Session->read('session_uid'))
 			$this->Blob->delete($id);
-		// web request
 		else
-		{
-			// make sure user is logged in
-			$this->requestAction('/users/check_login');
+			$this->Session->setFlash('Cannot delete level');
 			
-			// make sure user id of blob matches the logged in user before deleting
-			$blob = $this->Blob->findById($id);
-			if ($blob['User']['id'] == $this->Session->read('session_uid'))
-				$this->Blob->delete($id);
-			else
-				$this->Session->setFlash('Cannot delete level');
-				
-			// redirect user to his blob library
-			$this->redirect('/users/view' . $this->Session->read('session_uid'));
-		}
+		// redirect user to his blob library
+		$this->redirect('/users/view' . $this->Session->read('session_uid'));
 	}
-
-    // download the blob of the given id
+	
+	/**
+	 * Download blob data.
+	 * Used by both web interface and client.
+	 * @param $id The id of the blob to download.
+	 * 
+	 */
     public function download($id)
     {
 		$this->pageTitle = Configure::read('title') . ' | Download ' . Configure::read('blob_description');
@@ -139,54 +169,48 @@ class BlobsController extends AppController
     	exit();
     }
     
-    // edit blob of the given id
-	// if correct key is given, blob will be edited without checking session credentials
-    public function edit($id, $key = '', $title = '', $data = '')
+    /**
+     * Edit blob data.
+     * Used by web interface.
+     * @param $id The id of the blob to edit
+     * 
+     */
+	public function edit($id)
     {
-		// client request with correct key, so okay to edit blob of given id
-		if ($key == Configure::read('client_key'))
+		// make sure user is logged in
+		$this->requestAction('/users/check_login');
+		$blob = $this->Blob->findById($id);
+		
+		// do not edit blob if user id doesn't match id of logged in user
+		if ($blob['User']['id'] != $this->Session->read('session_uid'))
 		{
-			// get blob, then replace information
-			$blob = $this->Blob->findById($id);
+			$this->Session->setFlash('Cannot edit ' . Configure::read('blob_description'));
+			// redirect user to his blob library
+			$this->redirect('/users/view/' . $this->Session->read('session_uid'));
+		}
+		
+		// form submitted, so process data
+		if (!empty($this->data))
+		{
+			// sanitize database input and save new data
 			$blob['Blob']['title'] = Sanitize::paranoid($title, array(' '));
 			$blob['Blob']['data'] = Sanitize::paranoid($data, array(' '));
 			$this->Blob->save($blob);
 			
-			// don't redirect client request
-			exit();
+			// redirect user to his blob library
+			$this->redirect('/users/view/' . $this->Session->read('session_uid'));
 		}
-		// web request
+		// form not submitted, so send data to view
 		else
-		{
-			// make sure user is logged in
-			$this->requestAction('/users/check_login');
-			$blob = $this->Blob->findById($id);
-			
-			// do not edit blob if user id doesn't match id of logged in user
-			if ($blob['User']['id'] != $this->Session->read('session_uid'))
-			{
-				$this->Session->setFlash('Cannot edit level');
-				// redirect user to his blob library
-				$this->redirect('/users/view/' . $this->Session->read('session_uid'));
-			}
-			
-			// form submitted, so process data
-			if (!empty($this->data))
-			{
-				$blob['Blob']['title'] = Sanitize::paranoid($title, array(' '));
-				$blob['Blob']['data'] = Sanitize::paranoid($data, array(' '));
-				$this->Blob->save($blob);
-				
-				// redirect user to his blob library
-				$this->redirect('/users/view/' . $this->Session->read('session_uid'));
-			}
-			else
-				// form not submitted, so send data to view
-				$this->set('blob', $this->Blob->findById($id));
-		}
+			$this->set('blob', $this->Blob->findById($id));
 	}
     
-	// return results for search query
+	/**
+	 * Show results for search query.
+	 * Used by both web interface and client.
+	 * @param $query Search query. If none given, data for all blobs will be fetched.
+	 * 
+	 */ 
 	public function results($query = '')
 	{
 		$this->pageTitle = Configure::read('title') . ' | Search Results';
@@ -211,7 +235,11 @@ class BlobsController extends AppController
 		}
 	}
     
-    // get all books matching query
+    /**
+     * Search for blobs.
+     * Used by web interface. Will redirect user to results view with query.
+     * 
+     */
 	public function search()
 	{
 		$this->pageTitle = Configure::read('title') . ' | Search ' . Configure::read('blob_description') . 's';
@@ -226,8 +254,13 @@ class BlobsController extends AppController
 		}
 	}
 
-    // get blob information for the blob of the given id
-    public function view($id = '')
+    /**
+     * View page for blob, with creator and download link.
+     * Used by web interface.
+     * @param $id The id of the blob to view
+     * 
+     */
+    public function view($id)
     {
 		$this->pageTitle = Configure::read('title') . ' | View ' . Configure::read('blob_description');
 		

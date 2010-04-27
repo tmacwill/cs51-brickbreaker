@@ -1,15 +1,28 @@
 <?php
 
-// import sanitize helper to prevent sql attacks
+/**
+ * @file users_controller.php
+ * @author Tommy MacWilliam
+ * 
+ */
+
 App::import('Sanitize'); 
 App::import('Xml');
 
+/**
+ * Controller for users.
+ * 
+ */
 class UsersController extends AppController
 {
     public $name = 'Users';
     public $components = array('RequestHandler');
 
-    // create new user
+    /**
+     * Create a new user.
+     * Used by web interface.
+     * 
+     */
     public function add()
     {
 		$this->pageTitle = Configure::read('title') . ' | Create New Account';
@@ -50,14 +63,23 @@ class UsersController extends AppController
 		}
     }
     
-    // send all session variables to view
+    /**
+     * Called before rendering of each view.
+     * Used by web interface.
+     * 
+     */
     public function beforeRender()
     {
+		// send session variables
 		$this->set('session_username', $this->Session->read('session_username'));
 		$this->set('session_uid', $this->Session->read('session_uid'));
     }
     
-    // make sure user is logged in
+    /**
+     * Make sure user is logged in.
+     * Used by web interface.
+     * @return True if user is logged in, redirect if not.
+     */
     public function check_login()
     {
 		if ($this->action != 'login' && $this->action != 'logout')
@@ -73,7 +95,11 @@ class UsersController extends AppController
 		}
     }
     
-    // log user in and create new session
+    /**
+     * Log user in and create new session.
+     * Used by web interface.
+     * 
+     */
     public function login()
     {
 		$this->pageTitle = Configure::read('title') . ' | User Login';
@@ -101,7 +127,11 @@ class UsersController extends AppController
 		}
     }
     
-    // log user out and destroy session
+    /**
+     * Log user out and destroy session.
+     * Used by web interface.
+     * 
+     */
     public function logout()
     {
 		// destory session variables
@@ -114,7 +144,12 @@ class UsersController extends AppController
 		exit();
     }
     
-    // view the profile of the given user
+    /**
+     * View the profile of a user.
+     * Used by both web interface and client.
+     * @param $id The id of the user to view.
+     * 
+     */
     public function view($id)
     {
 		$this->pageTitle = Configure::read('title') . ' | View User';
@@ -123,7 +158,7 @@ class UsersController extends AppController
 		$conditions = array('User.id' => $id);
 		$this->paginate = array('conditions' => $conditions, 'limit' => Configure::read('pagination_limit'));
 		
-		// format xml request from client
+		// xml response to client
 		if ($this->params['url']['ext'] == 'xml')
 			$this->set('blobs', $this->User->findAllById($id));
 		// web html response
@@ -131,8 +166,16 @@ class UsersController extends AppController
 			$this->set('blobs', $this->paginate('Blob'));
 	}
 	
-	// verify if the user's credentials are valid, used by client
-	// returns empty <users> element if credentials are not valid
+	/**
+	 * Verify if the user's credentials are valid.
+	 * Used by client.
+	 * Format of request POSTDATA:
+	 * <user>
+	 *   <username>user</username>
+	 *   <password>pass</password>
+	 * </user>
+	 * 
+	 */
 	public function verify()
 	{
 		$postdata = $_POST['postdata'];
