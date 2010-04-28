@@ -5,10 +5,14 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * This class provides methods for performing HTTP requests.
@@ -35,6 +39,8 @@ public class ConnectionUtil {
 			return value;
 		}
 	}
+	
+	private static final String ENCODING_SCHEME = "UTF-8";
 	
 	private static final int CONNECT_TIMEOUT_IN_MILLIS = 5000;
 	private static final int READ_TIMEOUT_IN_MILLIS = 5000;
@@ -75,7 +81,7 @@ public class ConnectionUtil {
 	 * @throws RequestFailureException
 	 *             if the request is unsuccessful
 	 */
-	public static String doPost( String urlString, String postData ) {
+	public static String doPost( String urlString, Map<String, String> postData ) {
 		if( urlString == null ) {
 			throw new IllegalArgumentException( 
 					"Argument 'url' cannot be null" );
@@ -106,7 +112,7 @@ public class ConnectionUtil {
 	 *             if the request is unsuccessful
 	 */
 	private static String doRequest( RequestMethod method, String urlString,
-			String postData ) {
+			Map<String, String> postData ) {
 		assert method != null : "method is null";
 		assert urlString != null : "urlString is null";
 		
@@ -143,11 +149,20 @@ public class ConnectionUtil {
 				conn.setRequestProperty(
 						"Content-Type",
 						"application/x-www-form-urlencoded" );
+				StringBuilder postDataBuilder = new StringBuilder( 1024 );
+				Set<String> paramNames = postData.keySet( );
+				for( String paramName : paramNames ) {
+					postDataBuilder
+							.append( paramName )
+							.append( "=" )
+							.append( encodeURLComponent( postData.get( 
+									paramName ) ) );
+				}
 				
 				// Send the request
 				Writer requestWriter = new BufferedWriter( 
 						new OutputStreamWriter( conn.getOutputStream( ) ) );
-				requestWriter.write( postData );
+				requestWriter.write( postDataBuilder.toString( ) );
 				requestWriter.close( );
 			}
 			
@@ -169,5 +184,22 @@ public class ConnectionUtil {
 		}
 		
 		return response.toString( );
+	}
+
+	/**
+	 * Encodes a URL fragment to <code>application/x-www-form-urlencoded</code>
+	 * format, using the UTF-8 encoding scheme.
+	 * 
+	 * @param fragment
+	 *            the URL fragment to encode
+	 * @return the encoded URL fragment
+	 */
+	public static String encodeURLComponent( String fragment ) {
+		try {
+			return URLEncoder.encode( fragment, ENCODING_SCHEME );
+		} catch( UnsupportedEncodingException e ) {
+			// Should never happen
+			throw new RuntimeException( e );
+		}
 	}
 }
