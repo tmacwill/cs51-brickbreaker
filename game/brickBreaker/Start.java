@@ -1,7 +1,5 @@
 package brickBreaker;
 
-
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -11,73 +9,96 @@ public class Start extends JFrame implements WindowListener
 {
     public static int WIDTH = 1200;
     public static int HEIGHT = 700;
-  private GamePanel gp;        // where the game is drawn
+    
+    private GamePanel gp;
+    private IdlePanel ip;
+    private PRPanel currPanel;
+    
+    public Start ()
+    {     
+        super("Brick Breaker");
+        setBackground(Color.black);
+        setPreferredSize(new Dimension(WIDTH+20, HEIGHT+30));
 
-  public Start ()
-  { super("Running Game");
-    makeGUI();
-
-    addWindowListener( this );
-    pack();
-    setResizable(false);
-    setVisible(true);
-  }  // end of Start() constructor
-
-
-  private void makeGUI()
-  {
-    Container c = getContentPane();    // default BorderLayout used
-
-    gp = new GamePanel(1);
-    c.add(gp, "Center");
-
-//     JPanel ctrls = new JPanel();   // a row of textfields
-//     ctrls.setLayout( new BoxLayout(ctrls, BoxLayout.X_AXIS));
-// 
-//     jtfBox = new JTextField("Boxes used: 0");
-//     jtfBox.setEditable(false);
-//     ctrls.add(jtfBox);
-// 
-//     jtfTime = new JTextField("Time Spent: 0 secs");
-//     jtfTime.setEditable(false);
-//     ctrls.add(jtfTime);
-// 
-//     c.add(ctrls, "South");
-  }  // end of makeGUI()
+        ip = new IdlePanel(this);
+        gp = new GamePanel(LevelInitializer.generateLevels(1)[0], this);
+        gp.setVisible(false);
+        
+        Container c = getContentPane();
+        c.add(ip, BorderLayout.CENTER);
+        c.add(gp, BorderLayout.CENTER);
+        
+        currPanel = ip;
+        currPanel.start();
+        gp.init();
+        
+        addWindowListener(this);
+        pack();
+        setResizable(false);
+        setVisible(true);
+        
+        // Receive key events from all windows
+        setFocusable(true);
+        requestFocusInWindow(); 
+        addKeyListener(ip);
+        addKeyListener(gp);
+    }  // end of Main() constructor
   
+    public void startGame(Level lev) {
+         currPanel.pause();
+         removeKeyListener(currPanel);
+         currPanel.setVisible(false);
+         
+         gp.reset(lev);
+         currPanel = gp;
+         currPanel.setVisible(true);
+         addKeyListener(currPanel);
+         currPanel.start();
+    }
+    
+    public void endGame(int score) {
+        if (score > 0) {
+            // Send the score to the website
+        }
+         currPanel.stop();
+         removeKeyListener(currPanel);
+         currPanel.setVisible(false);
+         
+         ip.reset();
+         currPanel = ip;
+         currPanel.setVisible(true);
+         addKeyListener(currPanel);
+         currPanel.start();
+    }
 
-  // ----------------- window listener methods -------------
-
-  public void windowActivated(WindowEvent e) 
-  { gp.resumeGame();  }
+    // ----------------- window listener methods -------------
+    public void windowActivated(WindowEvent e) 
+    { if (currPanel != null) currPanel.resume(); }
   
-  public void windowDeactivated(WindowEvent e) 
-  {  gp.pauseGame();  }
+    public void windowDeactivated(WindowEvent e) 
+    {  if (currPanel != null) currPanel.pause(); }
 
   
-  public void windowDeiconified(WindowEvent e) 
-  {  gp.resumeGame();  }
+    public void windowDeiconified(WindowEvent e) 
+    {  if (currPanel != null) currPanel.resume(); }
 
-  public void windowIconified(WindowEvent e) 
-  {  gp.pauseGame(); }
+    public void windowIconified(WindowEvent e) 
+    {  if (currPanel != null) currPanel.pause(); }
 
-  
-  public void windowClosing(WindowEvent e)
-  {  gp.stopGame();  }
+    public void windowClosing(WindowEvent e)
+    {  
+        if (currPanel != null) currPanel.stop();
+    }
 
-
-  public void windowClosed(WindowEvent e) {}
-  public void windowOpened(WindowEvent e) {}
+    public void windowClosed(WindowEvent e) {}
+    public void windowOpened(WindowEvent e) {}
+    public void edit() { }
 
   // ----------------------------------------------------
 
   public static void main(String args[])
   { 
-//     int fps = DEFAULT_FPS;
-//     long period = (long) 1000.0/fps;
-//     System.out.println("fps: " + fps + "; period: " + period + " ms");
-
-    new Start();    // ms --> nanosecs 
+    new Start();
   }
 
-} // end of Start class
+} // end of Main class

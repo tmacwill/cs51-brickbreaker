@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.params=pts\ hits\ c
+comment0.target=Brick(int,\ int,\ Color)
+comment1.params=x\ y\ wid\ hgt
+comment1.target=void\ setLoc(int,\ int,\ int,\ int)
+comment2.params=ball
+comment2.target=int\ bounce(Ball)
+comment3.target=boolean\ removed()
+comment4.target=Color\ color()
+comment5.target=int[]\ getLoc()
+comment6.params=b
+comment6.target=void\ powerUp(Ball)
+comment7.target=boolean\ permanent()
+comment8.params=g
+comment8.target=void\ draw(Graphics)
+numComments=9

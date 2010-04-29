@@ -45,11 +45,41 @@ public class HorizontalRacket extends Racket
         if (x >= getLeft() && x <= getRight()) {
             if (top && y < (posY+thickness+r) && y >= posY) {
                 ball.bounce(getY()+thickness+r, true);
+                if (movingLeft || movingRight) {
+                    double newAngle = ball.getAngle() - Math.PI/6.0*speed/maxSpeed;
+                    
+                    // Make sure the ball bounces back down
+                    if (newAngle < 0.15) newAngle = 0.15;
+                    else if (newAngle > Math.PI-0.15) newAngle = Math.PI-0.15;
+                    ball.changeAngle(newAngle);
+                }
             }
             else if (!top && y > (posY-r) && y <= (posY+thickness)) {
                 ball.bounce(getY()-r, true);
+                if (movingLeft || movingRight) {
+                    double newAngle = ball.getAngle() + Math.PI/6.0*speed/maxSpeed;
+                    
+                    // Make sure the ball bounces back up
+                    if (newAngle < Math.PI+0.15) newAngle = Math.PI+0.15;
+                    else if (newAngle > 2*Math.PI-0.15) newAngle = 2*Math.PI-0.15;
+                    ball.changeAngle(newAngle);
+                }
             }
         }
+        else if (x > (getLeft()-r) && x < (getRight()+r)) {
+            int diff = 0;
+            if (x < posX) diff = x - getLeft();
+            else diff = x - getRight();
+            if (top && y < (posY+thickness+Math.abs(diff)) && y >= posY) {
+                ball.bounce(getY()+thickness+Math.abs(diff), true);
+                ball.changeAngle(ball.getAngle() + 2*Math.asin(diff/r));
+            }
+            else if (!top && y > (posY-Math.abs(diff)) && y <= (posY+thickness)) {
+                ball.bounce(getY()-Math.abs(diff), true);
+                ball.changeAngle(ball.getAngle() + 2*Math.asin(diff/r));
+            }
+        }
+                
         return ball;
     }
     

@@ -35,8 +35,7 @@ public class LevelInitializer
                 else if (j > 1 && j < 11) bricks1[i][j] = new StandardBrick();
             }
         }
-        levels[0] = new Level(bricks1, balls1, racks1);
-        
+        levels[0] = new Level(bricks1, balls1, racks1, "Default Level 1a");
         
         Racket[] racks2 = { new HorizontalRacket(width, height, 80, false) };
         Ball[] balls2 = { new Ball(racks2, 8) };
@@ -54,31 +53,49 @@ public class LevelInitializer
                 }
             }
         }
-        levels[1] = new Level(bricks2, balls2, racks2);
+        levels[1] = new Level(bricks2, balls2, racks2, "Default Level 1b");
         
         return levels;
     }
     
     public static Level[] generateTwoPlayers() {
-        Level[] levels = new Level[1];
-        
-        Racket[] racks = 
+        Level[] levels = new Level[2];
+
+        int wid = 26;
+        Racket[] racks1 = 
             { new HorizontalRacket(width, height, 80, false),
               new HorizontalRacket(width, height, 80, true)};
-        Ball[] balls = { new Ball(racks, 8), new Ball(racks, 8) };
-        balls[0].setLoc(width/2, height/2+50, Math.random()*pi/4+pi/8);
-        balls[1].setLoc(width/2, height/2-50, Math.random()*pi/4+9*pi/8);
-        
-        
-        int wid = 26;
-        Brick[][] levelBoxes = new Brick[wid][wid];
-        for (int x = 0; x < levelBoxes.length; x++) {
-            for (int y = 0; y < levelBoxes[0].length; y++) {
-                if (y >= x && x+y <= wid && y > 1 && y < (wid-2)) levelBoxes[x][y] = new StandardBrick();
-                else if (x >= wid/2 && levelBoxes[wid-x][y] != null) levelBoxes[x][y] = new StandardBrick();
+        Ball[] balls1 = { new Ball(racks1, 8), new Ball(racks1, 8) };
+        balls1[0].setLoc(width/2, height/2, Math.random()*pi/4+pi/8);
+        balls1[1].setLoc(width/2, height/2, Math.random()*pi/4+9*pi/8);
+
+        Brick[][] levelBoxes1 = new Brick[wid][wid];
+        for (int x = 0; x < levelBoxes1.length; x++) {
+            for (int y = 0; y < levelBoxes1[0].length; y++) {
+                if (y > 5 && y < (wid-6)) {
+                    if (x < 10 || x > 16 || y < 10 || y > 15) {
+                        levelBoxes1[x][y] = new StandardBrick();
+                    }
+                }
             }
         }
-        levels[0] = new Level(levelBoxes, balls, racks);
+        levels[0] = new Level(levelBoxes1, balls1, racks1, "Default Level 2a");
+        
+        Racket[] racks2 = 
+            { new HorizontalRacket(width, height, 80, false),
+              new HorizontalRacket(width, height, 80, true)};
+        Ball[] balls2 = { new Ball(racks2, 8), new Ball(racks2, 8) };
+        balls2[0].setLoc(width/2, height/2+50, Math.random()*pi/4+pi/8);
+        balls2[1].setLoc(width/2, height/2-50, Math.random()*pi/4+9*pi/8);
+
+        Brick[][] levelBoxes2 = new Brick[wid][wid];
+        for (int x = 0; x < levelBoxes2.length; x++) {
+            for (int y = 0; y < levelBoxes2[0].length; y++) {
+                if (y >= x && x+y <= wid && y > 1 && y < (wid-2)) levelBoxes2[x][y] = new StandardBrick();
+                else if (x >= wid/2 && levelBoxes2[wid-x][y] != null) levelBoxes2[x][y] = new StandardBrick();
+            }
+        }
+        levels[1] = new Level(levelBoxes2, balls2, racks2, "Default Level 2b");
         
         return levels;
     }

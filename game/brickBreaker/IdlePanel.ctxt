@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.params=m
+comment0.target=IdlePanel(Main)
+comment1.target=void\ start()
+comment2.target=void\ pause()
+comment3.target=void\ resume()
+comment4.target=void\ stop()
+comment5.params=e
+comment5.target=void\ actionPerformed(ActionEvent)
+comment6.target=void\ paintScreen()
+comment7.params=e
+comment7.target=void\ keyPressed(KeyEvent)
+comment8.params=e
+comment8.target=void\ keyReleased(KeyEvent)
+comment9.params=e
+comment9.target=void\ keyTyped(KeyEvent)
+numComments=10

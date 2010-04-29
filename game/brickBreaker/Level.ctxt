@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.params=bricks\ numPlayers
+comment0.target=Level(Brick[][],\ int)
+comment0.text=\nDefault\ constructor\:\ takes\ arguments\ for\ the\ width\ and\ height\ of\ the\ screen\ and\ the\ \n\n
+comment1.params=bricks\ balls\ rack
+comment1.target=Level(Brick[][],\ Ball[],\ Racket[])
+comment2.params=bricks
+comment2.target=void\ initBricks(Brick[][])
+comment3.target=Racket[]\ getRackets()
+comment4.target=Ball[]\ getBalls()
+comment5.target=Brick[][]\ getBricks()
+comment6.target=int\ brickWidth()
+comment7.target=int\ brickHeight()
+comment8.target=int\ numCols()
+comment9.target=int\ numRows()
+numComments=10

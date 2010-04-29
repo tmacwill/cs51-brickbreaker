@@ -1,0 +1,6 @@
+#BlueJ class context
+comment0.target=void\ pause()
+comment1.target=void\ resume()
+comment2.target=void\ stop()
+comment3.target=void\ start()
+numComments=4

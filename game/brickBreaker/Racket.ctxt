@@ -1,0 +1,23 @@
+#BlueJ class context
+comment0.target=void\ setMovingLeft()
+comment1.target=void\ setMovingRight()
+comment10.target=int\ getWidth()
+comment11.params=g
+comment11.target=void\ draw(Graphics)
+comment12.params=ball
+comment12.target=Ball\ checkCollision(Ball)
+comment13.params=ball
+comment13.target=boolean\ checkPast(Ball)
+comment14.target=boolean\ isLeft()
+comment15.target=boolean\ isRight()
+comment16.target=boolean\ isTop()
+comment17.target=boolean\ isBottom()
+comment2.target=void\ stop()
+comment3.target=void\ updatePos()
+comment4.target=void\ moveLeft()
+comment5.target=void\ moveRight()
+comment6.target=int\ getLeft()
+comment7.target=int\ getRight()
+comment8.target=int\ getX()
+comment9.target=int\ getY()
+numComments=18

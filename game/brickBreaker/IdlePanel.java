@@ -1,7 +1,5 @@
 package brickBreaker;
 
-
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -15,9 +13,12 @@ import java.util.*;
  */
 public class IdlePanel extends PRPanel implements ActionListener, KeyListener
 {
-    public static final int PWIDTH = Main.WIDTH;  // Size of panel
-    public static final int PHEIGHT = Main.HEIGHT;
-    private Main main;
+    public static final int PWIDTH = Start.WIDTH;  // Size of panel
+    public static final int PHEIGHT = Start.HEIGHT;
+    private Start main;
+    
+    boolean paused = false;
+    boolean running = false;
     
     private static final int delay = 200; // milliseconds
     private javax.swing.Timer clock;
@@ -28,15 +29,20 @@ public class IdlePanel extends PRPanel implements ActionListener, KeyListener
                                                 "F3..........Enter Level Editor",
                                                 "F4..........Upload/Download Levels" };
 
-    public IdlePanel(Main m) {
+    public IdlePanel(Start m) {
         main = m;
         
         setBackground(Color.black);
         setPreferredSize(new Dimension(PWIDTH, PHEIGHT));
-        addKeyListener(this);
         
-        setFocusable(true);
-        requestFocus();    // the JPanel now has focus, so receives key events
+        // Get key events
+//        addKeyListener(this);
+//        setFocusable(true);
+//        requestFocus();    // the JPanel now has focus, so receives key events
+    }
+    
+    public void reset() {
+        step = -1;
     }
     
     public void start()
@@ -45,6 +51,7 @@ public class IdlePanel extends PRPanel implements ActionListener, KeyListener
         if (clock == null) 
             clock = new javax.swing.Timer(delay,this);
         clock.start();
+        running = true;
     }
     
     public void pause() { 
@@ -52,20 +59,23 @@ public class IdlePanel extends PRPanel implements ActionListener, KeyListener
     public void resume() {
         if (clock != null) clock.start(); }
     public void stop() {
+        running = false;
         if (clock != null) clock.stop();
         step = -1;
     } 
     
     public void actionPerformed (ActionEvent e) {
-        step++;
-        if (step >= msgs.length) {
-            try { 
-                Thread.sleep(500);
-                step = -1;
-                paintScreen();
-                Thread.sleep(500);
-            }    
-            catch (InterruptedException ex) { System.out.println("Thread interrupted"); }
+        if (!paused && running) {
+            step++;
+            if (step >= msgs.length) {
+                try { 
+                    Thread.sleep(500);
+                    step = -1;
+                    paintScreen();
+                    Thread.sleep(500);
+                }    
+                catch (InterruptedException ex) { System.out.println("Thread interrupted"); }
+            }
         }
         paintScreen();
     }
@@ -74,30 +84,37 @@ public class IdlePanel extends PRPanel implements ActionListener, KeyListener
     {
         Graphics g;
         try {
-            g = this.getGraphics();  // get panel's graphic content
-            
-            if (g != null) {
-                g.setColor(Color.black);
-                g.fillRect(0,0,PWIDTH,PHEIGHT);
-                for (int i = 0; i <= step; i++) {
-                    g.setFont(new Font("Arial", Font.BOLD, 20));
-                    g.setColor(Color.white);
-                    g.drawString(msgs[i], PWIDTH/2-100, PHEIGHT/2-100 + 30*i);
-                }
-            }
+//            g = this.getGraphics();  // get panel's graphic content
+            g = main.getGraphics();
+             if (g != null) {
+                 g.setColor(Color.black);
+                 g.fillRect(0,0,PWIDTH,PHEIGHT);
+                 for (int i = 0; i <= step; i++) {
+                     g.setFont(new Font("Arial", Font.BOLD, 20));
+                     g.setColor(Color.white);
+                     g.drawString(msgs[i], PWIDTH/2-100, PHEIGHT/2-100 + 30*i);
+                 }
+             }
             Toolkit.getDefaultToolkit().sync();     // sync the display on some systems
-            g.dispose();
+             g.dispose();
         }
         catch (Exception e)
-        {   System.out.println("Graphics context error: " + e); }
+        {   System.out.println("IdlePanel: Graphics context error: " + e); }
     }   // end of paintScreen()
     
     public void keyPressed(KeyEvent e)
     {
         int code = e.getKeyCode();
-        if (code == KeyEvent.VK_F1) { }
+        if (code == KeyEvent.VK_F1) {
+            Level lev = LevelInitializer.generateLevels(1)[0];
+            main.startGame(lev);
+        }
+        else if (code == KeyEvent.VK_F2) {
+            Level lev = LevelInitializer.generateLevels(2)[0];
+            main.startGame(lev);
+        }
     }
     
-    public void keyReleased(KeyEvent e) {  }
+    public void keyReleased(KeyEvent e) { }    
     public void keyTyped(KeyEvent e) { }
 }

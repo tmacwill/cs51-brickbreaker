@@ -12,7 +12,7 @@ import java.util.*;
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class GamePanel extends JPanel implements ActionListener, KeyListener
+public class GamePanel extends PRPanel implements ActionListener, KeyListener
 {
     public static final int PWIDTH = 1200;  // Size of panel
     public static final int PHEIGHT = 700;
@@ -30,42 +30,34 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
     
     private Graphics dbg;
     private Image dbImage = null;
-
-    private Level[] levels;
-    private LevelPlayer levelPlayer;
-    private int currLevel;
     
+    private Start main;
+    private LevelPlayer levelPlayer;
     private int totalScore;
     
-    public GamePanel(int numPlayers)
+    public GamePanel(Level lev, Start main)
     {
         setBackground(Color.white);
         setPreferredSize(new Dimension(PWIDTH, PHEIGHT));
-        addKeyListener(this);
         
-        setFocusable(true);
-        requestFocus();    // the JPanel now has focus, so receives key events
-//        readyForTermination();    // Why won't this work???
-        
-        initGame(numPlayers);
-    }   // end of GamePanel()
-    
-    private void initGame(int numPlayers) {
-        levels = LevelInitializer.generateLevels(numPlayers);
-        currLevel = 0;
-        levelPlayer = new LevelPlayer(levels[0]);
-    }
+        this.main = main;
+        levelPlayer = new LevelPlayer(lev);
+    } 
 
+    public void reset (Level lev)
+    {
+        levelPlayer = new LevelPlayer(lev);
+    }
+    
     /* Wait for the JPanel to be added to the
-     * JFrame/JAplet before starting.    */
-    public void addNotify()
+     * JFrame before starting.    */
+    public void init()
     {
         super.addNotify();  // creates the peer
-        startGame();            // start the thread
     }
     
     // initialize and start the thread
-    private void startGame()
+    public void start()
     {
         Ball.resetVars();
         totalScore = 0;
@@ -75,20 +67,23 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
         gameOver = false;
         running = true;
         clock.start();
+        
+        gameRender();
+        paintScreen();
     }
     
     // called by the user to stop execution
-    public void stopGame()
+    public void stop()
     {   
         running = false;
         gameOver = true;
         clock.stop();
     }
     
-    public void pauseGame()
+    public void pause()
     {   isPaused = true;    }
     
-    public void resumeGame()
+    public void resume()
     {   isPaused = false;   }
     
     // Repeatedly update, render, sleep
@@ -105,11 +100,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
     {
         if (!isPaused && !gameOver) {
             totalScore += levelPlayer.update();
-            if (!levelPlayer.ballsInBounds()) stopGame();
+            if (!levelPlayer.ballsInBounds()) {
+                stop();
+                main.endGame(totalScore);
+            }
             if (levelPlayer.cleared()) {
-                Ball.resetVars();
-                currLevel = (currLevel+1)%levels.length;
-                levelPlayer = new LevelPlayer(levels[currLevel]);
+                main.endGame(totalScore);
             }
         }
     }
@@ -142,8 +138,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
         dbg.setFont(new Font("Arial", Font.BOLD, 20));
         dbg.drawString( Integer.toString(totalScore), PWIDTH-100, BORDER+20);
         
-        dbg.drawString( "Level " + (currLevel+1), 50, BORDER+30);
-        
         if (gameOver)
             gameOverMessage(dbg);
     }   // end of gameRender()
@@ -153,14 +147,15 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
     {
         Graphics g;
         try {
-            g = this.getGraphics();  // get panel's graphic content
+            g = getGraphics();  // get panel's graphic content
             if ((g != null) && (dbImage != null))
                 g.drawImage(dbImage, 0, 0, null);
             Toolkit.getDefaultToolkit().sync();     // sync the display on some systems
             g.dispose();
         }
         catch (Exception e)
-        {   System.out.println("Graphics context error: " + e); }
+        {   //System.out.println("GamePanel: Graphics context error: " + e); 
+        }
     }   // end of paintScreen()
     
     // print  the game-over message
@@ -177,22 +172,17 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener
     public void keyPressed(KeyEvent e)
     {
         int code = e.getKeyCode();
-        
-        if (code == KeyEvent.VK_F1) {
-            initGame(1);
-            startGame();
-        }
-        else if (code == KeyEvent.VK_F2) {
-            initGame(2);
-            startGame();
-        }
+        if (code == KeyEvent.VK_F1 || code == KeyEvent.VK_F2) { start(); }
+        else if (code == KeyEvent.VK_ESCAPE) { main.endGame(0); }
         
         else levelPlayer.keyPressed(code);
     }
     
-    public void keyReleased(KeyEvent e) {
+    public void keyReleased(KeyEvent e)
+    {
         int code = e.getKeyCode();
         levelPlayer.keyReleased(code);
     }
+    
     public void keyTyped(KeyEvent e) { }
 }

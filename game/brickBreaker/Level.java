@@ -23,41 +23,13 @@ public class Level implements Serializable
     private Brick [][] bricks; // true indicates a box is present
     private Racket[] rackets;
     private Ball[] balls;
+    private String name = "Unnamed";
 
-    /**
-     * Default constructor: takes arguments for the width and height of the screen and the 
-     */
-    public Level(Brick [][] bricks, int numPlayers)
+
+    public Level(Brick [][] bricks, Ball[] balls, Racket[] rack, String name)
     {
-        numRows = bricks.length;
-        numCols = bricks[0].length;
-        brickWidth = WIDTH/numCols;
-        brickHeight = HEIGHT/numRows;
-        
-        initBricks(bricks);
-        
-        if (numPlayers < 1 || numPlayers > 4) {
-            System.out.print("Error! only 1-4 players allowed!");
-            if (numPlayers < 1) {
-                System.out.println("  Creating 1 player");
-                numPlayers = 1;
-            }
-            else {
-                System.out.println("  Creating 4 players");
-                numPlayers = 4;
-            }
-        }
-        rackets = new Racket[numPlayers];
-        rackets[0] = new HorizontalRacket(WIDTH, HEIGHT, 80, false);
-        if (numPlayers > 1) rackets[1] = new HorizontalRacket(WIDTH, HEIGHT, 80, true);
-        if (numPlayers > 2) rackets[2] = new VerticalRacket(WIDTH, HEIGHT, 80, false);
-        if (numPlayers > 3) rackets[3] = new VerticalRacket(WIDTH, HEIGHT, 80, true);
-        
-        balls = new Ball[2];
-        balls[0] = new Ball(rackets, 8);
-        balls[0].setLoc(WIDTH/2, HEIGHT/2-100, Math.random()*Math.PI/2 + 5*Math.PI/4);
-        balls[1] = new Ball(rackets, 8);
-        balls[1].setLoc(WIDTH/2, HEIGHT/2+50, Math.random()*Math.PI/2 + Math.PI/4);
+	this(bricks, balls, rack);
+	this.name = name;
     }
     
     public Level(Brick [][] bricks, Ball[] balls, Racket[] rack)
@@ -81,6 +53,8 @@ public class Level implements Serializable
             }
         }
     }
+
+    public void setName(String name) { this.name = name; }
     
     public Racket[] getRackets() { return rackets; }
     public Ball[] getBalls() { return balls; }
@@ -89,6 +63,7 @@ public class Level implements Serializable
     public int brickHeight() { return brickHeight; }
     public int numCols() { return numCols; }
     public int numRows() { return numRows; }
+    public String getName() { return name; }
     
     
     
