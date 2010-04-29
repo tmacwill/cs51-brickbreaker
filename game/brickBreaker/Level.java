@@ -14,9 +14,9 @@ import java.io.Serializable;
  */
 public class Level implements Serializable
 {
-	private static final long serialVersionUID = 1L;
-	
-	public static int WIDTH = GamePanel.ARENA_WIDTH;
+    private static final long serialVersionUID = 1L;
+    
+    public static int WIDTH = GamePanel.ARENA_WIDTH;
     public static int HEIGHT = GamePanel.ARENA_HEIGHT;
     private int numRows, numCols;
     private int brickWidth, brickHeight;
@@ -28,8 +28,8 @@ public class Level implements Serializable
 
     public Level(Brick [][] bricks, Ball[] balls, Racket[] rack, String name)
     {
-	this(bricks, balls, rack);
-	this.name = name;
+        this(bricks, balls, rack);
+        this.name = name;
     }
     
     public Level(Brick [][] bricks, Ball[] balls, Racket[] rack)
@@ -43,6 +43,35 @@ public class Level implements Serializable
         rackets = rack;
         this.balls = balls;
     }
+    
+    public Level(Brick[][] bricks, int players, String name) {
+        this.name = name;
+        numRows = bricks.length;
+        numCols = bricks[0].length;
+        brickWidth = WIDTH/numCols;
+        brickHeight = HEIGHT/numRows;
+        initBricks(bricks);
+        
+        double pi = Math.PI;
+        if (players == 1) {
+            rackets = new Racket[1];
+            rackets[0] = new HorizontalRacket(WIDTH, HEIGHT, 80, false);
+            balls = new Ball[1];
+            balls[0] = new Ball(rackets, 8);
+            balls[0].setLoc(WIDTH/2, HEIGHT/2+50, Math.random()*pi/4+pi/8);
+        }
+        else if (players == 2) {
+            rackets = new Racket[2];
+            rackets[0] = new HorizontalRacket(WIDTH, HEIGHT, 80, false);
+            rackets[1] = new HorizontalRacket(WIDTH, HEIGHT, 80, true);
+            balls=  new Ball[2];
+            balls[0] = new Ball(rackets, 8);
+            balls[1] = new Ball(rackets, 8);
+            balls[0].setLoc(WIDTH/2, HEIGHT/2, Math.random()*pi/4+pi/8);
+            balls[1].setLoc(WIDTH/2, HEIGHT/2, Math.random()*pi/4+9*pi/8);
+        }
+        else System.out.println("Error!  Default constructor only supports 1 or 2 players");
+    }        
     
     public void initBricks(Brick[][] bricks) {
         this.bricks = bricks;

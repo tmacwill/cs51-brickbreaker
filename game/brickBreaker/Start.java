@@ -40,7 +40,7 @@ public class Start extends JFrame implements WindowListener
         // Receive key events from all windows
         setFocusable(true);
         requestFocusInWindow(); 
-        addKeyListener(ip);
+//        addKeyListener(ip);
         addKeyListener(gp);
     }  // end of Main() constructor
   

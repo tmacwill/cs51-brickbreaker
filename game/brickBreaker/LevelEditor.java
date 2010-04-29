@@ -1,19 +1,18 @@
 package brickBreaker;
 
-
-
 import java.awt.Color;
 import java.awt.Graphics;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
+import brickBreaker.local.*;
 
 /**
  *
  * @author robert
  */
-public class LevelEditor extends javax.swing.JPanel {
+public class LevelEditor extends PRPanel {
 
     public static final int PWIDTH = 1200;  // Size of panel
     public static final int PHEIGHT = 700;
@@ -36,6 +35,7 @@ public class LevelEditor extends javax.swing.JPanel {
     int r;
     int c;
     int players;
+    String name = "untitled-level";
     double boxHeight;
     double boxWidth;
     boolean gridGenerated = false;
@@ -66,6 +66,8 @@ public class LevelEditor extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         saveDesign = new javax.swing.JButton();
         testLevel = new javax.swing.JButton();
+        label1 = new java.awt.Label();
+        levelName = new java.awt.TextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1200, 700));
@@ -111,29 +113,39 @@ public class LevelEditor extends javax.swing.JPanel {
         jLabel3.setText("players");
 
         saveDesign.setText("Save Design");
+        saveDesign.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveDesignActionPerformed(evt);
+            }
+        });
 
         testLevel.setText("Test Level");
+
+        label1.setText("level name");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(1086, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(saveDesign, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(testLevel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(numPlayers, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(rowInput, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(colInput, javax.swing.GroupLayout.Alignment.TRAILING)))
-                    .addComponent(generateGrid, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(1048, 1048, 1048)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(levelName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
+                    .addComponent(testLevel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel2)
+                                .addComponent(jLabel1))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(numPlayers, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(rowInput, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(colInput, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(generateGrid, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(label1, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
+                        .addComponent(saveDesign, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -153,11 +165,15 @@ public class LevelEditor extends javax.swing.JPanel {
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(generateGrid)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(levelName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(saveDesign)
                 .addGap(18, 18, 18)
                 .addComponent(testLevel)
-                .addContainerGap(468, Short.MAX_VALUE))
+                .addContainerGap(414, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -243,11 +259,6 @@ public class LevelEditor extends javax.swing.JPanel {
             insertBrickGivenBlockNumber(blockX, blockY);
         else
             removeBrickGivenBlockNumber(blockX, blockY);
-    }
-
-    private Level getDesign() {
-        //this doesn't check to see if bricks has been initialized so make sure to be careful
-        return new Level(bricks, players);
     }
 
     private void mouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mouseClicked
@@ -347,6 +358,12 @@ public class LevelEditor extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_numPlayersActionPerformed
 
+    private void saveDesignActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveDesignActionPerformed
+        name = levelName.getText(); //FIXME: sanitize input
+        Level l = new Level(bricks, players, name);
+        LevelCatalog.getInstance().addLevel(l);
+    }//GEN-LAST:event_saveDesignActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField colInput;
@@ -354,6 +371,8 @@ public class LevelEditor extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private java.awt.Label label1;
+    private java.awt.TextField levelName;
     private javax.swing.JTextField numPlayers;
     private javax.swing.JTextField rowInput;
     private javax.swing.JButton saveDesign;

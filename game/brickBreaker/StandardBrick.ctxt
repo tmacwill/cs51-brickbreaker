@@ -1,0 +1,6 @@
+#BlueJ class context
+comment0.target=StandardBrick()
+comment0.text=\nConstructor\ for\ objects\ of\ class\ StandardBrick\n\n
+comment1.params=pts\ hits\ c
+comment1.target=StandardBrick(int,\ int,\ Color)
+numComments=2
