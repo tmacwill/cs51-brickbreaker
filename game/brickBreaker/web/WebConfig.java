@@ -42,10 +42,12 @@ public class WebConfig {
 	private static final String DEFAULT_HOST = "brickbreaker.x10hosting.com";
 	private static final WebConfig INSTANCE = new WebConfig(
 			DEFAULT_PROTOCOL,
-			DEFAULT_HOST );
+			DEFAULT_HOST, 
+			"" );
 	
 	private Protocol protocol;
 	private String host;
+	private String path;
 
 	/**
 	 * Constructs a new <code>WebConfig</code> with the specified parameters.
@@ -54,10 +56,12 @@ public class WebConfig {
 	 *            the protocol to use
 	 * @param host
 	 *            the hostname of the remote server
+	 * @param path TODO
 	 */
-	private WebConfig( Protocol protocol, String host ) {
+	private WebConfig( Protocol protocol, String host, String path ) {
 		this.protocol = protocol;
 		this.host = host;
+		this.path = path;
 	}
 	
 	/**
@@ -106,5 +110,23 @@ public class WebConfig {
 	 */
 	public void setHost( String host ) {
 		this.host = host;
+	}
+	
+	/**
+	 * 
+	 * 
+	 * @return
+	 */
+	public String getPath( ) {
+		return path;
+	}
+	
+	/**
+	 * 
+	 * 
+	 * @param path
+	 */
+	public void setPath( String path ) {
+		this.path = path;
 	}
 }

@@ -49,7 +49,7 @@ class BlobsController extends AppController
 				$this->data['Blob']['user_id'] = Sanitize::paranoid($xml_array['Blob']['user-id'], array(' '));
 				$this->data['Blob']['title'] = Sanitize::paranoid($xml_array['Blob']['title'], array(' '));
 				$this->data['Blob']['data'] = base64_decode($xml_array['Blob']['data']);
-				$this->data['Blob']['id'] = md5(base64_decode($xml_array['Blob']['data']));
+				$this->data['Blob']['id'] = md5($xml_array['Blob']['data']);
 			
 				// make sure blob with given id does not exist
 				$blob = $this->Blob->findById($this->data['Blob']['id']);

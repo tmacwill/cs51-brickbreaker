@@ -1,5 +1,6 @@
 package brickBreaker.local;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -79,8 +80,10 @@ public class LocalDataService {
 				ObjectInputStream levelStream = new ObjectInputStream(
 						new FileInputStream( levelFile ) );
 				Level level = (Level)levelStream.readObject( );
-				String levelID = DigestUtils.md5Hex( levelStream );
 				levelStream.close( );
+				
+				// Compute the ID for the level
+				String levelID = calculateHash( level );
 				
 				levels.put( levelID, level );
 			}
@@ -99,5 +102,25 @@ public class LocalDataService {
 		}
 		
 		return HashBiMap.create( levels );
+	}
+	
+	/**
+	 * 
+	 * 
+	 * @param level
+	 * @return
+	 */
+	public static String calculateHash( Level level ) {
+		try {
+			ByteArrayOutputStream byteStream = new ByteArrayOutputStream( );
+			ObjectOutputStream objStream = new ObjectOutputStream( byteStream );
+			objStream.writeObject( level );
+			objStream.close( );
+			byte[] levelBytes = byteStream.toByteArray( );
+			return DigestUtils.md5Hex( levelBytes );
+		} catch( IOException e ) {
+			// FIXME: Rethrow better exception
+			throw new RuntimeException( e );
+		}
 	}
 }

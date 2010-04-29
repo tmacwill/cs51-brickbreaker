@@ -31,17 +31,7 @@ public class LevelCatalog {
 	
 	public void addLevel( Level level ) {
 		// Compute the ID for the level
-		ByteArrayOutputStream byteStream = new ByteArrayOutputStream( );
-		try {
-			ObjectOutputStream objStream = new ObjectOutputStream( byteStream );
-			objStream.writeObject( level );
-			objStream.close( );
-		} catch( IOException e ) {
-			// FIXME: Rethrow better exception
-			throw new RuntimeException( e );
-		}
-		byte[] levelBytes = byteStream.toByteArray( );
-		String levelID = DigestUtils.md5Hex( levelBytes );
+		String levelID = LocalDataService.calculateHash( level );
 		
 		if( levelData.get( levelID ) != null ) {
 			// FIXME: Throw better exception
