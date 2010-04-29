@@ -206,9 +206,8 @@ class UsersController extends AppController
 		// xml response to client
 		if ($this->params['url']['ext'] == 'xml')
 		{
-			$blobs = $this->User->findById($id);
-			unset($blobs['User']['password']);
-			unset($blobs['User']['email']);
+			$conditions = array('User.id' => $id);
+			$blobs = $this->User->find('all', array('conditions' => $conditions, 'fields' => array('User.id', 'User.username')));
 			$this->set('blobs', $blobs);
 		}
 		// web html response
