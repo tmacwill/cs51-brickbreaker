@@ -224,7 +224,8 @@ class BlobsController extends AppController
 		// format xml request from client
 		if ($this->params['url']['ext'] == 'xml')
 		{
-			$blobs = $this->Blob->find('all', array('conditions' => $conditions));
+			$blobs = $this->Blob->find('all', array('conditions' => $conditions, 
+										'fields' => array('Blob.id', 'Blob.user_id', 'Blob.title', 'Blob.downloads')));
 			$this->set('blobs', $blobs);
 		}
 		// web html response
