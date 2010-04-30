@@ -20,7 +20,7 @@ public class LevelEditor extends PRPanel {
     public static final int ARENA_WIDTH = PWIDTH - 2*BORDER;
     public static final int ARENA_HEIGHT = PHEIGHT - 2*BORDER;
 
-    //Main main;
+    Start start;
     int controlsWidth = 200;
     int PWIDTHgrid = PWIDTH - controlsWidth;
     int PHEIGHTgrid = PHEIGHT;
@@ -44,7 +44,8 @@ public class LevelEditor extends PRPanel {
     boolean[][] blocks;
     Brick[][] bricks;
 
-    public LevelEditor() {
+    public LevelEditor(Start s) {
+        start = s;
         initComponents();
     }
 

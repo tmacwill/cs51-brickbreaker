@@ -43,7 +43,6 @@ public class IdlePanel extends PRPanel { //implements ActionListener, KeyListene
 
     public void start()
     {
-        super.addNotify();  // creates the peer
         /*if (clock == null)
             clock = new javax.swing.Timer(delay,this);
         clock.start();*/
@@ -80,7 +79,7 @@ public class IdlePanel extends PRPanel { //implements ActionListener, KeyListene
     private void displayLevel(Level l) {
         Graphics g;
             try {
-                g = this.getGraphics();
+                g = start.getGraphics();
                 if (g != null) {
 
                     // initialize values
@@ -208,19 +207,34 @@ public class IdlePanel extends PRPanel { //implements ActionListener, KeyListene
     }// </editor-fold>//GEN-END:initComponents
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-
+        int code = evt.getKeyCode();
+        throw new RuntimeException();
+        /*System.out.println(code);
+        System.out.println(KeyEvent.VK_F2);
+        if (code == KeyEvent.VK_F2) {
+            start.startEditor();
+        }*/
     }//GEN-LAST:event_formKeyPressed
 
     private void formKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyTyped
-
+        throw new RuntimeException();
     }//GEN-LAST:event_formKeyTyped
 
     private void levelListKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_levelListKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_RIGHT) {
+        int code = evt.getKeyCode();
+        if (code == KeyEvent.VK_RIGHT) {
             int i = levelList.getSelectedIndex();
             Level l = levelObjectList.get(i);
             displayLevel(l);
         }
+        else if (code == KeyEvent.VK_F1) {
+            int i = levelList.getSelectedIndex();
+            Level lev = levelObjectList.get(i);
+            start.startGame(lev);
+        }
+        //else if (code == KeyEvent.VK_F2) {
+        //    start.startEditor();
+        //}
     }//GEN-LAST:event_levelListKeyPressed
 
     private void levelListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_levelListMouseClicked

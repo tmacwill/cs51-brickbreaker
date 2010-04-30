@@ -11,40 +11,44 @@ import java.io.Serializable;
  */
 public abstract class Racket implements Serializable
 {
-    private static final long serialVersionUID = 1L;
-
-    protected int range;  // Size of the area over which the racket can move
+	private static final long serialVersionUID = 1L;
+	
+	protected int range;  // Size of the area over which the racket can move
     protected int width;  // Size of racket
     
     // Position of the center of the racket
     // Coordinates are relative to the racket (i.e. in side rackets, coordinates are switched
     protected double posX, posY;
     public static final double maxSpeed = 8.0;
-    protected double speed = 0;
+    private double speed = 0;
     protected Color color = Color.blue;
     public static int thickness = 5;
-    protected boolean movingRight, movingLeft;
+    
+    boolean moving = false;
     
     public void setMovingLeft() {
-        movingLeft = true;
-        movingRight = false;
+        if (!moving) {
+            speed = -maxSpeed/2;
+            moving = true;
+        }
+        else speed = -maxSpeed;
     }
     
     public void setMovingRight() {
-        movingRight = true;
-        movingLeft = false;
+        if (!moving) {
+            speed = 3*maxSpeed/4;
+            moving = true;
+        }
+        else speed = maxSpeed;
     }
     
     public void stop() {
-        movingLeft = false;
-        movingRight = false;
+        moving = false;
         speed = 0;
     }
     
     public void updatePos() {
-        if (movingRight) speed = Math.min(speed+2, maxSpeed);
-        else if (movingLeft) speed = Math.max(speed-2, -maxSpeed);
-        if (movingLeft || movingRight) {
+        if (moving) {
             posX += speed;
             if (posX < width/2) posX = width/2;
             if (posX > (range-width/2)) posX = range-width/2;
