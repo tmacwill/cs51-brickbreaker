@@ -5,10 +5,12 @@ import java.awt.event.*;
 import java.io.Serializable;
 
 /**
- * Write a description of class Level here.
+ * Contains all of the data necessary to initialize a level.  This object is passed to LevelPlayer to play a level.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Jacob Pritt
+ * @version 4/30/10
+ * @file Level.java
+ * @see LevelPlayer.java
  */
 public class Level implements Serializable
 {
@@ -24,12 +26,27 @@ public class Level implements Serializable
     private String name = "Unnamed";
 
 
+    /**
+     * Constructor
+     *
+     * @param bricks 2-dimensional array of bricks
+     * @param balls All existing balls
+     * @param rack All existing rackets
+     * @param name String identifier (used in user interface)
+     */
     public Level(Brick [][] bricks, Ball[] balls, Racket[] rack, String name)
     {
         this(bricks, balls, rack);
         this.name = name;
     }
-    
+
+    /**
+     * Constructor
+     *
+     * @param bricks 2-dimensional array of bricks
+     * @param balls All existing balls
+     * @param rack All existing rackets
+     */
     public Level(Brick [][] bricks, Ball[] balls, Racket[] rack)
     {
         numRows = bricks.length;
@@ -41,7 +58,14 @@ public class Level implements Serializable
         rackets = rack;
         this.balls = balls;
     }
-    
+
+    /**
+     * Constructor
+     *
+     * @param bricks 2-dimensional array of bricks
+     * @param players Number of players
+     * @param name String identifier (used in user interface)
+     */
     public Level(Brick[][] bricks, int players, String name) {
         this.name = name;
         numRows = bricks.length;
@@ -70,7 +94,11 @@ public class Level implements Serializable
         }
         else System.out.println("Error!  Default constructor only supports 1 or 2 players");
     }        
-    
+
+    /**
+     * Sets the location of each brick in the level.
+     * @param bricks 2d array of all existing bricks
+     */
     public void initBricks(Brick[][] bricks) {
         this.bricks = bricks;
         for (int i = 0; i < bricks.length; i++) {
@@ -81,19 +109,50 @@ public class Level implements Serializable
         }
     }
 
+    /**
+     * Sets the level's name to the new string
+     * @param name New name
+     */
     public void setName(String name) { this.name = name; }
-    
+
+    /**
+     * @return The array of rackets
+     */
     public Racket[] getRackets() { return rackets; }
+
+    /**
+     * @return The array of balls
+     */
     public Ball[] getBalls() { return balls; }
+
+    /**
+     * @return The 2d array of bricks
+     */
     public Brick[][] getBricks() { return bricks; }
-    public int brickWidth() { return brickWidth; }    
+
+    /**
+     * @return The width of each brick (in pixels)
+     */
+    public int brickWidth() { return brickWidth; }
+
+    /**
+     * @return The height of each brick (in pixels)
+     */
     public int brickHeight() { return brickHeight; }
+
+    /**
+     * @return The number of columns of bricks across the screen
+     */
     public int numCols() { return numCols; }
+
+    /**
+     * @return The number of rows of bricks down the screen
+     */
     public int numRows() { return numRows; }
+
+    /**
+     * @return The name of this level
+     */
     public String getName() { return name; }
     
-    
-    
-    
-        
 }

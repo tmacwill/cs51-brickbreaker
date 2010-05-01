@@ -3,21 +3,26 @@ package brickBreaker;
 import java.awt.*;
 
 /**
- * Write a description of class PermanentBrick here.
+ * Represents a permanent brick object, which can never be removed.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Jacob Pritt
+ * @version 4/30/10
+ * @file PermanentBrick.java
+ * @see Brick.java
  */
 public class PermanentBrick extends Brick
 {
     
     /**
-     * Constructor for objects of class StandardBrick
+     * Constructor
      */
     public PermanentBrick()
     {
         super(0, -1, new Color(100,150,240));
     }
 
+    /**
+     * Always returns true, since this brick is by definition permanent.
+     */
     public boolean permanent() { return true; }
 }

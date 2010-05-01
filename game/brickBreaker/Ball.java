@@ -4,10 +4,11 @@ import java.awt.*;
 import java.io.Serializable;
 
 /**
- * Write a description of class Ball here.
+ * Represents a ball object, which bounces around the screen bouncing off walls, bricks and rackets.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Jacob Pritt
+ * @version 4/30/10
+ * @file Ball.java
  */
 public class Ball implements Serializable
 {
@@ -31,19 +32,39 @@ public class Ball implements Serializable
     private Racket[] rackets;
     private LevelPlayer level;
 
+    /**
+     * Constructor.
+     *
+     * @param r An array of all rackets in the game
+     * @param radius The radius of the ball, in pixels
+     */
     public Ball(Racket[] r, int radius)
     {
         rackets = r;
         this.radius = radius;
     }
-    
+
+    /**
+     * Constructor.
+     *
+     * @param l The LevelPlayer in which the ball exists
+     * @param r An array of all rackets in the game
+     * @param radius The radius of the ball, in pixels
+     */
     public Ball(LevelPlayer l, Racket[] r, int radius)
     {
         level = l;
         rackets = r;
         this.radius = radius;
     }
-    
+
+    /**
+     * Sets the ball's location and direction to the given coordinates.
+     *
+     * @param x New x-coordinate
+     * @param y New y-coordinate
+     * @param angle New Angle
+     */
     public void setLoc(double x, double y, double angle) {
         posX = x;
         posY = y;
@@ -55,14 +76,21 @@ public class Ball implements Serializable
         inBounds = true;
         inPlay = true;
     }
-    
+
+    /**
+     * Changes the LevelPlayer in which the ball exists.
+     * Usually called after the first constructor, in which the LevelPlayer is not specified.
+     *
+     * @param lev New LevelPlayer
+     */
     public void setLevel(LevelPlayer lev) {
         level = lev;
     }
     
     /**
-     * Updates the position of the ball
-     * Returns the number of points earned (based on the boxes hit)
+     * Updates the position of the ball and calculates the number of points earned.
+     *
+     * @return Returns the number of points earned during this time step.
      */
     public int updatePosition()
     {
@@ -96,27 +124,61 @@ public class Ball implements Serializable
         return level.checkCollision(this);
     }
 
+    /**
+     * Draws the ball on the screen.
+     *
+     * @param g The graphics object with which to draw
+     */
     public void draw(Graphics g) {
         g.setColor(color);
         int border = GamePanel.BORDER;
         g.fillOval(getX()-radius+border, getY()-radius+border, 2*radius, 2*radius);  
     }
-    
+
+    /**
+     * @return Returns the current x-coordinate, rounded to the nearest int
+     */
     public int getX() { return Math.round((long)posX); }
+
+    /**
+     * @return Returns the current y-coordinate, rounded to the nearest int
+     */
     public int getY() { return Math.round((long)posY); }
+
+    /**
+     * @return Returns the ball's radius, in pixels
+     */
     public int getRad() { return radius; }
-    
+
+    /**
+     * Sets the x-coordinate to the new value.
+     * @param x The new x-coordinate
+     */
     public void setX(double x) { posX = x; }
+
+    /**
+     * Sets the y-coordinate to the new value.
+     * @param y The new y-coordinate
+     */
     public void setY(double y) { posY = y; }
-    
+
+    /**
+     * @return Returns true if the ball is still in play
+     */
     public boolean inBounds() { return inBounds; }
     
-    // Resets the static variables in this class
+    /**
+     * Resets all the static variables in this class to their initial values.
+     */
     public static void resetVars() {
         powerLevel = 0;
         ptMultiplier = 1;
     }
-    
+
+    /**
+     * Changes the ball's angle to the new value.
+     * @param newAngle The new angle
+     */
     private void changeAngle(double newAngle) {
         angle = newAngle % (2*pi);
         while (angle < 0) angle += 2*pi;
@@ -127,6 +189,9 @@ public class Ball implements Serializable
     /**
      * Checks if the ball is colliding with the given object
      * If a collision exists and changeDir is true, it changes the ball's direction
+     *
+     * @param loc A block to be tested, represented by an int array containing, in order, x, y, width and height of the brick
+     * @return Returns true if the ball hit the object, false if not
      */
     public boolean checkCollision(int[] loc) {
         int x = loc[0];
@@ -152,8 +217,11 @@ public class Ball implements Serializable
         return false;
     }
     
-    // Returns the updated ball after bouncing off the wall
-    // The wall is either horizontal or vertical 
+    /**
+     * Bounces this ball off the given wall. The wall is either horizontal or vertical, specified by param horizontal.
+     * @param x The location of the wall
+     * @param horizontal True if the wall is horizontal, false if it is vertical
+     */
     public void bounce(int x, boolean horizontal)
     {
         if (horizontal) {

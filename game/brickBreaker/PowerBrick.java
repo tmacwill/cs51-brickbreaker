@@ -3,10 +3,12 @@ package brickBreaker;
 import java.awt.*;
 
 /**
- * Write a description of class PowerBrick here.
+ * Represents a brick that offers a "Power Up" when it is hit by a ball, increasing game speed, point multipliers, etc.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Jacob Pritt
+ * @version 4/30/10
+ * @file PowerBrick.java
+ * @see Brick.java
  */
 public class PowerBrick extends StandardBrick
 {
@@ -14,11 +16,18 @@ public class PowerBrick extends StandardBrick
     // Each higher level increases the point multiplier, speed, etc.
     private int level = 1;
 
+    /**
+     * Constructor
+     */
     public PowerBrick()
     {
         super(50,1,new Color(250,130,10));
     }
-    
+
+    /**
+     * Increases the speed and point multiplier of the given ball.
+     * @param b The ball object to be updated
+     */
     public void powerUp(Ball b)
     {
         if (level > b.powerLevel) {

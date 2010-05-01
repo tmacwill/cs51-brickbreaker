@@ -5,17 +5,25 @@ package brickBreaker;
 import java.awt.*;
 
 /**
- * Write a description of class VerticalRacket here.
+ * Represents a racket that moves vertically, either at the right or left side of the screen.
+ * See class Racket for more information.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Jacob Pritt
+ * @version 4/30/10
+ * @file VerticalRacket.java
+ * @see Racket.java
  */
 public class VerticalRacket extends Racket
 {
     boolean left;
 
     /**
-     * Constructor for objects of class SideRacket
+     * Constructor
+     *
+     * @param arenaW The width of the screen on which play occurs
+     * @param arenaH The height of the screen on which play occurs
+     * @param racketW The width of the racket, in pixels
+     * @param left True if the racket is at the left side of the screen, false if it is at the right
      */
     public VerticalRacket(int arenaW, int arenaH, int racketW, boolean left)
     {
@@ -29,7 +37,9 @@ public class VerticalRacket extends Racket
     }
 
     /**
-     * Draws the racket on the screen
+     * Draws the racket on the screen.
+     *
+     * @param g Graphics object used to draw
      */
     public void draw(Graphics g) {
         g.setColor(color);
@@ -39,6 +49,9 @@ public class VerticalRacket extends Racket
     
     /**
      * Checks if the ball collides with the racket and returns the updated ball
+     *
+     * @param ball Ball object to be tested
+     * @return Returns the updated Ball object
      */
     public Ball checkCollision(Ball ball) {
         int x = ball.getX();
@@ -54,15 +67,27 @@ public class VerticalRacket extends Racket
         }
         return ball;
     }
-    
-    // Checks if the ball is past the racket (and thus out of play)
+
+    /**
+     * Checks if the ball is past the racket (and thus out of play)
+     *
+     * @param ball Ball to be tested
+     * @return Returns true if the ball is past the racket, false if not
+     */
     public boolean checkPast(Ball ball) {
         int x = ball.getX();
         if (left && x < posX) return true;
         else if (!left && x > (posX+thickness)) return true;
         return false;
     }
-    
+
+    /**
+     * Returns true if the racket is on the left side of the screen.
+     */
     public boolean isLeft() { return left; }
+
+    /**
+     * Returns true if the racket is on the right side of the screen.
+     */
     public boolean isRight() { return !left; }
 }
