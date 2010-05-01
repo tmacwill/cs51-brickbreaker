@@ -1,0 +1,86 @@
+\hypertarget{class_scores_controller}{
+\section{ScoresController Class Reference}
+\label{class_scores_controller}\index{ScoresController@{ScoresController}}
+}
+
+
+Controller for scores.  
+
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_scores_controller_a837ba24a1c3095ae67613238d866f79a}{add} ()
+\begin{DoxyCompactList}\small\item\em Add a new high score. \item\end{DoxyCompactList}\item 
+\hyperlink{class_scores_controller_ac89dd29d2229bbc37879d31f95d06e97}{beforeRender} ()
+\begin{DoxyCompactList}\small\item\em Called before rendering of each view. \item\end{DoxyCompactList}\item 
+\hypertarget{class_scores_controller_ad69dd4607977cae05ebe19d1ae604fb1}{
+\hyperlink{class_scores_controller_ad69dd4607977cae05ebe19d1ae604fb1}{test} ()}
+\label{class_scores_controller_ad69dd4607977cae05ebe19d1ae604fb1}
+
+\begin{DoxyCompactList}\small\item\em Test controller functionality. \item\end{DoxyCompactList}\item 
+\hyperlink{class_scores_controller_a82afb1e6c361be60e0ec7e239ea40a93}{view} (\$blob\_\-id= '')
+\begin{DoxyCompactList}\small\item\em View the high scores table. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_scores_controller_ab2fc40d43824ea3e1ce5d86dee0d763b}{
+{\bfseries \$name} = 'Scores'}
+\label{class_scores_controller_ab2fc40d43824ea3e1ce5d86dee0d763b}
+
+\item 
+\hypertarget{class_scores_controller_a2409c247baf67a1d4c6b9a1789cfc088}{
+{\bfseries \$components} = array('RequestHandler')}
+\label{class_scores_controller_a2409c247baf67a1d4c6b9a1789cfc088}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Controller for scores. 
+
+\subsection{Member Function Documentation}
+\hypertarget{class_scores_controller_a837ba24a1c3095ae67613238d866f79a}{
+\index{ScoresController@{ScoresController}!add@{add}}
+\index{add@{add}!ScoresController@{ScoresController}}
+\subsubsection[{add}]{\setlength{\rightskip}{0pt plus 5cm}add ()}}
+\label{class_scores_controller_a837ba24a1c3095ae67613238d866f79a}
+
+
+Add a new high score. 
+
+Used by client. Format of request POSTDATA: 
+\begin{DoxyCode}
+ <score>
+   <client-key>abcdef123456</client-key>
+   <user-id>123</user-id>
+   <blob-id>123abc456def</blob-id>
+   <score>456789</score>
+ </score>
+\end{DoxyCode}
+ \hypertarget{class_scores_controller_ac89dd29d2229bbc37879d31f95d06e97}{
+\index{ScoresController@{ScoresController}!beforeRender@{beforeRender}}
+\index{beforeRender@{beforeRender}!ScoresController@{ScoresController}}
+\subsubsection[{beforeRender}]{\setlength{\rightskip}{0pt plus 5cm}beforeRender ()}}
+\label{class_scores_controller_ac89dd29d2229bbc37879d31f95d06e97}
+
+
+Called before rendering of each view. 
+
+Used by web interface. \hypertarget{class_scores_controller_a82afb1e6c361be60e0ec7e239ea40a93}{
+\index{ScoresController@{ScoresController}!view@{view}}
+\index{view@{view}!ScoresController@{ScoresController}}
+\subsubsection[{view}]{\setlength{\rightskip}{0pt plus 5cm}view (\$ {\em blob\_\-id} = {\ttfamily ''})}}
+\label{class_scores_controller_a82afb1e6c361be60e0ec7e239ea40a93}
+
+
+View the high scores table. 
+
+Used by both web interface and client. 
+\begin{DoxyParams}{Parameters}
+\item[{\em \$blob\_\-id}]Optional. If specified, only view high scores for that blob. If not, view all high scores. \end{DoxyParams}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{scores__controller_8php}{scores\_\-controller.php}\end{DoxyCompactItemize}

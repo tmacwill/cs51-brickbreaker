@@ -35,7 +35,7 @@ public class Start extends JFrame implements WindowListener
         currPanel.start();
         gp.init();
         
-        addWindowListener(this);
+        //addWindowListener(this);
         pack();
         setResizable(false);
         setVisible(true);
@@ -84,7 +84,7 @@ public class Start extends JFrame implements WindowListener
          currPanel = le;
          currPanel.setVisible(true);
          //addKeyListener(currPanel);
-         //currPanel.start();
+         currPanel.start();
          c.add(le, BorderLayout.CENTER);
     }
 
