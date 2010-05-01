@@ -155,7 +155,8 @@ public class ConnectionUtil {
 							.append( paramName )
 							.append( "=" )
 							.append( encodeURLComponent( postData.get( 
-									paramName ) ) );
+									paramName ) ) )
+							.append( "&" );
 				}
 				
 				// Send the request

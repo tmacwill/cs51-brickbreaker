@@ -30,19 +30,19 @@ public class Test {
 		userConfig.setUsername( "test" );
 		userConfig.setPassword( "test" );
 		
-		List<OnlineLevel> onlineLevels = WebService.getOnlineLevels( );
-		for( OnlineLevel onlineLevel : onlineLevels ) {
-//			System.out.println( onlineLevel.getLevelID( ) + ":" + onlineLevel.getTitle( ) );
-			Level l = WebService.downloadLevel( onlineLevel.getLevelID( ) );
-			LevelCatalog.getInstance( ).addLevel( l );
-		}
+//		List<OnlineLevel> onlineLevels = WebService.getOnlineLevels( );
+//		for( OnlineLevel onlineLevel : onlineLevels ) {
+////			System.out.println( onlineLevel.getLevelID( ) + ":" + onlineLevel.getTitle( ) );
+//			Level l = WebService.downloadLevel( onlineLevel.getLevelID( ) );
+//			LevelCatalog.getInstance( ).addLevel( l );
+//		}
 		
 		List<Level> levels = catalog.getLevels( );
 		for( Level l : levels ) {
 //			System.out.println( l );
 //			System.out.println( catalog.getLevelID( l ) );
 //			WebService.uploadLevel( l, "A Random Level" );
-//			WebService.submitScore( l, 12345 );
+			WebService.submitScore( l, 12345 );
 		}
 	}
 

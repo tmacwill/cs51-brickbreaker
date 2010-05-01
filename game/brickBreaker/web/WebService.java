@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -147,16 +148,20 @@ public class WebService {
 			throw new RuntimeException( "Invalid login credentials" );
 		}
 		
+		Key publicKey = EncryptionUtil.getPublicKey( );
+		Key symmetricKey = EncryptionUtil.getSymmetricKey( );
 		String scoreSubmitURL = getScoreSubmitURL( );
 		Map<String, String> scoreSubmitRequest = getScoreSubmitRequest(
 				userID,
 				levelID,
-				score );
+				score,
+				publicKey,
+				symmetricKey );
 		
 		String response = new String( ConnectionUtil.doPost(
 				scoreSubmitURL,
 				scoreSubmitRequest ) );
-		
+		System.out.println(response);
 		// TODO: Verify response
 	}
 
@@ -321,7 +326,7 @@ public class WebService {
 		return new StringBuilder( )
 				.append( getBaseURL( ) )
 				.append( SCORE_SUBMIT_PATH )
-				.append( URL_SUFFIX	)
+//				.append( URL_SUFFIX	)
 				.toString( );
 	}
 	
@@ -331,10 +336,12 @@ public class WebService {
 	 * @param userID
 	 * @param levelID
 	 * @param score
+	 * @param publicKey TODO
+	 * @param symmetricKey TODO
 	 * @return
 	 */
 	private static Map<String, String> getScoreSubmitRequest( String userID,
-			String levelID, long score ) {
+			String levelID, long score, Key publicKey, Key symmetricKey ) {
 		Map<String, String> postData = new HashMap<String, String>( );
 		String data = new StringBuilder( 256 )
 				.append( "<score>" )
@@ -352,7 +359,12 @@ public class WebService {
 				.append( "</score>" )
 				.append( "</score>" )
 				.toString( );
-		postData.put( XML_PARAM_NAME, EncryptionUtil.encryptData( data ) );
+		postData.put( "key", EncryptionUtil.encryptData(
+				publicKey,
+				symmetricKey.getEncoded( ) ) );
+		postData.put( XML_PARAM_NAME, EncryptionUtil.encryptData(
+				symmetricKey,
+				data.getBytes( ) ) );
 		
 		return postData;
 	}

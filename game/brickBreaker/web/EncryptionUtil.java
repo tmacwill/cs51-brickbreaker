@@ -6,10 +6,11 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
+import java.security.Key;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
-import java.security.PublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.HashMap;
@@ -18,7 +19,9 @@ import java.util.Map;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.IvParameterSpec;
 
 import org.apache.commons.codec.binary.Base64;
 
@@ -28,9 +31,21 @@ import org.apache.commons.codec.binary.Base64;
  * @author Abraham Lin
  */
 public class EncryptionUtil {
-	private static final String ALGORITHM = "RSA";
-	private static final Map<String, PublicKey> KEYS = 
-			new HashMap<String, PublicKey>( );
+	private static final IvParameterSpec INIT_VECTOR = new IvParameterSpec(
+			"fedcba9876543210".getBytes( ) );
+	private static final String ASYMMETRIC_ALGORITHM = "RSA";
+	private static final String SYMMETRIC_ALGORITHM = "AES";
+	private static final int SYMMETRIC_KEY_SIZE = 128;
+	
+	private static final Map<String, String> ALGORITHMS =
+			new HashMap<String, String>( );
+	static {
+		ALGORITHMS.put( ASYMMETRIC_ALGORITHM, ASYMMETRIC_ALGORITHM );
+		ALGORITHMS.put( SYMMETRIC_ALGORITHM, "AES/CBC/NoPadding" );
+	}
+	
+	private static final Map<String, Key> PUBLIC_KEYS = 
+			new HashMap<String, Key>( );
 	
 	/**
 	 * Loads all available public keys into memory.
@@ -40,23 +55,35 @@ public class EncryptionUtil {
 	public static int init( ) {
 		loadPublicKeys( );
 		
-		return KEYS.size( );
+		return PUBLIC_KEYS.size( );
 	}
 
 	/**
 	 * Encrypts the supplied data using public-key encryption.
-	 * 
-	 * @param input
+	 * @param key TODO
+	 * @param data
 	 *            the data to encrypt
+	 * 
 	 * @return the encrypted data in base64-encoded form
 	 */
-	public static String encryptData( String input ) {
-		PublicKey key = getPublicKey( );
-		
+	public static String encryptData( Key key, byte[] data ) {
 		try {
-			Cipher cipher = Cipher.getInstance( ALGORITHM );
-			cipher.init( Cipher.ENCRYPT_MODE, key );
-			byte[] encryptedData = cipher.doFinal( input.getBytes( ) );
+			String keyAlgorithm = key.getAlgorithm( );
+			String algorithm = ALGORITHMS.get( keyAlgorithm );
+			Cipher cipher = Cipher.getInstance( algorithm );
+			
+			if( SYMMETRIC_ALGORITHM.equals( keyAlgorithm ) ) {
+				cipher.init( Cipher.ENCRYPT_MODE, key, INIT_VECTOR );
+				if( data.length % 16 != 0 ) {
+					int newLength = 16 * ( data.length / 16 + 1 );
+					byte[] newData = new byte[newLength];
+					System.arraycopy( data, 0, newData, 0, data.length );
+					data = newData;
+				}
+			} else {
+				cipher.init( Cipher.ENCRYPT_MODE, key );
+			}
+			byte[] encryptedData = cipher.doFinal( data );
 			return Base64.encodeBase64String( encryptedData );
 		} catch( InvalidKeyException e ) {
 			// FIXME: Rethrow better exception
@@ -73,6 +100,9 @@ public class EncryptionUtil {
 		} catch( BadPaddingException e ) {
 			// FIXME: Rethrow better exception
 			throw new RuntimeException( e );
+		} catch( InvalidAlgorithmParameterException e ) {
+			// FIXME: Rethrow better exception
+			throw new RuntimeException( e );
 		}
 	}
 	
@@ -81,7 +111,7 @@ public class EncryptionUtil {
 	 */
 	private static void loadPublicKeys( ) {
 		try {
-			KeyFactory factory = KeyFactory.getInstance( ALGORITHM );
+			KeyFactory factory = KeyFactory.getInstance( ASYMMETRIC_ALGORITHM );
 			
 			File keysDir = new File( Thread
 					.currentThread( )
@@ -99,9 +129,9 @@ public class EncryptionUtil {
 				keyByteStream.close( );
 				
 				X509EncodedKeySpec keySpec = new X509EncodedKeySpec( keyBytes );
-				PublicKey key = factory.generatePublic( keySpec );
+				Key key = factory.generatePublic( keySpec );
 				
-				KEYS.put( keyName, key );
+				PUBLIC_KEYS.put( keyName, key );
 			}
 		} catch( URISyntaxException e ) {
 			// FIXME: Rethrow better exception
@@ -126,12 +156,29 @@ public class EncryptionUtil {
 	 * 
 	 * @return the public key for the current remote server
 	 */
-	private static PublicKey getPublicKey( ) {
+	public static Key getPublicKey( ) {
 		String keyName = canonicalizeHostName( WebConfig
 				.getInstance( )
 				.getHost( ) );
 		
-		return KEYS.get( keyName );
+		return PUBLIC_KEYS.get( keyName );
+	}
+	
+	/**
+	 * 
+	 * 
+	 * @return
+	 */
+	public static Key getSymmetricKey( ) {
+		KeyGenerator keygen;
+		try {
+			keygen = KeyGenerator.getInstance( SYMMETRIC_ALGORITHM );
+			keygen.init( SYMMETRIC_KEY_SIZE );
+		} catch( NoSuchAlgorithmException e ) {
+			// FIXME: Rethrow better exception
+			throw new RuntimeException( e );
+		}
+		return keygen.generateKey( );
 	}
 
 	/**
