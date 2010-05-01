@@ -12,10 +12,11 @@ public class Start extends JFrame implements WindowListener
     
     private GamePanel gp;
     private IdlePanel ip;
+    private LevelEditor le;
     private PRPanel currPanel;
+    Container c = getContentPane();
     
-    public Start ()
-    {     
+    public Start () {
         super("Brick Breaker");
         setBackground(Color.black);
         setPreferredSize(new Dimension(WIDTH+20, HEIGHT+30));
@@ -23,16 +24,18 @@ public class Start extends JFrame implements WindowListener
         ip = new IdlePanel(this);
         gp = new GamePanel(LevelInitializer.generateLevels(1)[0], this);
         gp.setVisible(false);
+        le = new LevelEditor(this);
+        le.setVisible(false);
         
-        Container c = getContentPane();
+        //Container c = getContentPane();
+        //c.add(gp, BorderLayout.CENTER);
         c.add(ip, BorderLayout.CENTER);
-        c.add(gp, BorderLayout.CENTER);
         
         currPanel = ip;
         currPanel.start();
         gp.init();
         
-        addWindowListener(this);
+        //addWindowListener(this);
         pack();
         setResizable(false);
         setVisible(true);
@@ -40,7 +43,7 @@ public class Start extends JFrame implements WindowListener
         // Receive key events from all windows
         setFocusable(true);
         requestFocusInWindow(); 
-//        addKeyListener(ip);
+        //addKeyListener(ip);
         addKeyListener(gp);
     }  // end of Main() constructor
   
@@ -54,6 +57,7 @@ public class Start extends JFrame implements WindowListener
          currPanel.setVisible(true);
          addKeyListener(currPanel);
          currPanel.start();
+         c.add(gp, BorderLayout.CENTER);
     }
     
     public void endGame(int score) {
@@ -69,6 +73,19 @@ public class Start extends JFrame implements WindowListener
          currPanel.setVisible(true);
          addKeyListener(currPanel);
          currPanel.start();
+    }
+
+    public void startEditor() {
+         currPanel.pause();
+         removeKeyListener(currPanel);
+         currPanel.setVisible(false);
+
+         //le.reset();
+         currPanel = le;
+         currPanel.setVisible(true);
+         //addKeyListener(currPanel);
+         currPanel.start();
+         c.add(le, BorderLayout.CENTER);
     }
 
     // ----------------- window listener methods -------------

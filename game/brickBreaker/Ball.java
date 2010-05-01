@@ -105,7 +105,6 @@ public class Ball implements Serializable
     public int getX() { return Math.round((long)posX); }
     public int getY() { return Math.round((long)posY); }
     public int getRad() { return radius; }
-    public double getAngle() { return angle; }
     
     public void setX(double x) { posX = x; }
     public void setY(double y) { posY = y; }
@@ -118,7 +117,7 @@ public class Ball implements Serializable
         ptMultiplier = 1;
     }
     
-    public void changeAngle(double newAngle) {
+    private void changeAngle(double newAngle) {
         angle = newAngle % (2*pi);
         while (angle < 0) angle += 2*pi;
         velX = speed*Math.cos(angle);

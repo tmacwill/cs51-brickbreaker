@@ -1,5 +1,7 @@
 package brickBreaker;
 
+
+
 import java.awt.*;
 
 /**
@@ -45,25 +47,9 @@ public class VerticalRacket extends Racket
         if (y >= getLeft() && y <= getRight()) {
             if (left && x < (posY+thickness+r) && x >= posY) {
                 ball.bounce(getY()+thickness+r, false);
-                if (movingLeft || movingRight) {
-                    double newAngle = ball.getAngle() - Math.PI/6.0*speed/maxSpeed;
-                    
-                    // Make sure the ball bounces back down
-                    if (newAngle > Math.PI && newAngle < 3*Math.PI/2+0.15) newAngle = 3*Math.PI/2+0.15;
-                    else if (newAngle < Math.PI && newAngle > Math.PI/2-0.15) newAngle = Math.PI/2-0.15;
-                    ball.changeAngle(newAngle);
-                }
             }
             else if (!left && x > (posY-r) && x <= (posY+thickness)) {
                 ball.bounce(getY()-r, false);
-                if (movingLeft || movingRight) {
-                    double newAngle = ball.getAngle() + Math.PI/6.0*speed/maxSpeed;
-                    
-                    // Make sure the ball bounces back up
-                    if (newAngle < Math.PI/2+0.15) newAngle = Math.PI/2+0.15;
-                    else if (newAngle > 3*Math.PI/2-0.15) newAngle = 3*Math.PI/2-0.15;
-                    ball.changeAngle(newAngle);
-                }
             }
         }
         return ball;
@@ -72,8 +58,8 @@ public class VerticalRacket extends Racket
     // Checks if the ball is past the racket (and thus out of play)
     public boolean checkPast(Ball ball) {
         int x = ball.getX();
-        if (left && x < posY) return true;
-        else if (!left && x > (posY+thickness)) return true;
+        if (left && x < posX) return true;
+        else if (!left && x > (posX+thickness)) return true;
         return false;
     }
     

@@ -1,8 +1,0 @@
-#BlueJ class context
-comment0.target=StartEditor()
-comment1.target=void\ makeGUI()
-comment2.target=void\ initComponents()
-comment3.params=args
-comment3.target=void\ main([)
-comment3.text=\n@param\ args\ the\ command\ line\ arguments\n\n
-numComments=4

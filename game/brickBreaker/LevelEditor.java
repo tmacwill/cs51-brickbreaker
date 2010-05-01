@@ -19,8 +19,9 @@ public class LevelEditor extends PRPanel {
     public static final int BORDER = 10;
     public static final int ARENA_WIDTH = PWIDTH - 2*BORDER;
     public static final int ARENA_HEIGHT = PHEIGHT - 2*BORDER;
+    private boolean running;
 
-    //Main main;
+    Start start;
     int controlsWidth = 200;
     int PWIDTHgrid = PWIDTH - controlsWidth;
     int PHEIGHTgrid = PHEIGHT;
@@ -44,14 +45,10 @@ public class LevelEditor extends PRPanel {
     boolean[][] blocks;
     Brick[][] bricks;
 
-    public LevelEditor() {
+    public LevelEditor(Start s) {
+        start = s;
         initComponents();
     }
-
-    /*public LevelEditor(Main m) {
-        main = m;
-        initComponents();
-    }*/
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -177,6 +174,14 @@ public class LevelEditor extends PRPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    public void pause() { running = false; }
+
+    public void resume() { running = true; }
+
+    public void stop() { running = false; }
+
+    public void start() { running = true; }
+
     private boolean checkGridInput() {
         r = Integer.parseInt(rowInput.getText());
         c = Integer.parseInt(colInput.getText());
@@ -262,7 +267,7 @@ public class LevelEditor extends PRPanel {
     }
 
     private void mouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mouseClicked
-        if (gridGenerated) {
+        if (gridGenerated && running) {
             int x = evt.getX();
             int y = evt.getY();
             if (inBounds(x, y)) {
@@ -274,7 +279,7 @@ public class LevelEditor extends PRPanel {
     }//GEN-LAST:event_mouseClicked
 
     private void generateGridActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateGridActionPerformed
-        if (checkGridInput()) {
+        if (checkGridInput() && running) {
             blocks = new boolean[c][r];
             bricks = new Brick[c][r];
             gridGenerated = true;
@@ -283,15 +288,6 @@ public class LevelEditor extends PRPanel {
                 g = this.getGraphics();
                 if (g != null) {
 
-                    /*//clear screen
-                    this.remove(jLabel1);
-                    this.remove(jLabel2);
-                    this.remove(rowInput);
-                    this.remove(colInput);
-                    this.remove(generateGrid);
-                    g.setColor(Color.white);
-                    g.fillRect(0, 0, PWIDTHgrid, PHEIGHTgrid);*/
-                    
                     //clear grid and draw border
                     g.setColor(Color.white);
                     g.fillRect(0, 0, PWIDTHgrid, PHEIGHTgrid);
@@ -324,15 +320,17 @@ public class LevelEditor extends PRPanel {
     }//GEN-LAST:event_generateGridActionPerformed
 
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
-        mouseDown = true;
+        if (running)
+            mouseDown = true;
     }//GEN-LAST:event_formMousePressed
 
     private void formMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseReleased
-        mouseDown = false;
+        if (running)
+            mouseDown = false;
     }//GEN-LAST:event_formMouseReleased
 
     private void formMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseDragged
-        if (mouseDown && gridGenerated) {
+        if (mouseDown && gridGenerated && running) {
             int x = evt.getX();
             int y = evt.getY();
             if (inBounds(x, y)) {
@@ -359,9 +357,11 @@ public class LevelEditor extends PRPanel {
     }//GEN-LAST:event_numPlayersActionPerformed
 
     private void saveDesignActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveDesignActionPerformed
-        name = levelName.getText(); //FIXME: sanitize input
-        Level l = new Level(bricks, players, name);
-        LevelCatalog.getInstance().addLevel(l);
+        if (running) {
+            name = levelName.getText(); //FIXME: sanitize input
+            Level l = new Level(bricks, players, name);
+            LevelCatalog.getInstance().addLevel(l);
+        }
     }//GEN-LAST:event_saveDesignActionPerformed
 
 

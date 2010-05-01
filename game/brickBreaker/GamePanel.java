@@ -171,17 +171,23 @@ public class GamePanel extends PRPanel implements ActionListener, KeyListener
      */
     public void keyPressed(KeyEvent e)
     {
-        int code = e.getKeyCode();
-        if (code == KeyEvent.VK_F1 || code == KeyEvent.VK_F2) { start(); }
-        else if (code == KeyEvent.VK_ESCAPE) { main.endGame(0); }
-        
-        else levelPlayer.keyPressed(code);
+        if (running) {
+            int code = e.getKeyCode();
+            if (code == KeyEvent.VK_F1 || code == KeyEvent.VK_F2)
+                start();
+            else if (code == KeyEvent.VK_ESCAPE)
+                main.endGame(0);
+            else
+                levelPlayer.keyPressed(code);
+        }
     }
     
     public void keyReleased(KeyEvent e)
     {
-        int code = e.getKeyCode();
-        levelPlayer.keyReleased(code);
+        if (running) {
+            int code = e.getKeyCode();
+            levelPlayer.keyReleased(code);
+        }
     }
     
     public void keyTyped(KeyEvent e) { }
