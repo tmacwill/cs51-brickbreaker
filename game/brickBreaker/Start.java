@@ -45,6 +45,7 @@ public class Start extends JFrame implements WindowListener
         requestFocusInWindow(); 
         //addKeyListener(ip);
         addKeyListener(gp);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
     }  // end of Main() constructor
   
     public void startGame(Level lev) {
