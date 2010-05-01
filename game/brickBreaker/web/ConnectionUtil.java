@@ -1,9 +1,8 @@
 package brickBreaker.web;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.DataInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
@@ -57,7 +56,7 @@ public class ConnectionUtil {
 	 * @throws RequestFailureException
 	 *             if the request is unsuccessful
 	 */
-	public static String doGet( String urlString ) {
+	public static byte[] doGet( String urlString ) {
 		if( urlString == null ) {
 			throw new IllegalArgumentException( 
 					"Argument 'url' cannot be null" );
@@ -81,7 +80,7 @@ public class ConnectionUtil {
 	 * @throws RequestFailureException
 	 *             if the request is unsuccessful
 	 */
-	public static String doPost( String urlString, Map<String, String> postData ) {
+	public static byte[] doPost( String urlString, Map<String, String> postData ) {
 		if( urlString == null ) {
 			throw new IllegalArgumentException( 
 					"Argument 'url' cannot be null" );
@@ -111,7 +110,7 @@ public class ConnectionUtil {
 	 * @throws RequestFailureException
 	 *             if the request is unsuccessful
 	 */
-	private static String doRequest( RequestMethod method, String urlString,
+	private static byte[] doRequest( RequestMethod method, String urlString,
 			Map<String, String> postData ) {
 		assert method != null : "method is null";
 		assert urlString != null : "urlString is null";
@@ -124,7 +123,7 @@ public class ConnectionUtil {
 			throw new RequestFailureException( e );
 		}
 		
-		StringBuilder response = new StringBuilder( );
+		byte[] data;
 		
 		HttpURLConnection conn = null;
 		try {
@@ -167,13 +166,15 @@ public class ConnectionUtil {
 			}
 			
 			// Get the response
-			BufferedReader responseReader = new BufferedReader(
-					new InputStreamReader( conn.getInputStream( ) ) );
-			String buffer;
-			while( ( buffer = responseReader.readLine( ) ) != null ) {
-				response.append( buffer ).append( "\n" );
+			int contentLength = conn.getContentLength( );
+			if( contentLength < 0 ) {
+				throw new RequestFailureException( "Invalid response length" );
 			}
-			responseReader.close( );
+			
+			data = new byte[contentLength];
+			DataInputStream responseReader = new DataInputStream( conn
+					.getInputStream( ) );
+			responseReader.readFully( data );
 		} catch( IOException e ) {
 			// Unrecoverable error
 			throw new RequestFailureException( e );
@@ -183,7 +184,7 @@ public class ConnectionUtil {
 			}
 		}
 		
-		return response.toString( );
+		return data;
 	}
 
 	/**

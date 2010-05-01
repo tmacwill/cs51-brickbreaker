@@ -1,9 +1,13 @@
 package brickBreaker.web;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.codec.binary.Base64;
@@ -29,8 +33,64 @@ public class WebService {
 	private static final String CLIENT_KEY = "2d4d4bb4ef2948f7974e072b0c613d97";
 	
 	private static final String USER_VERIFY_PATH = "/users/verify";
+	private static final String LEVEL_BROWSE_PATH = "/blobs/results";
+	private static final String LEVEL_DOWNLOAD_PATH = "/blobs/download";
 	private static final String LEVEL_UPLOAD_PATH = "/blobs/add";
 	private static final String SCORE_SUBMIT_PATH = "/scores/add";
+	
+	/**
+	 * 
+	 * 
+	 * @return
+	 */
+	public static List<OnlineLevel> getOnlineLevels( ) {
+		List<OnlineLevel> onlineLevels = new ArrayList<OnlineLevel>( );
+		
+		String levelBrowseURL = getLevelBrowseURL( );
+		String response = new String( ConnectionUtil.doGet( levelBrowseURL ) );
+		Document document = XMLUtil.parseXML( response );
+		if( document != null ) {
+			// TODO: Error handling
+			NodeList levelNodes = document.getElementsByTagName( "blob" );
+			int numLevels = levelNodes.getLength( );
+			for( int i = 0; i < numLevels; i++ ) {
+				Element level = (Element)levelNodes.item( i );
+				String id = level.getAttribute( "id" );
+				String title = level.getAttribute( "title" );
+				onlineLevels.add( new OnlineLevel( id, title ) );
+			}
+		}
+		
+		return onlineLevels;
+	}
+	
+	/**
+	 * 
+	 * 
+	 * @param levelID
+	 * @return
+	 */
+	public static Level downloadLevel( String levelID ) {
+		Level level = null;
+		
+		String levelDownloadURL = getLevelDownloadURL( levelID );
+		byte[] response = ConnectionUtil.doGet( levelDownloadURL );
+		
+		ByteArrayInputStream byteStream = new ByteArrayInputStream( response );
+		try {
+			ObjectInputStream objStream = new ObjectInputStream( byteStream );
+			level = (Level)objStream.readObject( );
+			objStream.close( );
+		} catch( IOException e ) {
+			// FIXME: Rethrow better exception
+			throw new RuntimeException( e );
+		} catch( ClassNotFoundException e ) {
+			// FIXME: Rethrow better exception
+			throw new RuntimeException( e );
+		}
+		
+		return level;
+	}
 
 	/**
 	 * Uploads a level to a remote server
@@ -65,9 +125,9 @@ public class WebService {
 				title,
 				encodedLevelData );
 		
-		String response = ConnectionUtil.doPost(
+		String response = new String( ConnectionUtil.doPost(
 				levelUploadURL,
-				levelUploadRequest );
+				levelUploadRequest ) );
 		
 		// TODO: Verify response
 	}
@@ -93,9 +153,9 @@ public class WebService {
 				levelID,
 				score );
 		
-		String response = ConnectionUtil.doPost(
+		String response = new String( ConnectionUtil.doPost(
 				scoreSubmitURL,
-				scoreSubmitRequest );
+				scoreSubmitRequest ) );
 		
 		// TODO: Verify response
 	}
@@ -112,9 +172,9 @@ public class WebService {
 		String userVerifyURL = getUserVerifyURL( );
 		Map<String, String> userVerifyReqest = getUserVerifyRequest( );
 		
-		String response = ConnectionUtil.doPost(
+		String response = new String( ConnectionUtil.doPost(
 				userVerifyURL,
-				userVerifyReqest );
+				userVerifyReqest ) );
 		Document document = XMLUtil.parseXML( response );
 		if( document != null ) {
 			// TODO: Error handling
@@ -180,6 +240,28 @@ public class WebService {
 		postData.put( XML_PARAM_NAME, data );
 		
 		return postData;
+	}
+	
+	/**
+	 * 
+	 * 
+	 * @return
+	 */
+	private static String getLevelBrowseURL( ) {
+		return new StringBuilder( )
+				.append( getBaseURL( ) )
+				.append( LEVEL_BROWSE_PATH )
+				.append( URL_SUFFIX	)
+				.toString( );
+	}
+	
+	private static String getLevelDownloadURL( String levelID ) {
+		return new StringBuilder( )
+				.append( getBaseURL( ) )
+				.append( LEVEL_DOWNLOAD_PATH )
+				.append( "/" )
+				.append( ConnectionUtil.encodeURLComponent( levelID ) )
+				.toString( );
 	}
 
 	/**
