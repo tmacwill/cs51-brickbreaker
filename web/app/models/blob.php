@@ -7,6 +7,14 @@
  */
 
 /**
+ * @mainpage Documentation for Brick Breaker. <br>
+ * Harvard CS 51 Final Project. <br>
+ * Abraham Lin, Tommy MacWilliam, Robert Nishihara, and Jacob Pritt. <br>
+ *
+ */
+
+
+/**
  * Model for blobs.
  * 
  */

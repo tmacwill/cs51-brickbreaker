@@ -22,12 +22,14 @@ class BlobsController extends AppController
      * Add a new blob.
      * Used by both web interface and client.
      * Format of request POSTDATA:
+     * @code
      * <blob>
      *   <client-key>abcdef123456</client-key>
      *   <user-id>123</user-id>
      *   <title>A Random Title</title>
      *   <data>Some base64 encoded data</data>
      * </blob>
+     * @endcode
      * 
      */
     public function add()
