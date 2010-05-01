@@ -11,6 +11,7 @@ public class IdlePanel extends PRPanel { //implements ActionListener, KeyListene
     public static final int PWIDTH = 1200; //Main.WIDTH;  // Size of panel
     public static final int PHEIGHT = 700; //Main.HEIGHT;
     private Start start;
+    private boolean running;
 
     private static final int DISPLAYX = 600;
     private static final int DISPLAYY = 200;
@@ -18,11 +19,6 @@ public class IdlePanel extends PRPanel { //implements ActionListener, KeyListene
     private static final int DISPLAYHEIGHT = 300;
 
     private java.util.List<Level> levelObjectList;
-
-    private String[] msgs = { "F1..........New 1-player Game",
-                                                "F2..........New 2-player Game",
-                                                "F3..........Enter Level Editor",
-                                                "F4..........Upload/Download Levels" };
 
     public IdlePanel(Start s) {
         start = s;
@@ -41,16 +37,19 @@ public class IdlePanel extends PRPanel { //implements ActionListener, KeyListene
         initComponents();
     }*/
 
-    public void start()
-    {
-        /*if (clock == null)
-            clock = new javax.swing.Timer(delay,this);
-        clock.start();*/
+    public void start() {
+        running = true;
     }
 
-    public void pause() {}
-    public void resume() {}
-    public void stop() {}
+    public void pause() {
+        running = false;
+    }
+    public void resume() {
+        running = true;
+    }
+    public void stop() {
+        running = false;
+    }
 
     private void initLevelList() {
         levelObjectList = LevelCatalog.getInstance().getLevels();
@@ -122,15 +121,6 @@ public class IdlePanel extends PRPanel { //implements ActionListener, KeyListene
             }
     }
 
-    /*public void keyPressed(KeyEvent e)
-    {
-        //int code = e.getKeyCode();
-        //if (code == KeyEvent.VK_F1) { }
-    }
-
-    public void keyReleased(KeyEvent e) {  }
-    public void keyTyped(KeyEvent e) { } */
-
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -143,6 +133,7 @@ public class IdlePanel extends PRPanel { //implements ActionListener, KeyListene
         label1 = new java.awt.Label();
         levelList = new java.awt.List();
         label2 = new java.awt.Label();
+        beginLevelEditor = new java.awt.Button();
 
         setBackground(new java.awt.Color(0, 0, 0));
         setPreferredSize(new java.awt.Dimension(1200, 700));
@@ -176,6 +167,13 @@ public class IdlePanel extends PRPanel { //implements ActionListener, KeyListene
         label2.setForeground(new java.awt.Color(255, 255, 255));
         label2.setText("Levels");
 
+        beginLevelEditor.setLabel("Enter Level Editor");
+        beginLevelEditor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                beginLevelEditorActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -186,65 +184,73 @@ public class IdlePanel extends PRPanel { //implements ActionListener, KeyListene
                         .addGap(265, 265, 265)
                         .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(339, 339, 339)
-                        .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(238, 238, 238)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(97, 97, 97)
+                                .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(levelList, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(242, 242, 242)
-                        .addComponent(levelList, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(305, Short.MAX_VALUE))
+                        .addGap(516, 516, 516)
+                        .addComponent(beginLevelEditor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(264, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(225, Short.MAX_VALUE)
+                .addGap(205, 205, 205)
                 .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(levelList, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(153, 153, 153)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 126, Short.MAX_VALUE)
+                .addComponent(beginLevelEditor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(49, 49, 49)
                 .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
-        int code = evt.getKeyCode();
-        throw new RuntimeException();
-        /*System.out.println(code);
-        System.out.println(KeyEvent.VK_F2);
-        if (code == KeyEvent.VK_F2) {
-            start.startEditor();
-        }*/
-    }//GEN-LAST:event_formKeyPressed
-
-    private void formKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyTyped
-        throw new RuntimeException();
-    }//GEN-LAST:event_formKeyTyped
-
     private void levelListKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_levelListKeyPressed
-        int code = evt.getKeyCode();
-        if (code == KeyEvent.VK_RIGHT) {
-            int i = levelList.getSelectedIndex();
-            Level l = levelObjectList.get(i);
-            displayLevel(l);
+        if (running) {
+            int code = evt.getKeyCode();
+            if (code == KeyEvent.VK_RIGHT) {
+                int i = levelList.getSelectedIndex();
+                Level l = levelObjectList.get(i);
+                displayLevel(l);
+            }
+            else if (code == KeyEvent.VK_F1) {
+                int i = levelList.getSelectedIndex();
+                Level lev = levelObjectList.get(i);
+                start.startGame(lev);
+            }
         }
-        else if (code == KeyEvent.VK_F1) {
-            int i = levelList.getSelectedIndex();
-            Level lev = levelObjectList.get(i);
-            start.startGame(lev);
-        }
-        //else if (code == KeyEvent.VK_F2) {
-        //    start.startEditor();
-        //}
     }//GEN-LAST:event_levelListKeyPressed
 
     private void levelListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_levelListMouseClicked
-        /*int i = levelList.getSelectedIndex();
-        Level l = levelObjectList.get(i);
-        displayLevel(l);*/
     }//GEN-LAST:event_levelListMouseClicked
+
+    private void formKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyTyped
+    }//GEN-LAST:event_formKeyTyped
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        throw new RuntimeException();
+        /*if (running) {
+            int code = evt.getKeyCode();
+            if (code == KeyEvent.VK_F2) {
+                start.startEditor();
+            }
+        }*/
+    }//GEN-LAST:event_formKeyPressed
+
+    private void beginLevelEditorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_beginLevelEditorActionPerformed
+        if (running) {
+            start.startEditor();
+        }
+    }//GEN-LAST:event_beginLevelEditorActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private java.awt.Button beginLevelEditor;
     private java.awt.Label label1;
     private java.awt.Label label2;
     private java.awt.List levelList;
