@@ -18,8 +18,13 @@ public class LevelCatalog {
 	private BiMap<String, Level> levelData;
 	
 	private LevelCatalog( ) {
-		levelData = LocalDataService.loadAllLevelsFromDisk( );
+            //levelData = LocalDataService.loadAllLevelsFromDisk( );
+            refreshLevels();
 	}
+
+        public void refreshLevels( ) {
+            levelData = LocalDataService.loadAllLevelsFromDisk( );
+        }
 	
 	public static LevelCatalog getInstance( ) {
 		return INSTANCE;
