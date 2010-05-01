@@ -219,12 +219,10 @@ class UsersController extends AppController
 	 * Verify if the user's credentials are valid.
 	 * Used by client.
 	 * Format of request POSTDATA:
-	 * @code
 	 * <user>
 	 *   <username>user</username>
 	 *   <password>pass</password>
 	 * </user>
-	 * @endcode
 	 * 
 	 */
 	public function verify()

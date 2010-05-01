@@ -22,22 +22,24 @@ class ScoresController extends AppController
 	 * Add a new high score.
 	 * Used by client.
 	 * Format of request POSTDATA:
-	 * @code
 	 * <score>
 	 *   <client-key>abcdef123456</client-key>
 	 *   <user-id>123</user-id>
 	 *   <blob-id>123abc456def</blob-id>
 	 *   <score>456789</score>
 	 * </score>
-	 * @endcode
 	 * 
 	 */
 	public function add()
 	{
 		// decrypt post request
-		$postdata_encrypted = $_POST['postdata'];
 		$key = file_get_contents(Configure::read('private_key_file'));
-		openssl_private_decrypt(base64_decode($postdata_encrypted), $postdata, $key);
+		$aes_key_encrypted = $_POST['key'];
+		openssl_private_decrypt(base64_decode($aes_key_encrypted), $aes_key, $key);
+		
+		$postdata_encrypted = $_POST['postdata'];
+		$iv = Configure::read('aes_iv');
+		$postdata = mcrypt_decrypt(MCRYPT_RIJNDAEL_128, $aes_key, base64_decode($postdata_encrypted), MCRYPT_MODE_CBC, $iv);
 		
 		// parse XML request
 		$xml = new Xml($postdata);
