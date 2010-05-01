@@ -75,7 +75,7 @@ public class LevelPlayer
      * @return Returns true if the given position is occupied by a brick, false if it is empty
      */
     public boolean isFilled (int x, int y) {
-        if (x < 0 || y < 0 || x >= numRows || y >= numCols) return false;
+        if (x < 0 || y < 0 || y >= numRows || x >= numCols) return false;
         return (bricks[x][y] != null);
     }
     
@@ -88,7 +88,7 @@ public class LevelPlayer
      * @return Returns the number of points earned by removing this brick
      */
     public int removeBrick (int x, int y, Ball b) {
-        if (x < 0 || y < 0 || x >= numRows || y >= numCols) return 0;
+        if (x < 0 || y < 0 || y >= numRows || x >= numCols) return 0;
         if (bricks[x][y] == null) return 0;
         else {
             int pts = bricks[x][y].bounce(b);

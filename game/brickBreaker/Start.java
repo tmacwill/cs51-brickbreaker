@@ -80,12 +80,21 @@ public class Start extends JFrame implements WindowListener
          removeKeyListener(currPanel);
          currPanel.setVisible(false);
 
-         //le.reset();
          currPanel = le;
          currPanel.setVisible(true);
-         //addKeyListener(currPanel);
          currPanel.start();
          c.add(le, BorderLayout.CENTER);
+    }
+
+    public void exitEditor() {
+        currPanel.pause();
+        removeKeyListener(currPanel);
+        currPanel.setVisible(false);
+
+        currPanel = ip;
+        currPanel.setVisible(true);
+        currPanel.start();
+        c.add(ip, BorderLayout.CENTER);
     }
 
     // ----------------- window listener methods -------------

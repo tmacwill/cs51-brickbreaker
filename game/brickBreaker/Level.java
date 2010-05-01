@@ -49,8 +49,10 @@ public class Level implements Serializable
      */
     public Level(Brick [][] bricks, Ball[] balls, Racket[] rack)
     {
-        numRows = bricks.length;
-        numCols = bricks[0].length;
+        //numRows = bricks.length;
+        //numCols = bricks[0].length;
+        numRows = bricks[0].length;
+        numCols = bricks.length;
         brickWidth = WIDTH/numCols;
         brickHeight = HEIGHT/numRows;
         
@@ -68,8 +70,10 @@ public class Level implements Serializable
      */
     public Level(Brick[][] bricks, int players, String name) {
         this.name = name;
-        numRows = bricks.length;
-        numCols = bricks[0].length;
+        //numRows = bricks.length;
+        //numCols = bricks[0].length;
+        numRows = bricks[0].length;
+        numCols = bricks.length;
         brickWidth = WIDTH/numCols;
         brickHeight = HEIGHT/numRows;
         initBricks(bricks);

@@ -44,6 +44,7 @@ public class IdlePanel extends PRPanel { //implements ActionListener, KeyListene
 
     public void start() {
         running = true;
+        reset();
     }
 
     public void pause() {
