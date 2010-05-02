@@ -67,6 +67,7 @@ public class IdlePanel extends PRPanel { //implements ActionListener, KeyListene
     }
 
     private void initOnlineLevelList() {
+        onlineLevelListDisplay.removeAll();
         onlineLevelList = WebService.getOnlineLevels();
         for (OnlineLevel l : onlineLevelList) {
             onlineLevelListDisplay.add(l.getTitle());
@@ -326,7 +327,8 @@ public class IdlePanel extends PRPanel { //implements ActionListener, KeyListene
                 int i = onlineLevelListDisplay.getSelectedIndex();
                 OnlineLevel ol = onlineLevelList.get(i);
                 String levelID = ol.getLevelID();
-                WebService.downloadLevel(levelID);
+                Level l = WebService.downloadLevel(levelID);
+                LevelCatalog.getInstance().addLevel(l);
                 reset();
             }
         }
