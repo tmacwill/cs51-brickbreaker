@@ -22,12 +22,14 @@ class BlobsController extends AppController
      * Add a new blob.
      * Used by both web interface and client.
      * Format of request POSTDATA:
+     * @code
      * <blob>
      *   <client-key>abcdef123456</client-key>
      *   <user-id>123</user-id>
      *   <title>A Random Title</title>
      *   <data>Some base64 encoded data</data>
      * </blob>
+     * @endcode
      * 
      */
     public function add()
@@ -95,9 +97,13 @@ class BlobsController extends AppController
 			else
 				$this->Session->setFlash('Blob already exists');
     	    
-    	    // redirect user to his profile
-    	    $this->redirect('/users/view/' . $this->Session->read('session_uid'));
-    	    exit();
+    	    // only redirect if debug mode is off
+    	    if (Configure::read('debug') != 0)
+    	    {
+				// redirect user to his profile
+				$this->redirect('/users/view/' . $this->Session->read('session_uid'));
+				exit();
+			}
     	}
     }
 
@@ -288,7 +294,7 @@ class BlobsController extends AppController
 		else
 			array_push($results, 'fail');
 			
-		// delete blob data from database
+		// delete blob data from databaseAlso, to format code contained in comments, the @code and @endcode markers are necessary for the documentation generator I'm using (called Doxygen).
 		array_push($tests, 'delete blob');
 		if ($this->Blob->delete($blob))
 			array_push($results, 'pass');
