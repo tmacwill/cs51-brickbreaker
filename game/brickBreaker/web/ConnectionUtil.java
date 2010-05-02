@@ -10,6 +10,9 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -43,6 +46,8 @@ public class ConnectionUtil {
 	
 	private static final int CONNECT_TIMEOUT_IN_MILLIS = 5000;
 	private static final int READ_TIMEOUT_IN_MILLIS = 5000;
+	
+	private static final int RESPONSE_BUFFER_SIZE = 512;
 
 	/**
 	 * Performs a GET request to the specified URL target.
@@ -167,15 +172,29 @@ public class ConnectionUtil {
 			}
 			
 			// Get the response
-			int contentLength = conn.getContentLength( );
-			if( contentLength < 0 ) {
-				throw new RequestFailureException( "Invalid response length" );
-			}
-			
-			data = new byte[contentLength];
 			DataInputStream responseReader = new DataInputStream( conn
 					.getInputStream( ) );
-			responseReader.readFully( data );
+			List<byte[]> buffers = new ArrayList<byte[]>( );
+			int totalBytesRead = 0;
+			
+			// Read the response in chunks
+			byte[] buffer = new byte[RESPONSE_BUFFER_SIZE];
+			int bytesRead;
+			while( ( bytesRead = responseReader.read( buffer ) ) > 0 ) {
+				buffers.add( Arrays.copyOf( buffer, bytesRead ) );
+				totalBytesRead += bytesRead;
+			}
+			responseReader.close( );
+			
+			// Combine the chunks into a single array
+			data = new byte[totalBytesRead];
+			int bytesCopied = 0;
+			int numBuffers = buffers.size( );
+			for( int i = 0; i < numBuffers; i++ ) {
+				buffer = buffers.get( i );
+				System.arraycopy( buffer, 0, data, bytesCopied, buffer.length );
+				bytesCopied += buffer.length;
+			}
 		} catch( IOException e ) {
 			// Unrecoverable error
 			throw new RequestFailureException( e );
