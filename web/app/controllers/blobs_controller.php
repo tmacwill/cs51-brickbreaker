@@ -97,13 +97,9 @@ class BlobsController extends AppController
 			else
 				$this->Session->setFlash('Blob already exists');
     	    
-    	    // only redirect if debug mode is off
-    	    if (Configure::read('debug') != 0)
-    	    {
-				// redirect user to his profile
-				$this->redirect('/users/view/' . $this->Session->read('session_uid'));
-				exit();
-			}
+    	    // redirect user to his profile
+			$this->redirect('/users/view/' . $this->Session->read('session_uid'));
+			exit();
     	}
     }
 
@@ -294,7 +290,7 @@ class BlobsController extends AppController
 		else
 			array_push($results, 'fail');
 			
-		// delete blob data from databaseAlso, to format code contained in comments, the @code and @endcode markers are necessary for the documentation generator I'm using (called Doxygen).
+		// delete blob data from database
 		array_push($tests, 'delete blob');
 		if ($this->Blob->delete($blob))
 			array_push($results, 'pass');
