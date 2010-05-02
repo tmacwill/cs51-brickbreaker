@@ -4,6 +4,7 @@ import java.util.List;
 
 import brickBreaker.local.LevelCatalog;
 import brickBreaker.web.EncryptionUtil;
+import brickBreaker.web.HighScore;
 import brickBreaker.web.OnlineLevel;
 import brickBreaker.web.UserConfig;
 import brickBreaker.web.WebConfig;
@@ -16,9 +17,9 @@ public class Test {
 	 */
 	public static void main( String[] args ) {
 		LevelCatalog catalog = LevelCatalog.getInstance( );
-		Brick[][] bricks = new Brick[20][20];
-		Level level = new Level( bricks, 1, "a" );
-		catalog.addLevel( level );
+//		Brick[][] bricks = new Brick[20][20];
+//		Level level = new Level( bricks, 1, "a" );
+//		catalog.addLevel( level );
 		
 		EncryptionUtil.init( );
 		
@@ -42,9 +43,15 @@ public class Test {
 		for( Level l : levels ) {
 //			System.out.println( l );
 //			System.out.println( catalog.getLevelID( l ) );
-			WebService.uploadLevel( l, "A Random Level" );
-//			WebService.submitScore( l, 12345 );
+//			WebService.uploadLevel( l, "A Random Level" );
+			WebService.submitScore( l, 12345 );
+			
+			List<HighScore> highScores = WebService.retrieveHighScores( l );
+			for( HighScore highScore : highScores ) {
+				System.out.println( highScore.getName( ) + " : " + highScore.getScore( ) );
+			}
 		}
+		
 	}
 
 }

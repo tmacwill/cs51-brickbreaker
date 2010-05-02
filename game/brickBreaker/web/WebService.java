@@ -37,6 +37,7 @@ public class WebService {
 	private static final String LEVEL_BROWSE_PATH = "/blobs/results";
 	private static final String LEVEL_DOWNLOAD_PATH = "/blobs/download";
 	private static final String LEVEL_UPLOAD_PATH = "/blobs/add";
+	private static final String SCORE_RETRIEVE_PATH = "/scores/view";
 	private static final String SCORE_SUBMIT_PATH = "/scores/add";
 	
 	/**
@@ -131,6 +132,37 @@ public class WebService {
 				levelUploadRequest ) );
 		
 		// TODO: Verify response
+	}
+	
+	/**
+	 * 
+	 * 
+	 * @param level
+	 * @return
+	 */
+	public static List<HighScore> retrieveHighScores( Level level ) {
+		List<HighScore> highScores = new ArrayList<HighScore>( );
+		
+		String levelID = LevelCatalog.getInstance( ).getLevelID( level );
+		
+		String scoreRetrieveURL = getScoreRetrieveURL( levelID );
+		String response = new String( ConnectionUtil.doGet( scoreRetrieveURL ) );
+		Document document = XMLUtil.parseXML( response );
+		if( document != null ) {
+			// TODO: Error handling
+			NodeList scoreNodes = document.getElementsByTagName( "score" );
+			int numLevels = scoreNodes.getLength( );
+			for( int i = 0; i < numLevels; i++ ) {
+				Element score = (Element)scoreNodes.item( i );
+				String name = ( (Element)score.getFirstChild( ) )
+						.getAttribute( "username" );
+				int highScore = Integer
+						.parseInt( score.getAttribute( "score" ) );
+				highScores.add( new HighScore( name, highScore ) );
+			}
+		}
+		
+		return highScores;
 	}
 	
 	/**
@@ -320,13 +352,29 @@ public class WebService {
 	/**
 	 * 
 	 * 
+	 * @param levelID TODO
+	 * @return
+	 */
+	private static String getScoreRetrieveURL( String levelID ) {
+		return new StringBuilder( )
+				.append( getBaseURL( ) )
+				.append( SCORE_RETRIEVE_PATH )
+				.append( "/" )
+				.append( ConnectionUtil.encodeURLComponent( levelID ) )
+				.append( URL_SUFFIX	)
+				.toString( );
+	}
+	
+	/**
+	 * 
+	 * 
 	 * @return
 	 */
 	private static String getScoreSubmitURL( ) {
 		return new StringBuilder( )
 				.append( getBaseURL( ) )
 				.append( SCORE_SUBMIT_PATH )
-//				.append( URL_SUFFIX	)
+				.append( URL_SUFFIX	)
 				.toString( );
 	}
 	
