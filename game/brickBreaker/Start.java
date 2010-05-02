@@ -9,6 +9,7 @@ public class Start extends JFrame implements WindowListener
 {
     public static int WIDTH = 1200;
     public static int HEIGHT = 700;
+    private static String username = "";
     
     private GamePanel gp;
     private IdlePanel ip;
@@ -46,7 +47,14 @@ public class Start extends JFrame implements WindowListener
         //addKeyListener(ip);
         addKeyListener(gp);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-    }  // end of Main() constructor
+    }  // end of Start() constructor
+
+    public Start(String name) {
+        this();
+        username = name;
+        if (username.equals("")) System.out.println("Started game - not logged in");
+        else System.out.println("Started game - logged in with username " + name);
+    }
   
     public void startGame(Level lev) {
          currPanel.pause();
@@ -124,8 +132,12 @@ public class Start extends JFrame implements WindowListener
   // ----------------------------------------------------
 
   public static void main(String args[])
-  { 
-    new Start();
+  {
+    /*PasswordBox pass = new PasswordBox();
+    String name = pass.getResult();
+    pass.setVisible(false);*/
+
+    new Start();//name);
   }
 
 } // end of Main class
