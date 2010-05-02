@@ -220,7 +220,9 @@ public class ConnectionUtil {
 			return URLEncoder.encode( fragment, ENCODING_SCHEME );
 		} catch( UnsupportedEncodingException e ) {
 			// Should never happen
-			throw new RuntimeException( e );
+			throw new RuntimeException(
+					"An unsupported encoding was specified",
+					e );
 		}
 	}
 }
