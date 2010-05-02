@@ -29,12 +29,11 @@ public class LevelPlayer
      */
     public LevelPlayer(Level lev)
     {
-        //level = (Level) lev.clone();
-        level = lev;
+        level = (Level)lev.clone( );
         rackets = level.getRackets();
         balls = level.getBalls();
-        for (int i = 0; i < balls.length; i++)
-            balls[i].setLevel(this);
+        for (int i = 0; i < balls.length; i++) balls[i].setLevel(this);
+        
         bricks = level.getBricks();
         brickWidth = level.brickWidth();
         brickHeight = level.brickHeight();

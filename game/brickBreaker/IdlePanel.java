@@ -58,7 +58,6 @@ public class IdlePanel extends PRPanel { //implements ActionListener, KeyListene
     }
 
     private void initLevelList() {
-        LevelCatalog.getInstance().refreshLevels();
         levelObjectList = LevelCatalog.getInstance().getLevels();
         levelList.removeAll();
         for (Level l : levelObjectList) {

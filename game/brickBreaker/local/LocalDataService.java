@@ -48,14 +48,17 @@ public class LocalDataService {
 			levelStream.writeObject( level );
 			levelStream.close( );
 		} catch( FileNotFoundException e ) {
-			// FIXME: Rethrow better exception
-			throw new RuntimeException( e );
+			throw new FilesystemFailureException(
+					"Could not find levels directory",
+					e );
 		} catch( IOException e ) {
-			// FIXME: Rethrow better exception
-			throw new RuntimeException( e );
+			throw new FilesystemFailureException(
+					"Error in saving level to disk",
+					e );
 		} catch( URISyntaxException e ) {
-			// FIXME: Rethrow better exception
-			throw new RuntimeException( e );
+			throw new FilesystemFailureException(
+					"Could not resolve path to levels directory",
+					e );
 		}
 	}
 	
@@ -74,8 +77,12 @@ public class LocalDataService {
 					.getContextClassLoader( )
 					.getResource( LEVELS_DIR )
 					.toURI( ) );
-			// FIXME: Better error handling (e.g. make sure levelsDir is directory)
 			File[] levelFiles = levelsDir.listFiles( );
+			if( levelFiles == null ) {
+				// Found a file, not a directory
+				throw new FilesystemFailureException(
+						"Could not resolve path to levels directory" );
+			}
 			for( File levelFile : levelFiles ) {
 				ObjectInputStream levelStream = new ObjectInputStream(
 						new FileInputStream( levelFile ) );
@@ -88,27 +95,32 @@ public class LocalDataService {
 				levels.put( levelID, level );
 			}
 		} catch( URISyntaxException e ) {
-			// FIXME: Rethrow better exception
-			throw new RuntimeException( e );
+			throw new FilesystemFailureException(
+					"Could not resolve path to levels directory",
+					e );
 		} catch( FileNotFoundException e ) {
-			// FIXME: Rethrow better exception
-			throw new RuntimeException( e );
+			throw new FilesystemFailureException(
+					"Could not find levels directory",
+					e );
 		} catch( IOException e ) {
-			// FIXME: Rethrow better exception
-			throw new RuntimeException( e );
+			throw new FilesystemFailureException(
+					"Error in reading level from disk",
+					e );
 		} catch( ClassNotFoundException e ) {
-			// FIXME: Rethrow better exception
-			throw new RuntimeException( e );
+			throw new FilesystemFailureException(
+					"Error in reading level from disk",
+					e );
 		}
 		
 		return HashBiMap.create( levels );
 	}
-	
+
 	/**
-	 * 
+	 * Calculates the MD5 hash for the provided level.
 	 * 
 	 * @param level
-	 * @return
+	 *            the level
+	 * @return the MD5 hash of the level
 	 */
 	public static String calculateHash( Level level ) {
 		try {
@@ -116,11 +128,9 @@ public class LocalDataService {
 			ObjectOutputStream objStream = new ObjectOutputStream( byteStream );
 			objStream.writeObject( level );
 			objStream.close( );
-			byte[] levelBytes = byteStream.toByteArray( );
-			return DigestUtils.md5Hex( levelBytes );
+			return DigestUtils.md5Hex( byteStream.toByteArray( ) );
 		} catch( IOException e ) {
-			// FIXME: Rethrow better exception
-			throw new RuntimeException( e );
+			throw new RuntimeException( "Error in reading level data", e );
 		}
 	}
 }

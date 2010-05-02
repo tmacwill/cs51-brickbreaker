@@ -3,6 +3,7 @@ package brickBreaker;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * Contains all of the data necessary to initialize a level.  This object is passed to LevelPlayer to play a level.
@@ -12,7 +13,7 @@ import java.io.Serializable;
  * @file Level.java
  * @see LevelPlayer.java
  */
-public class Level implements Serializable
+public class Level implements Serializable, Cloneable
 {
     private static final long serialVersionUID = 1L;
     
@@ -111,7 +112,23 @@ public class Level implements Serializable
             }
         }
     }
-
+    
+    /**
+     * Returns a deep clone of the Level.
+     */
+    @Override
+    public Object clone( ) {
+    	// Copy each of the arrays
+    	Brick[][] bricksCopy = new Brick[bricks.length][bricks[0].length];
+    	for( int i = 0; i < bricks.length; i++ ) {
+    		bricksCopy[i] = Arrays.copyOf( bricks[i], bricks[i].length );
+    	}
+    	Racket[] racketsCopy = Arrays.copyOf( rackets, rackets.length );
+    	Ball[] ballsCopy = Arrays.copyOf( balls, balls.length );
+    	
+    	return new Level( bricksCopy, ballsCopy, racketsCopy, name );
+    }
+    
     /**
      * Sets the level's name to the new string
      * @param name New name

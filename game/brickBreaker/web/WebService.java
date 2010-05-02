@@ -37,12 +37,41 @@ public class WebService {
 	private static final String LEVEL_BROWSE_PATH = "/blobs/results";
 	private static final String LEVEL_DOWNLOAD_PATH = "/blobs/download";
 	private static final String LEVEL_UPLOAD_PATH = "/blobs/add";
+	private static final String SCORE_RETRIEVE_PATH = "/scores/view";
 	private static final String SCORE_SUBMIT_PATH = "/scores/add";
+
+	/**
+	 * Returns whether the given login credentials are valid.
+	 * 
+	 * @param username
+	 *            the username
+	 * @param password
+	 *            the password
+	 * @return whether the given username/password pair is valid
+	 */
+	public static boolean verifyUser( String username, String password ) {
+		boolean isValidUser = false;
+		
+		String userVerifyURL = getUserVerifyURL( );
+		Map<String, String> userVerifyReqest = getUserVerifyRequest( );
+		
+		String response = new String( ConnectionUtil.doPost(
+				userVerifyURL,
+				userVerifyReqest ) );
+		Document document = XMLUtil.parseXML( response );
+		if( document != null ) {
+			// TODO: Error handling
+			NodeList userNodes = document.getElementsByTagName( "std_class" );
+			isValidUser = ( userNodes.getLength( ) > 0 );
+		}
+		
+		return isValidUser;
+	}
 	
 	/**
+	 * Returns a list of all levels available on the remote server.
 	 * 
-	 * 
-	 * @return
+	 * @return the list of available levels
 	 */
 	public static List<OnlineLevel> getOnlineLevels( ) {
 		List<OnlineLevel> onlineLevels = new ArrayList<OnlineLevel>( );
@@ -66,10 +95,10 @@ public class WebService {
 	}
 	
 	/**
+	 * Downloads the level with the specified unique identifier.
 	 * 
-	 * 
-	 * @param levelID
-	 * @return
+	 * @param levelID the unique identifier
+	 * @return the downloaded level
 	 */
 	public static Level downloadLevel( String levelID ) {
 		Level level = null;
@@ -94,7 +123,7 @@ public class WebService {
 	}
 
 	/**
-	 * Uploads a level to a remote server
+	 * Uploads a level to a remote server.
 	 * 
 	 * @param level
 	 *            the level to upload
@@ -132,12 +161,47 @@ public class WebService {
 		
 		// TODO: Verify response
 	}
-	
+
 	/**
-	 * 
+	 * Retrieves high scores for the specified level from the remote server.
 	 * 
 	 * @param level
+	 *            the level
+	 * @return a list of high scores for that level retrieved from the remote
+	 *         server
+	 */
+	public static List<HighScore> retrieveHighScores( Level level ) {
+		List<HighScore> highScores = new ArrayList<HighScore>( );
+		
+		String levelID = LevelCatalog.getInstance( ).getLevelID( level );
+		
+		String scoreRetrieveURL = getScoreRetrieveURL( levelID );
+		String response = new String( ConnectionUtil.doGet( scoreRetrieveURL ) );
+		Document document = XMLUtil.parseXML( response );
+		if( document != null ) {
+			// TODO: Error handling
+			NodeList scoreNodes = document.getElementsByTagName( "score" );
+			int numLevels = scoreNodes.getLength( );
+			for( int i = 0; i < numLevels; i++ ) {
+				Element score = (Element)scoreNodes.item( i );
+				String name = ( (Element)score.getFirstChild( ) )
+						.getAttribute( "username" );
+				long highScore = Long
+						.parseLong( score.getAttribute( "score" ) );
+				highScores.add( new HighScore( name, highScore ) );
+			}
+		}
+		
+		return highScores;
+	}
+
+	/**
+	 * Submits a new high score to the remote server.
+	 * 
+	 * @param level
+	 *            the level with which the score is associated
 	 * @param score
+	 *            the score
 	 */
 	public static void submitScore( Level level, long score ) {
 		String levelID = LevelCatalog.getInstance( ).getLevelID( level );
@@ -149,7 +213,7 @@ public class WebService {
 		}
 		
 		Key publicKey = EncryptionUtil.getPublicKey( );
-		Key symmetricKey = EncryptionUtil.getSymmetricKey( );
+		Key symmetricKey = EncryptionUtil.generateSymmetricKey( );
 		String scoreSubmitURL = getScoreSubmitURL( );
 		Map<String, String> scoreSubmitRequest = getScoreSubmitRequest(
 				userID,
@@ -161,7 +225,6 @@ public class WebService {
 		String response = new String( ConnectionUtil.doPost(
 				scoreSubmitURL,
 				scoreSubmitRequest ) );
-		System.out.println(response);
 		// TODO: Verify response
 	}
 
@@ -196,9 +259,9 @@ public class WebService {
 	}
 	
 	/**
+	 * Returns the base URL to the remote server.
 	 * 
-	 * 
-	 * @return
+	 * @return the base URL
 	 */
 	private static StringBuilder getBaseURL( ) {
 		WebConfig webConfig = WebConfig.getInstance( );
@@ -210,9 +273,9 @@ public class WebService {
 	}
 	
 	/**
+	 * Returns the full URL for verifying user identities.
 	 * 
-	 * 
-	 * @return
+	 * @return the URL
 	 */
 	private static String getUserVerifyURL( ) {
 		return new StringBuilder( )
@@ -221,11 +284,11 @@ public class WebService {
 				.append( URL_SUFFIX	)
 				.toString( );
 	}
-	
+
 	/**
+	 * Returns the parameters used in requests for verifying user identities.
 	 * 
-	 * 
-	 * @return
+	 * @return the parameters
 	 */
 	private static Map<String, String> getUserVerifyRequest( ) {
 		UserConfig userConfig = UserConfig.getInstance( );
@@ -248,9 +311,9 @@ public class WebService {
 	}
 	
 	/**
+	 * Returns the full URL for browsing levels.
 	 * 
-	 * 
-	 * @return
+	 * @return the URL
 	 */
 	private static String getLevelBrowseURL( ) {
 		return new StringBuilder( )
@@ -259,7 +322,15 @@ public class WebService {
 				.append( URL_SUFFIX	)
 				.toString( );
 	}
-	
+
+	/**
+	 * Returns the full URL for downloading the level with the specified unique
+	 * identifier.
+	 * 
+	 * @param levelID
+	 *            the unique identifier
+	 * @return the URL
+	 */
 	private static String getLevelDownloadURL( String levelID ) {
 		return new StringBuilder( )
 				.append( getBaseURL( ) )
@@ -270,9 +341,9 @@ public class WebService {
 	}
 
 	/**
-	 * Returns the URL for uploading levels to the remote server.
+	 * Returns the full URL for uploading levels.
 	 * 
-	 * @return the URL for uploading levels
+	 * @return the URL
 	 */
 	private static String getLevelUploadURL( ) {
 		return new StringBuilder( )
@@ -283,7 +354,7 @@ public class WebService {
 	}
 	
 	/**
-	 * 
+	 * Returns the parameters used in requests for uploading levels.
 	 * 
 	 * @param userID
 	 *            the current user's ID
@@ -291,7 +362,7 @@ public class WebService {
 	 *            the name of the level
 	 * @param encodedLevelData
 	 *            the level as a base64-encoded string
-	 * @return
+	 * @return the parameters
 	 */
 	private static Map<String, String> getLevelUploadRequest( String userID,
 			String title, String encodedLevelData ) {
@@ -316,29 +387,53 @@ public class WebService {
 		
 		return postData;
 	}
+
+	/**
+	 * Returns the full URL for retrieving high scores for the level with the
+	 * specified unique identifier.
+	 * 
+	 * @param levelID
+	 *            the unique identifier
+	 * @return the URL
+	 */
+	private static String getScoreRetrieveURL( String levelID ) {
+		return new StringBuilder( )
+				.append( getBaseURL( ) )
+				.append( SCORE_RETRIEVE_PATH )
+				.append( "/" )
+				.append( ConnectionUtil.encodeURLComponent( levelID ) )
+				.append( URL_SUFFIX	)
+				.toString( );
+	}
 	
 	/**
+	 * Returns the full URL for submitting high scores.
 	 * 
-	 * 
-	 * @return
+	 * @return the URL
 	 */
 	private static String getScoreSubmitURL( ) {
 		return new StringBuilder( )
 				.append( getBaseURL( ) )
 				.append( SCORE_SUBMIT_PATH )
-//				.append( URL_SUFFIX	)
+				.append( URL_SUFFIX	)
 				.toString( );
 	}
-	
+
 	/**
-	 * 
+	 * Returns the parameters used in requests for submitting high scores.
 	 * 
 	 * @param userID
+	 *            the current user's ID
 	 * @param levelID
+	 *            the unique identifier for the level associated with the high
+	 *            score
 	 * @param score
-	 * @param publicKey TODO
-	 * @param symmetricKey TODO
-	 * @return
+	 *            the score
+	 * @param publicKey
+	 *            the public key to be used for encrypting the symmetric key
+	 * @param symmetricKey
+	 *            the symmetric key to be used for encrypting the score data
+	 * @return the parameters
 	 */
 	private static Map<String, String> getScoreSubmitRequest( String userID,
 			String levelID, long score, Key publicKey, Key symmetricKey ) {

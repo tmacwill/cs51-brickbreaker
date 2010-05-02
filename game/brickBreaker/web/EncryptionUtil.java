@@ -25,25 +25,37 @@ import javax.crypto.spec.IvParameterSpec;
 
 import org.apache.commons.codec.binary.Base64;
 
+import brickBreaker.local.FilesystemFailureException;
+
 /**
- * This class provides methods for performing public-key encryption.
+ * This class provides methods for performing encryption.
  * 
  * @author Abraham Lin
  */
 public class EncryptionUtil {
-	private static final IvParameterSpec INIT_VECTOR = new IvParameterSpec(
-			"fedcba9876543210".getBytes( ) );
-	private static final String ASYMMETRIC_ALGORITHM = "RSA";
-	private static final String SYMMETRIC_ALGORITHM = "AES";
+	// Encryption parameters
+	private static final String ASYMMETRIC_KEYGEN_ALGORITHM = "RSA";
+	private static final String ASYMMETRIC_ENCRYPT_ALGORITHM = "RSA";
+	private static final String SYMMETRIC_KEYGEN_ALGORITHM = "AES";
+	private static final String SYMMETRIC_ENCRYPT_ALGORITHM = 
+			"AES/CBC/NoPadding";
 	private static final int SYMMETRIC_KEY_SIZE = 128;
+	private static final IvParameterSpec INIT_VECTOR = new IvParameterSpec(
+			"fedcba9876543210".getBytes( ) );	// Only used with symmetric key
 	
+	// The algorithm names for key generation are different from those for
+	// encryption
 	private static final Map<String, String> ALGORITHMS =
 			new HashMap<String, String>( );
 	static {
-		ALGORITHMS.put( ASYMMETRIC_ALGORITHM, ASYMMETRIC_ALGORITHM );
-		ALGORITHMS.put( SYMMETRIC_ALGORITHM, "AES/CBC/NoPadding" );
+		ALGORITHMS.put(
+				ASYMMETRIC_KEYGEN_ALGORITHM,
+				ASYMMETRIC_ENCRYPT_ALGORITHM );
+		ALGORITHMS
+				.put( SYMMETRIC_KEYGEN_ALGORITHM, SYMMETRIC_ENCRYPT_ALGORITHM );
 	}
 	
+	// All available public keys
 	private static final Map<String, Key> PUBLIC_KEYS = 
 			new HashMap<String, Key>( );
 	
@@ -59,8 +71,10 @@ public class EncryptionUtil {
 	}
 
 	/**
-	 * Encrypts the supplied data using public-key encryption.
-	 * @param key TODO
+	 * Encrypts the supplied data using the supplied key.
+	 * 
+	 * @param key
+	 *            the encryption key
 	 * @param data
 	 *            the data to encrypt
 	 * 
@@ -72,7 +86,9 @@ public class EncryptionUtil {
 			String algorithm = ALGORITHMS.get( keyAlgorithm );
 			Cipher cipher = Cipher.getInstance( algorithm );
 			
-			if( SYMMETRIC_ALGORITHM.equals( keyAlgorithm ) ) {
+			if( SYMMETRIC_KEYGEN_ALGORITHM.equals( keyAlgorithm ) ) {
+				// Symmetric key encryption requires initialization vector and
+				// data padded to a multiple of 16 bytes
 				cipher.init( Cipher.ENCRYPT_MODE, key, INIT_VECTOR );
 				if( data.length % 16 != 0 ) {
 					int newLength = 16 * ( data.length / 16 + 1 );
@@ -83,43 +99,55 @@ public class EncryptionUtil {
 			} else {
 				cipher.init( Cipher.ENCRYPT_MODE, key );
 			}
+			
 			byte[] encryptedData = cipher.doFinal( data );
 			return Base64.encodeBase64String( encryptedData );
 		} catch( InvalidKeyException e ) {
-			// FIXME: Rethrow better exception
-			throw new RuntimeException( e );
+			throw new EncryptionFailureException(
+					"An invalid key was supplied",
+					e );
 		} catch( NoSuchAlgorithmException e ) {
-			// FIXME: Rethrow better exception
-			throw new RuntimeException( e );
+			throw new EncryptionFailureException(
+					"An invalid algorithm was specified",
+					e );
 		} catch( NoSuchPaddingException e ) {
-			// FIXME: Rethrow better exception
-			throw new RuntimeException( e );
+			throw new EncryptionFailureException(
+					"Invalid data was supplied",
+					e );
 		} catch( IllegalBlockSizeException e ) {
-			// FIXME: Rethrow better exception
-			throw new RuntimeException( e );
+			throw new EncryptionFailureException(
+					"Invalid data was supplied",
+					e );
 		} catch( BadPaddingException e ) {
-			// FIXME: Rethrow better exception
-			throw new RuntimeException( e );
+			throw new EncryptionFailureException(
+					"Invalid data was supplied",
+					e );
 		} catch( InvalidAlgorithmParameterException e ) {
-			// FIXME: Rethrow better exception
-			throw new RuntimeException( e );
+			throw new EncryptionFailureException(
+					"An invalid algorithm parameter was specified",
+					e );
 		}
 	}
 	
 	/**
-	 * Loads all available public keys.
+	 * Loads all available public keys from disk.
 	 */
 	private static void loadPublicKeys( ) {
 		try {
-			KeyFactory factory = KeyFactory.getInstance( ASYMMETRIC_ALGORITHM );
+			KeyFactory factory = KeyFactory
+					.getInstance( ASYMMETRIC_KEYGEN_ALGORITHM );
 			
 			File keysDir = new File( Thread
 					.currentThread( )
 					.getContextClassLoader( )
 					.getResource( "keys" )
 					.toURI( ) );
-			// FIXME: Better error handling (e.g. make sure keysDir is directory)
 			File[] keyFiles = keysDir.listFiles( );
+			if( keyFiles == null ) {
+				// Found a file, not a directory
+				throw new FilesystemFailureException(
+						"Could not resolve path to keys directory" );
+			}
 			for( File keyFile : keyFiles ) {
 				String keyName = keyFile.getName( ).replace( ".der", "" );
 				DataInputStream keyByteStream = new DataInputStream(
@@ -134,20 +162,25 @@ public class EncryptionUtil {
 				PUBLIC_KEYS.put( keyName, key );
 			}
 		} catch( URISyntaxException e ) {
-			// FIXME: Rethrow better exception
-			throw new RuntimeException( e );
+			throw new EncryptionFailureException(
+					"Could not resolve path to keys directory",
+					e );
 		} catch( FileNotFoundException e ) {
-			// FIXME: Rethrow better exception
-			throw new RuntimeException( e );
+			throw new EncryptionFailureException(
+					"Could not find keys directory",
+					e );
 		} catch( IOException e ) {
-			// FIXME: Rethrow better exception
-			throw new RuntimeException( e );
+			throw new EncryptionFailureException(
+					"Error in reading keys from disk",
+					e );
 		} catch( NoSuchAlgorithmException e ) {
-			// FIXME: Rethrow better exception
-			throw new RuntimeException( e );
+			throw new EncryptionFailureException(
+					"An invalid algorithm was specified",
+					e );
 		} catch( InvalidKeySpecException e ) {
-			// FIXME: Rethrow better exception
-			throw new RuntimeException( e );
+			throw new EncryptionFailureException(
+					"An invalid key specification was specified",
+					e );
 		}
 	}
 	
@@ -165,25 +198,26 @@ public class EncryptionUtil {
 	}
 	
 	/**
+	 * Generates a new symmetric key.
 	 * 
-	 * 
-	 * @return
+	 * @return the new key
 	 */
-	public static Key getSymmetricKey( ) {
+	public static Key generateSymmetricKey( ) {
 		KeyGenerator keygen;
 		try {
-			keygen = KeyGenerator.getInstance( SYMMETRIC_ALGORITHM );
+			keygen = KeyGenerator.getInstance( SYMMETRIC_KEYGEN_ALGORITHM );
 			keygen.init( SYMMETRIC_KEY_SIZE );
 		} catch( NoSuchAlgorithmException e ) {
-			// FIXME: Rethrow better exception
-			throw new RuntimeException( e );
+			throw new EncryptionFailureException(
+					"An invalid algorithm was specified",
+					e );
 		}
 		return keygen.generateKey( );
 	}
 
 	/**
 	 * Formats the supplied host to conform with the naming conventions of
-	 * public key files.
+	 * public key filenames.
 	 * 
 	 * @param host
 	 *            the host to canonicalize

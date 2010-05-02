@@ -56,7 +56,8 @@ public class WebConfig {
 	 *            the protocol to use
 	 * @param host
 	 *            the hostname of the remote server
-	 * @param path TODO
+	 * @param path
+	 *            the path to the application on the remote server
 	 */
 	private WebConfig( Protocol protocol, String host, String path ) {
 		this.protocol = protocol;
@@ -113,18 +114,19 @@ public class WebConfig {
 	}
 	
 	/**
+	 * Returns the path to the application on the remote server.
 	 * 
-	 * 
-	 * @return
+	 * @return the path
 	 */
 	public String getPath( ) {
 		return path;
 	}
-	
+
 	/**
-	 * 
+	 * Sets the path to the application on the remote server.
 	 * 
 	 * @param path
+	 *            the new path
 	 */
 	public void setPath( String path ) {
 		this.path = path;
