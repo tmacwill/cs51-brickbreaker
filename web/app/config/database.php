@@ -83,7 +83,7 @@ class DATABASE_CONFIG {
 		'persistent' => false,
 		'host' => 'localhost',
 		'login' => 'root',
-		'password' => '4movecheckmate!',
+		'password' => '',
 		'database' => 'brckbrkr_main',
 		'prefix' => '',
 	);

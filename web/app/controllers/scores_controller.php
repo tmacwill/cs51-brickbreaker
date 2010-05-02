@@ -22,12 +22,14 @@ class ScoresController extends AppController
 	 * Add a new high score.
 	 * Used by client.
 	 * Format of request POSTDATA:
+	 * @code
 	 * <score>
 	 *   <client-key>abcdef123456</client-key>
 	 *   <user-id>123</user-id>
 	 *   <blob-id>123abc456def</blob-id>
 	 *   <score>456789</score>
 	 * </score>
+	 * @endcode
 	 * 
 	 */
 	public function add()
@@ -129,7 +131,7 @@ class ScoresController extends AppController
 		
 		// if id given, only list high scores for that level
 		if ($blob_id != '')
-			$conditions = array('Score.blob_id' => $blob_id);
+			$conditions = array('Score.blob_id' => $blob_id, 'order' => array('Score.score' => 'desc'));
 			
 		$this->paginate = array('conditions' => $conditions, 'limit' => Configure::read('pagination_limit'), 
 								'order' => array('Score.score' => 'desc'));

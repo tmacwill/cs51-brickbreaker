@@ -22,12 +22,14 @@ class BlobsController extends AppController
      * Add a new blob.
      * Used by both web interface and client.
      * Format of request POSTDATA:
+     * @code
      * <blob>
      *   <client-key>abcdef123456</client-key>
      *   <user-id>123</user-id>
      *   <title>A Random Title</title>
      *   <data>Some base64 encoded data</data>
      * </blob>
+     * @endcode
      * 
      */
     public function add()
@@ -96,8 +98,8 @@ class BlobsController extends AppController
 				$this->Session->setFlash('Blob already exists');
     	    
     	    // redirect user to his profile
-    	    $this->redirect('/users/view/' . $this->Session->read('session_uid'));
-    	    exit();
+			$this->redirect('/users/view/' . $this->Session->read('session_uid'));
+			exit();
     	}
     }
 
