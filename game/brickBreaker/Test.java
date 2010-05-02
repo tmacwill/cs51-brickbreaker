@@ -16,15 +16,16 @@ public class Test {
 	 */
 	public static void main( String[] args ) {
 		LevelCatalog catalog = LevelCatalog.getInstance( );
-//		Brick[][] bricks = new Brick[20][20];
-//		Level level = new Level( bricks, 1, "a" );
-//		catalog.addLevel( level );
+		Brick[][] bricks = new Brick[20][20];
+		Level level = new Level( bricks, 1, "a" );
+		catalog.addLevel( level );
 		
 		EncryptionUtil.init( );
 		
 		WebConfig webConfig = WebConfig.getInstance( );
-		webConfig.setHost( "localhost" );
-		webConfig.setPath( "/brickbreaker" );
+//		webConfig.setHost( "localhost" );
+//		webConfig.setPath( "/brickbreaker" );
+		webConfig.setHost( "brickbreaker.zxq.net" );
 		
 		UserConfig userConfig = UserConfig.getInstance( );
 		userConfig.setUsername( "test" );
@@ -41,8 +42,8 @@ public class Test {
 		for( Level l : levels ) {
 //			System.out.println( l );
 //			System.out.println( catalog.getLevelID( l ) );
-//			WebService.uploadLevel( l, "A Random Level" );
-			WebService.submitScore( l, 12345 );
+			WebService.uploadLevel( l, "A Random Level" );
+//			WebService.submitScore( l, 12345 );
 		}
 	}
 
