@@ -39,7 +39,7 @@ public class WebConfig {
 	}
 	
 	private static final Protocol DEFAULT_PROTOCOL = Protocol.HTTP;
-	private static final String DEFAULT_HOST = "brickbreaker.x10hosting.com";
+	private static final String DEFAULT_HOST = "brickbreaker.zxq.net";
 	private static final WebConfig INSTANCE = new WebConfig(
 			DEFAULT_PROTOCOL,
 			DEFAULT_HOST, 
