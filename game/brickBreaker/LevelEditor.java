@@ -50,6 +50,10 @@ public class LevelEditor extends PRPanel {
         initComponents();
     }
 
+    public LevelEditor() {
+        initComponents();
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -251,22 +255,24 @@ public class LevelEditor extends PRPanel {
     }
 
     private void insertBrickGivenBlockNumber(int blockX, int blockY) {
-        if (!blocks[blockX][blockY]) {
-            paintRectGivenBlockNumber(blockX, blockY, Color.magenta);
-            blocks[blockX][blockY] = true;
-            bricks[blockX][blockY] = new StandardBrick();
-        }
+        paintRectGivenBlockNumber(blockX, blockY, Color.magenta);
+        blocks[blockX][blockY] = true;
+        bricks[blockX][blockY] = new StandardBrick();
+    }
+
+    private void insertPermanentBrickGivenBlockNumber(int blockX, int blockY) {
+        paintRectGivenBlockNumber(blockX, blockY, Color.GRAY);
+        blocks[blockX][blockY] = true;
+        bricks[blockX][blockY] = new PermanentBrick();
     }
 
     private void removeBrickGivenBlockNumber(int blockX, int blockY) {
-        if (blocks[blockX][blockY]) {
-            paintRectGivenBlockNumber(blockX, blockY, Color.white);
-            blocks[blockX][blockY] = false;
-            bricks[blockX][blockY] = null;
-        }
+        paintRectGivenBlockNumber(blockX, blockY, Color.white);
+        blocks[blockX][blockY] = false;
+        bricks[blockX][blockY] = null;
     }
 
-    private void reverseBlockGivenBlockNumber(int blockX, int blockY) {
+    private void reverseBrickGivenBlockNumber(int blockX, int blockY) {
         if (!blocks[blockX][blockY])
             insertBrickGivenBlockNumber(blockX, blockY);
         else
@@ -275,12 +281,16 @@ public class LevelEditor extends PRPanel {
 
     private void mouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mouseClicked
         if (gridGenerated && running) {
+            int code = evt.getButton();
             int x = evt.getX();
             int y = evt.getY();
             if (inBounds(x, y)) {
                 int blockX = blockX(x);
                 int blockY = blockY(y);
-                reverseBlockGivenBlockNumber(blockX, blockY);
+                if (code == MouseEvent.BUTTON1)
+                    reverseBrickGivenBlockNumber(blockX, blockY);
+                else if (code == MouseEvent.BUTTON3)
+                    insertPermanentBrickGivenBlockNumber(blockX, blockY);
             }
         }
     }//GEN-LAST:event_mouseClicked
@@ -340,6 +350,7 @@ public class LevelEditor extends PRPanel {
         if (mouseDown && gridGenerated && running) {
             int x = evt.getX();
             int y = evt.getY();
+            int code = evt.getButton();
             if (inBounds(x, y)) {
                 int blockX = blockX(x);
                 int blockY = blockY(y);
@@ -352,9 +363,8 @@ public class LevelEditor extends PRPanel {
                     my2 = my1;
                     mx1 = blockX;
                     my1 = blockY;
-                    reverseBlockGivenBlockNumber(blockX, blockY);
+                    reverseBrickGivenBlockNumber(blockX, blockY);
                 }
-
             }
         }
     }//GEN-LAST:event_formMouseDragged

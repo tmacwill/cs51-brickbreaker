@@ -14,9 +14,9 @@ import java.io.Serializable;
  */
 public abstract class Racket implements Serializable
 {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 	
-	protected int range;  // Size of the area over which the racket can move
+    protected int range;  // Size of the area over which the racket can move
     protected int width;  // Size of racket
     
     // Position of the center of the racket

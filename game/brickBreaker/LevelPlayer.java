@@ -21,17 +21,20 @@ public class LevelPlayer
     private int numRows, numCols;
     public static int WIDTH, HEIGHT;
 
+
+
     /**
      * Constructor
      * @param lev The Level object containing the components used by this class
      */
     public LevelPlayer(Level lev)
     {
+        //level = (Level) lev.clone();
         level = lev;
         rackets = level.getRackets();
         balls = level.getBalls();
-        for (int i = 0; i < balls.length; i++) balls[i].setLevel(this);
-        
+        for (int i = 0; i < balls.length; i++)
+            balls[i].setLevel(this);
         bricks = level.getBricks();
         brickWidth = level.brickWidth();
         brickHeight = level.brickHeight();

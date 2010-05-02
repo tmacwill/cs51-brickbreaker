@@ -25,7 +25,6 @@ public class Level implements Serializable
     private Ball[] balls;
     private String name = "Unnamed";
 
-
     /**
      * Constructor
      *
@@ -118,6 +117,10 @@ public class Level implements Serializable
      * @param name New name
      */
     public void setName(String name) { this.name = name; }
+
+    public void setBricks(Brick[][] b) { bricks = b; }
+    public void setRacket(Racket[] r) { rackets = r; }
+    public void setBalls(Ball[] b) { balls = b; }
 
     /**
      * @return The array of rackets

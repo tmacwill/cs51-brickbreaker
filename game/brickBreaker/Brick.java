@@ -13,9 +13,9 @@ import java.io.Serializable;
  */
 public abstract class Brick implements Serializable
 {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 	
-	private int points;
+    private int points;
     private boolean destructible = true;
     private int hitsToRemove;
     private boolean removed = false;

@@ -12,9 +12,9 @@ import java.io.Serializable;
  */
 public class Ball implements Serializable
 {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 	
-	public static final double pi = Math.PI;
+    public static final double pi = Math.PI;
     private double posX, posY;  // position of center of the ball
     private double angle;   // Measured from the horizontal line (+x axis) clockwise
     public static double speed;

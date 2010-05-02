@@ -20,6 +20,7 @@ public class StartEditor extends javax.swing.JFrame {
     private void makeGUI() {
         Container c = getContentPane();
         l = new LevelEditor(start);
+        l.start();
         c.add(l, "Center");
     }
 
