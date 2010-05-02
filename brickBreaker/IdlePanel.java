@@ -156,9 +156,11 @@ public class IdlePanel extends PRPanel { //implements ActionListener, KeyListene
         label4 = new java.awt.Label();
         label5 = new java.awt.Label();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(0, 0, 0));
         setPreferredSize(new java.awt.Dimension(1200, 700));
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         levelList.setBackground(new java.awt.Color(1, 1, 1));
         levelList.setForeground(new java.awt.Color(255, 255, 255));
@@ -167,17 +169,23 @@ public class IdlePanel extends PRPanel { //implements ActionListener, KeyListene
                 levelListKeyPressed(evt);
             }
         });
+        add(levelList, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, 250, 290));
 
         label2.setFont(new java.awt.Font("Dialog", 1, 18));
         label2.setForeground(new java.awt.Color(255, 255, 255));
         label2.setText("Levels");
+        add(label2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 160, -1, -1));
 
+        beginLevelEditor.setBackground(new java.awt.Color(0, 0, 0));
+        beginLevelEditor.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        beginLevelEditor.setForeground(new java.awt.Color(255, 255, 255));
         beginLevelEditor.setLabel("Enter Level Editor");
         beginLevelEditor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 beginLevelEditorActionPerformed(evt);
             }
         });
+        add(beginLevelEditor, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 620, -1, -1));
 
         onlineLevelListDisplay.setBackground(new java.awt.Color(0, 0, 0));
         onlineLevelListDisplay.setForeground(new java.awt.Color(255, 255, 255));
@@ -186,105 +194,52 @@ public class IdlePanel extends PRPanel { //implements ActionListener, KeyListene
                 onlineLevelListDisplayKeyPressed(evt);
             }
         });
+        add(onlineLevelListDisplay, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 210, 250, 290));
 
         onlineLevelLabel.setBackground(new java.awt.Color(0, 0, 0));
         onlineLevelLabel.setFont(new java.awt.Font("Dialog", 1, 18));
         onlineLevelLabel.setForeground(new java.awt.Color(255, 255, 255));
         onlineLevelLabel.setName(""); // NOI18N
         onlineLevelLabel.setText("Online Levels");
+        add(onlineLevelLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 170, -1, -1));
 
+        browseOnlineLevelsButton.setBackground(new java.awt.Color(0, 0, 0));
+        browseOnlineLevelsButton.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        browseOnlineLevelsButton.setForeground(new java.awt.Color(255, 255, 255));
         browseOnlineLevelsButton.setLabel("Browse Online Levels");
         browseOnlineLevelsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 browseOnlineLevelsButtonActionPerformed(evt);
             }
         });
+        add(browseOnlineLevelsButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 620, -1, -1));
 
         label3.setFont(new java.awt.Font("Dialog", 1, 14));
         label3.setForeground(new java.awt.Color(255, 255, 255));
         label3.setText("Enter - Select Level");
+        add(label3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 540, -1, -1));
 
         label4.setFont(new java.awt.Font("Dialog", 1, 14));
         label4.setForeground(new java.awt.Color(255, 255, 255));
         label4.setText("F1 - Upload Level");
+        add(label4, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 570, -1, -1));
 
         label5.setFont(new java.awt.Font("Dialog", 1, 14));
         label5.setForeground(new java.awt.Color(255, 255, 255));
         label5.setText("F2 - Download Level");
+        add(label5, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 510, -1, -1));
 
         jLabel1.setBackground(new java.awt.Color(0, 0, 0));
         jLabel1.setFont(new java.awt.Font("DejaVu Sans", 1, 14));
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Right Arrow - Display Level");
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 510, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(87, 87, 87)
-                        .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(767, 767, 767)
-                        .addComponent(label5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(201, 201, 201))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(462, 462, 462)
-                        .addComponent(beginLevelEditor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(46, 46, 46)
-                        .addComponent(browseOnlineLevelsButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(levelList, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(99, 99, 99)
-                                .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(613, 613, 613)
-                                .addComponent(onlineLevelListDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 729, Short.MAX_VALUE)
-                                .addComponent(onlineLevelLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(214, 214, 214))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(56, 56, 56)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(96, 96, 96)
-                        .addComponent(label4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(139, 139, 139)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(onlineLevelLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(onlineLevelListDisplay, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
-                    .addComponent(levelList, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(beginLevelEditor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(browseOnlineLevelsButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(97, 97, 97))
-        );
+        jLabel2.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel2.setFont(new java.awt.Font("DejaVu Sans", 1, 36)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("BRICK BREAKER");
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 90, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void levelListKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_levelListKeyPressed
@@ -339,6 +294,7 @@ public class IdlePanel extends PRPanel { //implements ActionListener, KeyListene
     private java.awt.Button beginLevelEditor;
     private java.awt.Button browseOnlineLevelsButton;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private java.awt.Label label2;
     private java.awt.Label label3;
     private java.awt.Label label4;
