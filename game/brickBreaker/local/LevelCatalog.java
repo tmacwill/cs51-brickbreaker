@@ -24,7 +24,7 @@ public class LevelCatalog {
 	 * system.
 	 */
 	private LevelCatalog( ) {
-		levelData = LocalDataService.loadAllLevelsFromDisk( );
+		reset( );
 	}
 	
 	/**
@@ -34,6 +34,13 @@ public class LevelCatalog {
 	 */
 	public static LevelCatalog getInstance( ) {
 		return INSTANCE;
+	}
+	
+	/**
+	 * Resets the catalog by re-loading all levels from disk.
+	 */
+	public void reset( ) {
+		levelData = LocalDataService.loadAllLevelsFromDisk( );
 	}
 	
 	/**

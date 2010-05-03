@@ -13,7 +13,7 @@ import java.util.Arrays;
  * @file Level.java
  * @see LevelPlayer.java
  */
-public class Level implements Serializable, Cloneable
+public class Level implements Serializable
 {
     private static final long serialVersionUID = 1L;
     
@@ -111,22 +111,6 @@ public class Level implements Serializable, Cloneable
                 if (b != null) b.setLoc(brickWidth*i, brickHeight*j, brickWidth, brickHeight);
             }
         }
-    }
-    
-    /**
-     * Returns a deep clone of the Level.
-     */
-    @Override
-    public Object clone( ) {
-    	// Copy each of the arrays
-    	Brick[][] bricksCopy = new Brick[bricks.length][bricks[0].length];
-    	for( int i = 0; i < bricks.length; i++ ) {
-    		bricksCopy[i] = Arrays.copyOf( bricks[i], bricks[i].length );
-    	}
-    	Racket[] racketsCopy = Arrays.copyOf( rackets, rackets.length );
-    	Ball[] ballsCopy = Arrays.copyOf( balls, balls.length );
-    	
-    	return new Level( bricksCopy, ballsCopy, racketsCopy, name );
     }
     
     /**

@@ -29,7 +29,7 @@ public class LevelPlayer
      */
     public LevelPlayer(Level lev)
     {
-        level = (Level)lev.clone( );
+        level = lev;
         rackets = level.getRackets();
         balls = level.getBalls();
         for (int i = 0; i < balls.length; i++) balls[i].setLevel(this);
