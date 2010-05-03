@@ -14,7 +14,7 @@ import java.util.*;
  */
 public class GamePanel extends PRPanel implements ActionListener, KeyListener
 {
-    public static final int PWIDTH = 1200;  // Size of panel
+    public static final int PWIDTH = 1000;  // Size of panel
     public static final int PHEIGHT = 700;
     public static final int BORDER = 10;
     public static final int ARENA_WIDTH = PWIDTH - 2*BORDER;

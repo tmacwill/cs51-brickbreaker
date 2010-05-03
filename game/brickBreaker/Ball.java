@@ -69,7 +69,7 @@ public class Ball implements Serializable
         posX = x;
         posY = y;
         this.angle = angle;
-        speed = 3;
+        speed = 4.5;
         velX = speed*Math.cos(angle);
         velY = speed*Math.sin(angle);
         

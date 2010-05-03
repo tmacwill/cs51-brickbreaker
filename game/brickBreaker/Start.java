@@ -8,7 +8,7 @@ import brickBreaker.web.*;
 
 public class Start extends JFrame implements WindowListener
 {
-    public static int WIDTH = 1200;
+    public static int WIDTH = 1000;
     public static int HEIGHT = 700;
     private boolean loggedIn = false;
     
@@ -72,26 +72,26 @@ public class Start extends JFrame implements WindowListener
         if (score > 0 && loggedIn) {
             WebService.submitScore(lev, score);
         }
-         currPanel.stop();
-         removeKeyListener(currPanel);
-         currPanel.setVisible(false);
-         
-         ip.reset();
-         currPanel = ip;
-         currPanel.setVisible(true);
-         addKeyListener(currPanel);
-         currPanel.start();
+        currPanel.stop();
+        removeKeyListener(currPanel);
+        currPanel.setVisible(false);
+
+        ip.reset();
+        currPanel = ip;
+        currPanel.setVisible(true);
+        addKeyListener(currPanel);
+        currPanel.start();
     }
 
     public void startEditor() {
-         currPanel.pause();
-         removeKeyListener(currPanel);
-         currPanel.setVisible(false);
+        currPanel.pause();
+        removeKeyListener(currPanel);
+        currPanel.setVisible(false);
 
-         currPanel = le;
-         currPanel.setVisible(true);
-         currPanel.start();
-         c.add(le, BorderLayout.CENTER);
+        currPanel = le;
+        currPanel.setVisible(true);
+        c.add(currPanel, BorderLayout.CENTER);
+        currPanel.start();
     }
 
     public void exitEditor() {
@@ -131,17 +131,19 @@ public class Start extends JFrame implements WindowListener
   // ----------------------------------------------------
 
     public static void main(String args[]) {
-        EncryptionUtil.init();
-        /*PasswordBox pass = new PasswordBox();
+        /*EncryptionUtil.init();
+        PasswordBox pass = new PasswordBox();
         String name = pass.getResult();
         pass.setVisible(false);*/
 
-        String name = "";
+        new Start();
 
-        if (name.equals(""))
+        //String name = "";
+
+        /*if (name.equals(""))
             new Start(false);
         else
-            new Start(true);
+            new Start(true);*/
     }
 
 } // end of Main class
