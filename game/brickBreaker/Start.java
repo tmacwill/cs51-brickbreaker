@@ -130,15 +130,18 @@ public class Start extends JFrame implements WindowListener
 
   // ----------------------------------------------------
 
-  public static void main(String args[])
-  {
-	EncryptionUtil.init( );
-    PasswordBox pass = new PasswordBox();
-    String name = pass.getResult();
-    pass.setVisible(false);
+    public static void main(String args[]) {
+        EncryptionUtil.init();
+        /*PasswordBox pass = new PasswordBox();
+        String name = pass.getResult();
+        pass.setVisible(false);*/
 
-    if (name.equals("")) new Start(false);
-    else new Start(true);
-  }
+        String name = "";
+
+        if (name.equals(""))
+            new Start(false);
+        else
+            new Start(true);
+    }
 
 } // end of Main class
