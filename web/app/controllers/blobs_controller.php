@@ -83,7 +83,7 @@ class BlobsController extends AppController
 			$this->data['Blob']['title'] = Sanitize::paranoid($this->data['Blob']['title'], array(' '));
     	    $this->data['Blob']['data'] = $file_data;
     	    // generate a unique id for a blob by hashing its contents
-    	    $this->data['Blob']['id'] = md5(base64_decode($file_data));
+    	    $this->data['Blob']['id'] = md5($file_data);
 
 			// make sure blob with given id does not exist
 			$blob = $this->Blob->findById($this->data['Blob']['id']);
