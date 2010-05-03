@@ -146,7 +146,7 @@ class BlobsController extends AppController
 			$this->Session->setFlash('Cannot delete level');
 			
 		// redirect user to his blob library
-		$this->redirect('/users/view' . $this->Session->read('session_uid'));
+		$this->redirect('/users/view/' . $this->Session->read('session_uid'));
 	}
 	
 	/**
@@ -178,26 +178,35 @@ class BlobsController extends AppController
      * @param $id The id of the blob to edit
      * 
      */
-	public function edit($id)
+	public function edit($id = '')
     {
 		// make sure user is logged in
 		$this->requestAction('/users/check_login');
 		$blob = $this->Blob->findById($id);
-		
+						
 		// do not edit blob if user id doesn't match id of logged in user
-		if ($blob['User']['id'] != $this->Session->read('session_uid'))
+		if (empty($this->data) && $blob['Blob']['user_id'] != $this->Session->read('session_uid'))
 		{
 			$this->Session->setFlash('Cannot edit ' . Configure::read('blob_description'));
 			// redirect user to his blob library
 			$this->redirect('/users/view/' . $this->Session->read('session_uid'));
+			exit();
 		}
 		
 		// form submitted, so process data
 		if (!empty($this->data))
-		{
+		{		
 			// sanitize database input and save new data
-			$blob['Blob']['title'] = Sanitize::paranoid($title, array(' '));
-			$blob['Blob']['data'] = Sanitize::paranoid($data, array(' '));
+			$blob['Blob']['title'] = Sanitize::paranoid($this->data['Blob']['title'], array(' '));
+			
+			// change file data if user uploaded new file
+			if (is_uploaded_file($this->data['Blob']['file']['tmp_name']))
+			{
+				// read temporary uploaded file 
+				$file_data = fread(fopen($this->data['Blob']['file']['tmp_name'], 'r'), 
+								$this->data['Blob']['file']['size']);
+				$blob['Blob']['data'] = $file_data;
+			}
 			$this->Blob->save($blob);
 			
 			// redirect user to his blob library
