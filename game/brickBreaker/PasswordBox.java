@@ -31,7 +31,6 @@ public class PasswordBox extends JFrame {
 
         passwordField = new JPasswordField(20);
         passwordField.setActionCommand(OK);
-        //passwordField.addActionListener(this);
         JLabel plabel = new JLabel("Password: ");
         plabel.setLabelFor(passwordField);
 
@@ -71,9 +70,14 @@ public class PasswordBox extends JFrame {
                 String username = nameField.getText();
                 String password = passwordField.getText();
                 if (WebService.verifyUser(username, password)) {
+                    // save user credentials in UserConfig object
                     passed = true;
                     UserConfig.getInstance().setUsername(username);
                     UserConfig.getInstance().setPassword(password);
+                }
+                else {
+                    // show error message if combination is incorrect
+                    JOptionPane.showMessageDialog(null, "Incorrect username/password combination");
                 }
             }
         });
@@ -91,11 +95,20 @@ public class PasswordBox extends JFrame {
         return p;
     }
 
-
+    /**
+     * Check if user is logged in
+     *
+     * @return True if user is logged in, else false
+     */
     public boolean checkLogin() {
         return passed;
     }
 
+    /**
+     * Check if user has skipped login screen
+     *
+     * @return True if login has been skipped, else false
+     */
     public boolean checkSkipped() {
         return skipped;
     }

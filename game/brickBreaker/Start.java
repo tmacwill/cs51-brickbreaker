@@ -5,7 +5,6 @@ import java.awt.*;
 import java.awt.event.*;
 import brickBreaker.web.*;
 
-
 public class Start extends JFrame implements WindowListener
 {
     public static int WIDTH = 1000;
@@ -29,8 +28,6 @@ public class Start extends JFrame implements WindowListener
         le = new LevelEditor(this);
         le.setVisible(false);
         
-        //Container c = getContentPane();
-        //c.add(gp, BorderLayout.CENTER);
         c.add(ip, BorderLayout.CENTER);
         
         currPanel = ip;
@@ -70,7 +67,10 @@ public class Start extends JFrame implements WindowListener
     
     public void endGame(Level lev, int score) {
         if (score > 0 && loggedIn) {
-            WebService.submitScore(lev, score);
+            try {
+                WebService.submitScore(lev, score);
+            }
+            catch (Exception e) { e.printStackTrace(); }
         }
         currPanel.stop();
         removeKeyListener(currPanel);
@@ -144,14 +144,14 @@ public class Start extends JFrame implements WindowListener
             }
             catch (Exception e) { }
         }
+        // destroy password window
         pass.setVisible(false);
 
+        // user has been logged in
         if (pass.checkLogin())
             new Start(true);
         else
             new Start(false);
-
-        System.out.println(UserConfig.getInstance().getUsername());
     }
 
 } // end of Main class

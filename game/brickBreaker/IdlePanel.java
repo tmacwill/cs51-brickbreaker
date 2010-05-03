@@ -44,7 +44,10 @@ public class IdlePanel extends PRPanel { //implements ActionListener, KeyListene
         requestFocus();    // the JPanel now has focus, so receives key events
         initComponents();
         initLevelList();
-
+        /**WebConfig.getInstance().setHost("brickbreaker.zxq.net");
+        UserConfig.getInstance().setUsername("robert");
+        UserConfig.getInstance().setPassword("123");
+         * **/
         //WebConfig.getInstance().setHost("localhost");
         //WebConfig.getInstance().setPath("/brickbreaker");
         //UserConfig.getInstance().setUsername("test");

@@ -233,7 +233,7 @@ class UsersController extends AppController
 		// parse xml request
 		$xml = new Xml($postdata);
 		$xml_array = $xml->toArray();
-
+		
 		$user = $this->User->findByUsername($xml_array['User']['username']);
 		
 		// make sure user exists and passwords match

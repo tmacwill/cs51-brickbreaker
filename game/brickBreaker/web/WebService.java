@@ -60,7 +60,7 @@ public class WebService {
 		String response = new String( ConnectionUtil.doPost(
 				userVerifyURL,
 				userVerifyReqest ) );
-		Document document = XMLUtil.parseXML( response );
+                Document document = XMLUtil.parseXML( response );
 		if( document != null ) {
 			NodeList userNodes = document.getElementsByTagName( "std_class" );
 			isValidUser = ( userNodes.getLength( ) > 0 );
@@ -201,6 +201,20 @@ public class WebService {
 		if( userID == null ) {
 			throw new RuntimeException( "Invalid login credentials" );
 		}
+
+                // make sure level is found online before submitting score
+                List<OnlineLevel> onlineLevels = getOnlineLevels();
+                boolean found = false;
+                // iterate through all online levels to check if level is online
+                for (OnlineLevel onlineLevel : onlineLevels) {
+                    if (onlineLevel.getLevelID().equals(LevelCatalog.getInstance().getLevelID(level))) {
+                        found = true;
+                    }
+                }
+
+                if (!found) {
+                    throw new RuntimeException( "Level has not been uploaded yet" );
+                }
 		
 		Key publicKey = EncryptionUtil.getPublicKey( );
 		Key symmetricKey = EncryptionUtil.generateSymmetricKey( );
