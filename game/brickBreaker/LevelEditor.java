@@ -10,7 +10,8 @@ import brickBreaker.local.*;
 
 /**
  *
- * @author robert
+ * @author Robert Nishihara
+ * @version 5/02/10
  */
 public class LevelEditor extends PRPanel {
 
@@ -47,12 +48,13 @@ public class LevelEditor extends PRPanel {
     boolean[][] blocks;
     Brick[][] bricks;
 
+    /**
+     * Constructor
+     *
+     * @param s The JFrame which LevelEditor is a part of
+     */
     public LevelEditor(Start s) {
         start = s;
-        initComponents();
-    }
-
-    public LevelEditor() {
         initComponents();
     }
 
@@ -190,12 +192,24 @@ public class LevelEditor extends PRPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Pauses LevelEditor
+     */
     public void pause() { running = false; }
 
+    /**
+     * Resumes LevelEditor
+     */
     public void resume() { running = true; }
 
+    /**
+     * Stops LevelEditor
+     */
     public void stop() { running = false; }
 
+    /**
+     * Starts LevelEditor and sets text fields to their default values
+     */
     public void start() {
         running = true;
         rowInput.setText("20");
@@ -204,6 +218,10 @@ public class LevelEditor extends PRPanel {
         levelName.setText("Untitled");
     }
 
+    /**
+     * Verifies that inputs for rows, columns, and number of players is valid
+     * @return true if valid, false otherwise
+     */
     private boolean checkGridInput() {
         r = Integer.parseInt(rowInput.getText());
         c = Integer.parseInt(colInput.getText());
@@ -219,6 +237,12 @@ public class LevelEditor extends PRPanel {
         }
     }
 
+    /**
+     * Checks to see if the point (x,y) is within the level creation rectangle
+     * @param x x-coordinate in pixels
+     * @param y y-coordinate in pixels
+     * @return true if it is in bounds, false otherwise
+     */
     private boolean inBounds(int x, int y) {
         if (cornerX < x && x < cornerX + width && cornerY < y && y < cornerY + height)
             return true;
@@ -226,6 +250,12 @@ public class LevelEditor extends PRPanel {
             return false;
     }
 
+    /**
+     * Same as inBounds(), except it takes a point in grid coordinates as opposed to pixels
+     * @param blockX column number
+     * @param blockY row number
+     * @return true if in bounds, false otherwise
+     */
     private boolean inBoundsBlock(int blockX, int blockY) {
         if (gridGenerated) {
             if (0 <= blockX && blockX < c && 0 <= blockY && blockY < r)

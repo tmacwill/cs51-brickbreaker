@@ -33,11 +33,13 @@ public class XMLUtil {
 			document = builder.parse( new InputSource( new StringReader(
 					xmlString ) ) );
 		} catch( ParserConfigurationException e ) {
-			// TODO: Handle exception
+			throw new XMLParseFailureException(
+					"Failed to configure XML parser",
+					e );
 		} catch( SAXException e ) {
-			// TODO: Handle exception
+			throw new XMLParseFailureException( "Failed to parse XML", e );
 		} catch( IOException e ) {
-			// TODO: Handle exception
+			throw new XMLParseFailureException( "Failed to read in XML text", e );
 		}
 		
 		return document;

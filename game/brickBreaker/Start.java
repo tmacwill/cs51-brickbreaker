@@ -3,13 +3,14 @@ package brickBreaker;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import brickBreaker.web.*;
 
 
 public class Start extends JFrame implements WindowListener
 {
     public static int WIDTH = 1200;
     public static int HEIGHT = 700;
-    private static String username = "";
+    private boolean loggedIn = false;
     
     private GamePanel gp;
     private IdlePanel ip;
@@ -49,11 +50,9 @@ public class Start extends JFrame implements WindowListener
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }  // end of Start() constructor
 
-    public Start(String name) {
+    public Start(boolean loggedIn) {
         this();
-        username = name;
-        if (username.equals("")) System.out.println("Started game - not logged in");
-        else System.out.println("Started game - logged in with username " + name);
+        this.loggedIn = loggedIn;
     }
   
     public void startGame(Level lev) {
@@ -69,9 +68,9 @@ public class Start extends JFrame implements WindowListener
          c.add(gp, BorderLayout.CENTER);
     }
     
-    public void endGame(int score) {
-        if (score > 0) {
-            // Send the score to the website
+    public void endGame(Level lev, int score) {
+        if (score > 0 && loggedIn) {
+            WebService.submitScore(lev, score);
         }
          currPanel.stop();
          removeKeyListener(currPanel);
@@ -131,13 +130,18 @@ public class Start extends JFrame implements WindowListener
 
   // ----------------------------------------------------
 
-  public static void main(String args[])
-  {
-    /*PasswordBox pass = new PasswordBox();
-    String name = pass.getResult();
-    pass.setVisible(false);*/
+    public static void main(String args[]) {
+        EncryptionUtil.init();
+        /*PasswordBox pass = new PasswordBox();
+        String name = pass.getResult();
+        pass.setVisible(false);*/
 
-    new Start();//name);
-  }
+        String name = "";
+
+        if (name.equals(""))
+            new Start(false);
+        else
+            new Start(true);
+    }
 
 } // end of Main class

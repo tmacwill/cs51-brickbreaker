@@ -44,8 +44,8 @@ public class ConnectionUtil {
 	
 	private static final String ENCODING_SCHEME = "UTF-8";
 	
-	private static final int CONNECT_TIMEOUT_IN_MILLIS = 5000;
-	private static final int READ_TIMEOUT_IN_MILLIS = 5000;
+	private static final int CONNECT_TIMEOUT_IN_MILLIS = 60000;
+	private static final int READ_TIMEOUT_IN_MILLIS = 60000;
 	
 	private static final int RESPONSE_BUFFER_SIZE = 512;
 

@@ -7,6 +7,13 @@ import java.util.*;
 import brickBreaker.local.*;
 import brickBreaker.web.*;
 
+ /**
+ * class IdlePanel - This is the panel from which the user can enter a game, the level editor, or interact with the online database.
+ *
+ * @author Robert Nishihara
+ * @version 5/02/10
+ * @file IdlePanel.java
+ */
 public class IdlePanel extends PRPanel { //implements ActionListener, KeyListener {
 
     public static final int PWIDTH = 1200; //Main.WIDTH;  // Size of panel
@@ -22,12 +29,16 @@ public class IdlePanel extends PRPanel { //implements ActionListener, KeyListene
     private java.util.List<Level> levelObjectList;
     private java.util.List<OnlineLevel> onlineLevelList;
 
+    /**
+     * Constructor.
+     *
+     * @param s JFrame which IdlePanel is a part of
+     */
     public IdlePanel(Start s) {
         start = s;
 
         setBackground(Color.black);
         setPreferredSize(new Dimension(PWIDTH, PHEIGHT));
-        //addKeyListener(this);
 
         setFocusable(true);
         requestFocus();    // the JPanel now has focus, so receives key events
@@ -38,26 +49,41 @@ public class IdlePanel extends PRPanel { //implements ActionListener, KeyListene
         UserConfig.getInstance().setPassword("123");
     }
 
-    /*public IdlePanelTemp() {
-        initComponents();
-    }*/
-
+    /**
+     * Starts IdlePanel
+     *
+     */
     public void start() {
         running = true;
         reset();
     }
 
+    /**
+     * Pauses IdlePanel
+     */
     public void pause() {
         running = false;
     }
+
+    /**
+     * Resumes IdlePanel
+     */
     public void resume() {
         running = true;
     }
+
+    /**
+     * Stops IdlePanel
+     */
     public void stop() {
         running = false;
     }
 
+    /**
+     * Loads levels from the disk and adds them to the displayed list
+     */
     private void initLevelList() {
+        LevelCatalog.getInstance().reset();
         levelObjectList = LevelCatalog.getInstance().getLevels();
         levelList.removeAll();
         for (Level l : levelObjectList) {
@@ -65,6 +91,9 @@ public class IdlePanel extends PRPanel { //implements ActionListener, KeyListene
         }
     }
 
+    /**
+     * Retrieves online levels and displays them
+     */
     private void initOnlineLevelList() {
         onlineLevelListDisplay.removeAll();
         onlineLevelList = WebService.getOnlineLevels();
@@ -73,6 +102,9 @@ public class IdlePanel extends PRPanel { //implements ActionListener, KeyListene
         }
     }
 
+    /**
+     * Clears any displayed level and resets the list of levels
+     */
     public void reset() {
         initLevelList();
         Graphics g;
@@ -90,6 +122,10 @@ public class IdlePanel extends PRPanel { //implements ActionListener, KeyListene
         }
     }
 
+    /**
+     * Displays a level
+     * @param l the level to be displayed
+     */
     private void displayLevel(Level l) {
         Graphics g;
             try {
