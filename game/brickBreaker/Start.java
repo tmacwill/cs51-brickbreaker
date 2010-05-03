@@ -8,7 +8,7 @@ import brickBreaker.web.*;
 
 public class Start extends JFrame implements WindowListener
 {
-    public static int WIDTH = 1200;
+    public static int WIDTH = 1000;
     public static int HEIGHT = 700;
     private boolean loggedIn = false;
     
@@ -72,26 +72,26 @@ public class Start extends JFrame implements WindowListener
         if (score > 0 && loggedIn) {
             WebService.submitScore(lev, score);
         }
-         currPanel.stop();
-         removeKeyListener(currPanel);
-         currPanel.setVisible(false);
-         
-         ip.reset();
-         currPanel = ip;
-         currPanel.setVisible(true);
-         addKeyListener(currPanel);
-         currPanel.start();
+        currPanel.stop();
+        removeKeyListener(currPanel);
+        currPanel.setVisible(false);
+
+        ip.reset();
+        currPanel = ip;
+        currPanel.setVisible(true);
+        addKeyListener(currPanel);
+        currPanel.start();
     }
 
     public void startEditor() {
-         currPanel.pause();
-         removeKeyListener(currPanel);
-         currPanel.setVisible(false);
+        currPanel.pause();
+        removeKeyListener(currPanel);
+        currPanel.setVisible(false);
 
-         currPanel = le;
-         currPanel.setVisible(true);
-         currPanel.start();
-         c.add(le, BorderLayout.CENTER);
+        currPanel = le;
+        currPanel.setVisible(true);
+        c.add(currPanel, BorderLayout.CENTER);
+        currPanel.start();
     }
 
     public void exitEditor() {
@@ -131,17 +131,27 @@ public class Start extends JFrame implements WindowListener
   // ----------------------------------------------------
 
     public static void main(String args[]) {
+        WebConfig.getInstance().setHost("localhost");
+        WebConfig.getInstance().setPath("/brickbreaker");
+
         EncryptionUtil.init();
-        /*PasswordBox pass = new PasswordBox();
-        String name = pass.getResult();
-        pass.setVisible(false);*/
+        PasswordBox pass = new PasswordBox();
 
-        String name = "";
+        // wait to get result from password box
+        while (!pass.checkLogin() && !pass.checkSkipped()) {
+            try {
+                Thread.sleep(200);
+            }
+            catch (Exception e) { }
+        }
+        pass.setVisible(false);
 
-        if (name.equals(""))
-            new Start(false);
-        else
+        if (pass.checkLogin())
             new Start(true);
+        else
+            new Start(false);
+
+        System.out.println(UserConfig.getInstance().getUsername());
     }
 
 } // end of Main class

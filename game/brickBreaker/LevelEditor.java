@@ -15,7 +15,7 @@ import brickBreaker.local.*;
  */
 public class LevelEditor extends PRPanel {
 
-    public static final int PWIDTH = 1200;  // Size of panel
+    public static final int PWIDTH = 1000;  // Size of panel
     public static final int PHEIGHT = 700;
     public static final int BORDER = 10;
     public static final int ARENA_WIDTH = PWIDTH - 2*BORDER;
@@ -109,11 +109,6 @@ public class LevelEditor extends PRPanel {
         rowInput.setText("20");
 
         numPlayers.setText("1");
-        numPlayers.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                numPlayersActionPerformed(evt);
-            }
-        });
 
         jLabel3.setText("players");
 
@@ -216,6 +211,8 @@ public class LevelEditor extends PRPanel {
         colInput.setText("20");
         numPlayers.setText("1");
         levelName.setText("Untitled");
+        //if (checkGridInput())
+        //    generateGrid();
     }
 
     /**
@@ -234,6 +231,42 @@ public class LevelEditor extends PRPanel {
         }
         catch (Exception e) {
             return false;
+        }
+    }
+
+    private void generateGrid() {
+
+        blocks = new boolean[c][r];
+        bricks = new Brick[c][r];
+        gridGenerated = true;
+        Graphics g;
+        try {
+            g = this.getGraphics();
+            if (g != null) {
+
+                //clear grid and draw border
+                g.setColor(Color.white);
+                g.fillRect(0, 0, PWIDTHgrid, PHEIGHTgrid);
+                g.setColor(Color.black);
+                g.drawRect(BORDER, BORDER, PWIDTHgrid - 2 * BORDER, PHEIGHTgrid - 2 * BORDER);
+                g.drawRect(BORDER - 1, BORDER - 1, PWIDTHgrid - 2 * BORDER + 2, PHEIGHTgrid - 2 * BORDER + 2);
+                g.drawRect(BORDER - 2, BORDER - 2, PWIDTHgrid - 2 * BORDER + 4, PHEIGHTgrid - 2 * BORDER + 4);
+
+                //draw grid
+                boxHeight = 1. * height / r;
+                boxWidth = 1. * width / c;
+                for (int i = 1; i < r; i++) {
+                    g.drawLine(cornerX, cornerY + (int) (i * boxHeight), cornerX + width, cornerY + (int) (i * boxHeight));
+                }
+                for (int i = 1; i < c; i++) {
+                    g.drawLine(cornerX + (int) (i * boxWidth), cornerY, cornerX + (int) (i * boxWidth), cornerY + height);
+                }
+
+                g.dispose();
+            }
+        }
+        catch (Exception e) {
+            System.out.println("Graphics context error: " + e);
         }
     }
 
@@ -338,38 +371,7 @@ public class LevelEditor extends PRPanel {
 
     private void generateGridActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateGridActionPerformed
         if (checkGridInput() && running) {
-            blocks = new boolean[c][r];
-            bricks = new Brick[c][r];
-            gridGenerated = true;
-            Graphics g;
-            try {
-                g = this.getGraphics();
-                if (g != null) {
-
-                    //clear grid and draw border
-                    g.setColor(Color.white);
-                    g.fillRect(0, 0, PWIDTHgrid, PHEIGHTgrid);
-                    g.setColor(Color.black);
-                    g.drawRect(BORDER, BORDER, PWIDTHgrid - 2 * BORDER, PHEIGHTgrid - 2 * BORDER);
-                    g.drawRect(BORDER - 1, BORDER - 1, PWIDTHgrid - 2 * BORDER + 2, PHEIGHTgrid - 2 * BORDER + 2);
-                    g.drawRect(BORDER - 2, BORDER - 2, PWIDTHgrid - 2 * BORDER + 4, PHEIGHTgrid - 2 * BORDER + 4);
-
-                    //draw grid
-                    boxHeight = 1. * height / r;
-                    boxWidth = 1. * width / c;
-                    for (int i = 1; i < r; i++) {
-                        g.drawLine(cornerX, cornerY + (int) (i * boxHeight), cornerX + width, cornerY + (int) (i * boxHeight));
-                    }
-                    for (int i = 1; i < c; i++) {
-                        g.drawLine(cornerX + (int) (i * boxWidth), cornerY, cornerX + (int) (i * boxWidth), cornerY + height);
-                    }
-
-                    g.dispose();
-                }
-            }
-            catch (Exception e) {
-                System.out.println("Graphics context error: " + e);
-            }
+            generateGrid();
         }
         else {
             System.out.println("Inappropriate input.");
@@ -391,7 +393,6 @@ public class LevelEditor extends PRPanel {
         if (mouseDown && gridGenerated && running) {
             int x = evt.getX();
             int y = evt.getY();
-            int code = evt.getButton();
             if (inBounds(x, y)) {
                 int blockX = blockX(x);
                 int blockY = blockY(y);
@@ -409,10 +410,6 @@ public class LevelEditor extends PRPanel {
             }
         }
     }//GEN-LAST:event_formMouseDragged
-
-    private void numPlayersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_numPlayersActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_numPlayersActionPerformed
 
     private void saveDesignActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveDesignActionPerformed
         if (running) {

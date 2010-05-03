@@ -16,14 +16,14 @@ import brickBreaker.web.*;
  */
 public class IdlePanel extends PRPanel { //implements ActionListener, KeyListener {
 
-    public static final int PWIDTH = 1200; //Main.WIDTH;  // Size of panel
+    public static final int PWIDTH = 1000; //Main.WIDTH;  // Size of panel
     public static final int PHEIGHT = 700; //Main.HEIGHT;
     private Start start;
     private boolean running;
 
-    private static final int DISPLAYX = 400;
+    private static final int DISPLAYX = 350;
     private static final int DISPLAYY = 200;
-    private static final int DISPLAYWIDTH = 400;
+    private static final int DISPLAYWIDTH = 300;
     private static final int DISPLAYHEIGHT = 300;
 
     private java.util.List<Level> levelObjectList;
@@ -44,9 +44,14 @@ public class IdlePanel extends PRPanel { //implements ActionListener, KeyListene
         requestFocus();    // the JPanel now has focus, so receives key events
         initComponents();
         initLevelList();
-        WebConfig.getInstance().setHost("brickbreaker.zxq.net");
+        /**WebConfig.getInstance().setHost("brickbreaker.zxq.net");
         UserConfig.getInstance().setUsername("robert");
         UserConfig.getInstance().setPassword("123");
+         * **/
+        //WebConfig.getInstance().setHost("localhost");
+        //WebConfig.getInstance().setPath("/brickbreaker");
+        //UserConfig.getInstance().setUsername("test");
+        //UserConfig.getInstance().setPassword("test");
     }
 
     /**
@@ -212,7 +217,7 @@ public class IdlePanel extends PRPanel { //implements ActionListener, KeyListene
         add(label2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 160, -1, -1));
 
         beginLevelEditor.setBackground(new java.awt.Color(0, 0, 0));
-        beginLevelEditor.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        beginLevelEditor.setFont(new java.awt.Font("Dialog", 1, 12));
         beginLevelEditor.setForeground(new java.awt.Color(255, 255, 255));
         beginLevelEditor.setLabel("Enter Level Editor");
         beginLevelEditor.addActionListener(new java.awt.event.ActionListener() {
@@ -220,7 +225,7 @@ public class IdlePanel extends PRPanel { //implements ActionListener, KeyListene
                 beginLevelEditorActionPerformed(evt);
             }
         });
-        add(beginLevelEditor, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 620, -1, -1));
+        add(beginLevelEditor, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 610, -1, -1));
 
         onlineLevelListDisplay.setBackground(new java.awt.Color(0, 0, 0));
         onlineLevelListDisplay.setForeground(new java.awt.Color(255, 255, 255));
@@ -229,17 +234,17 @@ public class IdlePanel extends PRPanel { //implements ActionListener, KeyListene
                 onlineLevelListDisplayKeyPressed(evt);
             }
         });
-        add(onlineLevelListDisplay, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 210, 250, 290));
+        add(onlineLevelListDisplay, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 200, 250, 290));
 
         onlineLevelLabel.setBackground(new java.awt.Color(0, 0, 0));
         onlineLevelLabel.setFont(new java.awt.Font("Dialog", 1, 18));
         onlineLevelLabel.setForeground(new java.awt.Color(255, 255, 255));
         onlineLevelLabel.setName(""); // NOI18N
         onlineLevelLabel.setText("Online Levels");
-        add(onlineLevelLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 170, -1, -1));
+        add(onlineLevelLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 160, -1, -1));
 
         browseOnlineLevelsButton.setBackground(new java.awt.Color(0, 0, 0));
-        browseOnlineLevelsButton.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        browseOnlineLevelsButton.setFont(new java.awt.Font("Dialog", 1, 12));
         browseOnlineLevelsButton.setForeground(new java.awt.Color(255, 255, 255));
         browseOnlineLevelsButton.setLabel("Browse Online Levels");
         browseOnlineLevelsButton.addActionListener(new java.awt.event.ActionListener() {
@@ -247,7 +252,7 @@ public class IdlePanel extends PRPanel { //implements ActionListener, KeyListene
                 browseOnlineLevelsButtonActionPerformed(evt);
             }
         });
-        add(browseOnlineLevelsButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 620, -1, -1));
+        add(browseOnlineLevelsButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 610, -1, -1));
 
         label3.setFont(new java.awt.Font("Dialog", 1, 14));
         label3.setForeground(new java.awt.Color(255, 255, 255));
@@ -262,7 +267,7 @@ public class IdlePanel extends PRPanel { //implements ActionListener, KeyListene
         label5.setFont(new java.awt.Font("Dialog", 1, 14));
         label5.setForeground(new java.awt.Color(255, 255, 255));
         label5.setText("F2 - Download Level");
-        add(label5, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 510, -1, -1));
+        add(label5, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 500, -1, -1));
 
         jLabel1.setBackground(new java.awt.Color(0, 0, 0));
         jLabel1.setFont(new java.awt.Font("DejaVu Sans", 1, 14));
@@ -271,10 +276,10 @@ public class IdlePanel extends PRPanel { //implements ActionListener, KeyListene
         add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 510, -1, -1));
 
         jLabel2.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel2.setFont(new java.awt.Font("DejaVu Sans", 1, 36)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("DejaVu Sans", 1, 36));
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("BRICK BREAKER");
-        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 90, -1, -1));
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 90, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void levelListKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_levelListKeyPressed

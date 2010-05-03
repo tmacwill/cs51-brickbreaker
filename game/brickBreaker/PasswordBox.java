@@ -3,22 +3,22 @@ package brickBreaker;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import brickBreaker.web.*;
 
 /**
  *
  * @author Jacob
  */
-public class PasswordBox extends JFrame implements ActionListener {
+public class PasswordBox extends JFrame {
     private static String OK = "Enter";
     private static String SKIP = "Skip";
 
-    boolean passed = false;    // set to true when the user has entered the correct password
-    boolean skipped = false;    // set to true if the user chooses not to enter a password
+    private boolean passed = false; // set to true when the user has entered the correct password
+    private boolean skipped = false;
 
     private JTextField nameField;
     private JPasswordField passwordField;
 
-    private String username, password;
 
     public PasswordBox() {
         super("Login");
@@ -31,7 +31,7 @@ public class PasswordBox extends JFrame implements ActionListener {
 
         passwordField = new JPasswordField(20);
         passwordField.setActionCommand(OK);
-        passwordField.addActionListener(this);
+        //passwordField.addActionListener(this);
         JLabel plabel = new JLabel("Password: ");
         plabel.setLabelFor(passwordField);
 
@@ -64,8 +64,26 @@ public class PasswordBox extends JFrame implements ActionListener {
 
         okButton.setActionCommand(OK);
         skipButton.setActionCommand(SKIP);
-        okButton.addActionListener(this);
-        skipButton.addActionListener(this);
+
+        // check username and password when OK is clicked
+        okButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String username = nameField.getText();
+                String password = passwordField.getText();
+                if (WebService.verifyUser(username, password)) {
+                    passed = true;
+                    UserConfig.getInstance().setUsername(username);
+                    UserConfig.getInstance().setPassword(password);
+                }
+            }
+        });
+
+        // skip login, leaving UserConfig parameters blank
+        skipButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                skipped = true;
+            }
+        });
 
         p.add(okButton);
         p.add(skipButton);
@@ -73,43 +91,13 @@ public class PasswordBox extends JFrame implements ActionListener {
         return p;
     }
 
-    private void checkPassword() {
-        passed = true; // check with website
+
+    public boolean checkLogin() {
+        return passed;
     }
 
-    public void actionPerformed(ActionEvent e) {
-        String cmd = e.getActionCommand();
-
-        if (OK.equals(cmd)) {   // Process the password
-            password = new String(passwordField.getPassword());
-            username = nameField.getText();
-            checkPassword();
-        }
-        else if (SKIP.equals(cmd)) {
-            skipped = true;
-        }
-    }
-
-    /**
-     * Waits until the user has passed the password box, either by entering the correct
-     * username/password combo or by hitting the skip button.
-     *
-     * @return Returns the username if the user logged in correctly
-     * Returns an empty string if the user merely skipped the box
-     */
-    public String getResult() {
-        boolean finished = false;
-        while (!finished) {
-            if (skipped) {
-                finished = true;
-                return "";
-            }
-            else if (passed) {
-                finished = true;
-                return username;
-            }
-        }
-        return "";
+    public boolean checkSkipped() {
+        return skipped;
     }
 
 }
