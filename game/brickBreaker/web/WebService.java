@@ -53,7 +53,9 @@ public class WebService {
 		boolean isValidUser = false;
 		
 		String userVerifyURL = getUserVerifyURL( );
-		Map<String, String> userVerifyReqest = getUserVerifyRequest( );
+		Map<String, String> userVerifyReqest = getUserVerifyRequest(
+				username,
+				password );
 		
 		String response = new String( ConnectionUtil.doPost(
 				userVerifyURL,
@@ -238,7 +240,9 @@ public class WebService {
 		String userID = null;
 		
 		String userVerifyURL = getUserVerifyURL( );
-		Map<String, String> userVerifyReqest = getUserVerifyRequest( );
+		UserConfig userConfig = UserConfig.getInstance( );
+		Map<String, String> userVerifyReqest = getUserVerifyRequest( userConfig
+				.getUsername( ), userConfig.getPassword( ) );
 		
 		String response = new String( ConnectionUtil.doPost(
 				userVerifyURL,
@@ -288,20 +292,23 @@ public class WebService {
 	/**
 	 * Returns the parameters used in requests for verifying user identities.
 	 * 
+	 * @param username
+	 *            the username
+	 * @param password
+	 *            the password
+	 * 
 	 * @return the parameters
 	 */
-	private static Map<String, String> getUserVerifyRequest( ) {
-		UserConfig userConfig = UserConfig.getInstance( );
+	private static Map<String, String> getUserVerifyRequest( String username,
+			String password ) {
 		Map<String, String> postData = new HashMap<String, String>( );
 		String data = new StringBuilder( 256 )
 				.append( "<user>" )
 				.append( "<username>" )
-				.append( StringEscapeUtils.escapeXml( 
-						userConfig.getUsername( ) ) )
+				.append( StringEscapeUtils.escapeXml( username ) )
 				.append( "</username>" )
 				.append( "<password>" )
-				.append( StringEscapeUtils.escapeXml( 
-						userConfig.getPassword( ) ) )
+				.append( StringEscapeUtils.escapeXml( password ) )
 				.append( "</password>" )
 				.append( "</user>" )
 				.toString( );
