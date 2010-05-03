@@ -62,7 +62,6 @@ public class WebService {
 				userVerifyReqest ) );
 		Document document = XMLUtil.parseXML( response );
 		if( document != null ) {
-			// TODO: Error handling
 			NodeList userNodes = document.getElementsByTagName( "std_class" );
 			isValidUser = ( userNodes.getLength( ) > 0 );
 		}
@@ -82,7 +81,6 @@ public class WebService {
 		String response = new String( ConnectionUtil.doGet( levelBrowseURL ) );
 		Document document = XMLUtil.parseXML( response );
 		if( document != null ) {
-			// TODO: Error handling
 			NodeList levelNodes = document.getElementsByTagName( "blob" );
 			int numLevels = levelNodes.getLength( );
 			for( int i = 0; i < numLevels; i++ ) {
@@ -114,11 +112,9 @@ public class WebService {
 			level = (Level)objStream.readObject( );
 			objStream.close( );
 		} catch( IOException e ) {
-			// FIXME: Rethrow better exception
-			throw new RuntimeException( e );
+			throw new RuntimeException( "Could not read level data", e );
 		} catch( ClassNotFoundException e ) {
-			// FIXME: Rethrow better exception
-			throw new RuntimeException( e );
+			throw new RuntimeException( "Could not read level data", e );
 		}
 		
 		return level;
@@ -139,8 +135,7 @@ public class WebService {
 			objStream.writeObject( level );
 			objStream.close( );
 		} catch( IOException e ) {
-			// FIXME: Rethrow better exception
-			throw new RuntimeException( e );
+			throw new RuntimeException( "Could not read level data", e );
 		}
 		
 		byte[] levelData = byteStream.toByteArray( );
@@ -148,7 +143,6 @@ public class WebService {
 		
 		String userID = getUserID( );
 		if( userID == null ) {
-			// TODO: Better error handling
 			throw new RuntimeException( "Invalid login credentials" );
 		}
 		
@@ -157,11 +151,7 @@ public class WebService {
 				title,
 				encodedLevelData );
 		
-		String response = new String( ConnectionUtil.doPost(
-				levelUploadURL,
-				levelUploadRequest ) );
-		
-		// TODO: Verify response
+		ConnectionUtil.doPost( levelUploadURL, levelUploadRequest );
 	}
 
 	/**
@@ -181,12 +171,11 @@ public class WebService {
 		String response = new String( ConnectionUtil.doGet( scoreRetrieveURL ) );
 		Document document = XMLUtil.parseXML( response );
 		if( document != null ) {
-			// TODO: Error handling
 			NodeList scoreNodes = document.getElementsByTagName( "score" );
 			int numLevels = scoreNodes.getLength( );
 			for( int i = 0; i < numLevels; i++ ) {
 				Element score = (Element)scoreNodes.item( i );
-				String name = ( (Element)score.getFirstChild( ) )
+				String name = ((Element)score.getFirstChild( ))
 						.getAttribute( "username" );
 				long highScore = Long
 						.parseLong( score.getAttribute( "score" ) );
@@ -210,7 +199,6 @@ public class WebService {
 		
 		String userID = getUserID( );
 		if( userID == null ) {
-			// TODO: Better error handling
 			throw new RuntimeException( "Invalid login credentials" );
 		}
 		
@@ -224,10 +212,7 @@ public class WebService {
 				publicKey,
 				symmetricKey );
 		
-		String response = new String( ConnectionUtil.doPost(
-				scoreSubmitURL,
-				scoreSubmitRequest ) );
-		// TODO: Verify response
+		ConnectionUtil.doPost( scoreSubmitURL, scoreSubmitRequest );
 	}
 
 	/**
@@ -249,7 +234,6 @@ public class WebService {
 				userVerifyReqest ) );
 		Document document = XMLUtil.parseXML( response );
 		if( document != null ) {
-			// TODO: Error handling
 			NodeList userNodes = document.getElementsByTagName( "std_class" );
 			if( userNodes.getLength( ) > 0 ) {
 				Node userNode = userNodes.item( 0 );
