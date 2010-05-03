@@ -198,5 +198,7 @@ public class LevelPlayer
             rackets[0].stop(); }
         else if ((code == KeyEvent.VK_A || code == KeyEvent.VK_S) && rackets.length > 1) {
             rackets[1].stop(); }
-    }    
+    }
+
+    public Level getLevel() { return level; }
 }

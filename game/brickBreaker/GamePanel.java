@@ -112,9 +112,9 @@ public class GamePanel extends PRPanel implements ActionListener, KeyListener
                     Thread.sleep(1000);
                 }
                 catch (Exception e) {
-                    main.endGame(totalScore);
+                    main.endGame(levelPlayer.getLevel(), totalScore);
                 }
-                main.endGame(totalScore);
+                main.endGame(levelPlayer.getLevel(), totalScore);
             }
             if (levelPlayer.cleared()) {
                 gameOver = true;
@@ -125,9 +125,9 @@ public class GamePanel extends PRPanel implements ActionListener, KeyListener
                     Thread.sleep(1000);
                 }
                 catch (Exception e) {
-                    main.endGame(totalScore);
+                    main.endGame(levelPlayer.getLevel(), totalScore);
                 }
-                main.endGame(totalScore);
+                main.endGame(levelPlayer.getLevel(), totalScore);
             }
         }
     }
@@ -198,7 +198,7 @@ public class GamePanel extends PRPanel implements ActionListener, KeyListener
             if (code == KeyEvent.VK_F1 || code == KeyEvent.VK_F2)
                 start();
             else if (code == KeyEvent.VK_ESCAPE)
-                main.endGame(0);
+                main.endGame(levelPlayer.getLevel(), 0);
             else
                 levelPlayer.keyPressed(code);
         }
