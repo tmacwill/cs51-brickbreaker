@@ -131,9 +131,6 @@ public class Start extends JFrame implements WindowListener
   // ----------------------------------------------------
 
     public static void main(String args[]) {
-        WebConfig.getInstance().setHost("localhost");
-        WebConfig.getInstance().setPath("/brickbreaker");
-
         EncryptionUtil.init();
         PasswordBox pass = new PasswordBox();
 
