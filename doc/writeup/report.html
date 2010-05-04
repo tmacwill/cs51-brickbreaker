@@ -1,0 +1,48 @@
+<html>
+  <body>
+
+    <h1>Milestones</h1>
+    <p>
+      We began our project as soon as we chose a topic, and we worked steadily after that. Though we did not always meet our milestones exactly at the projected dates, our initial choices of dates had a built in buffer which allowed us to keep on track. We were always within striking distance of our milestones.
+    </p>
+
+    <h1>What Went Well</h1>
+    <p>
+      We used github.com as a repository to which we could push, pull, and merge our changes. This enabled us to maintain consistent versions of the code without having to worry about overriding each other's modifications. We divided up the work very well, meaning that we were able to use the methods and classes written by other people without having to worry about the implementation. Occasionally, we would have to ask for a different constructor or for a method to retrieve some value, but we would not have to actually write those functions.
+    </p>
+
+    <h1>Design</h1>
+    <p>
+      We had to make several design choices early on. After we decided to represent a level's brick layout as a two-dimensional array of brick objects, we were confronted with the following inconsistency. It is standard to represent information in an array in the form [row][column], whereas points are generally represented as (x,y). Since a brick's x-coordinate corresponds to a column, and the brick's y-coordinate corresponds to a row, we had to choose one representation and stick with it. We choice the graphical representation.
+    </p>
+    <p>
+      Another key design choice was the choice to design LevelEditor, GamePanel, and IdlePanel as JPanels which would be switched in and out of a JFrame called Start. We actually did not make this decision at the start. LevelEditor was built as a JFrame, which could stand on its own. It was later changed into a JPanel. 
+    </p>
+
+    <h1>Interfaces</h1>
+    <p>
+      Though we did not make any Java interfaces, we employed the same concept of abstraction through the occasional use of abstract classes. Admittedly, we could have made heavier use of these tools.
+    </p>
+
+    <h1>Testing</h1>
+    <p>
+      We tested the game by playing the game. Similarly, we tested LevelEditor and IdlePanel by running them. Since Start.java and the panel-flipping framework were not coded up for a while, we made do by writing the temporary JFrames StartEditor and StartIdle in order to allow testing. Most of the troubleshooting for code involving key listeners involved throwing exceptions so we could see if a certain point in the code was ever reached. Similarly, when testing the mechanisms for writing and reading files to and from the disk (as well as uploading and downloading files to and from our online database), great benefit was extracted from the use of print statements. Which allowed us to see what directories were being searched.
+    </p>
+
+    <h1>If We Hade More Time</h1>
+    <p>
+      To begin with, we would like to interface more seamlessly with the online database. Currently, when we upload a level, the user isn't notified when it is done. It would be nice to make bricks extensible in the sense that all the user would have to do is create a new brick class and the LevelEditor would automatically take this into account. There are some game play issues that would be nice to change. For instance, we could have made the game support more players. We could have made sequences of levels instead of individual levels.
+    </p>
+
+    <h1>How Would We Do It Differently</h1>
+    <p>
+      We would have put more time in upfront to design good interfaces and abstract classes. We also would have decided on a method for implementing the user interface (we ultimately settled on a semblance of the card-flipping layout, but we began by trying our own thing). This would have allowed everyone to get started immediately on their portions and would have prevented the need to rewrite things later on (such as changing JFrames to JPanels).
+    </p>
+
+    <h1>Lessons</h1>
+    <p>
+      I think everyone should learn to use github. This greatly simplified the process of sharing/merging code, which would have been extremely cumbersome had it instead been handled exclusively through email. We also made an effort to maintain copies of working versions of the code. This enabled us to make changes without having to worry about the difficulties of backtracking. As always, we were reminded of the importance of making good decision decisions at the outset.
+    </p>
+
+  </body>
+</html>

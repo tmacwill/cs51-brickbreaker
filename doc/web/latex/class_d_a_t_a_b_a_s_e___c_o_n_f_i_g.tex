@@ -1,0 +1,53 @@
+\hypertarget{class_d_a_t_a_b_a_s_e___c_o_n_f_i_g}{
+\section{DATABASE\_\-CONFIG Class Reference}
+\label{class_d_a_t_a_b_a_s_e___c_o_n_f_i_g}\index{DATABASE\_\-CONFIG@{DATABASE\_\-CONFIG}}
+}
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries \$default}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Database configuration class. You can specify multiple configurations for production, development and testing.
+
+driver =$>$ The name of a supported driver; valid options are as follows: mysql -\/ MySQL 4 \& 5, mysqli -\/ MySQL 4 \& 5 Improved Interface (PHP5 only), sqlite -\/ SQLite (PHP5 only), postgres -\/ PostgreSQL 7 and higher, mssql -\/ Microsoft SQL Server 2000 and higher, db2 -\/ IBM DB2, Cloudscape, and Apache Derby (\href{http://php.net/ibm-db2}{\tt http://php.net/ibm-\/db2}) oracle -\/ Oracle 8 and higher firebird -\/ Firebird/Interbase sybase -\/ Sybase ASE adodb-\/\mbox{[}drivername\mbox{]} -\/ ADOdb interface wrapper (see below), odbc -\/ ODBC DBO driver
+
+You can add custom database drivers (or override existing drivers) by adding the appropriate file to app/models/datasources/dbo. Drivers should be named 'dbo\_\-x.php', where 'x' is the name of the database.
+
+persistent =$>$ true / false Determines whether or not the database should use a persistent connection
+
+connect =$>$ ADOdb set the connect to one of these (\href{http://phplens.com/adodb/supported.databases.html}{\tt http://phplens.com/adodb/supported.databases.html}) and append it '$|$p' for persistent connection. (mssql$|$p for example, or just mssql for not persistent) For all other databases, this setting is deprecated.
+
+host =$>$ the host you connect to the database. To add a socket or port number, use 'port' =$>$ \#
+
+prefix =$>$ Uses the given prefix for all the tables in this database. This setting can be overridden on a per-\/table basis with the Model::\$tablePrefix property.
+
+schema =$>$ For Postgres and DB2, specifies which schema you would like to use the tables in. Postgres defaults to 'public', DB2 defaults to empty.
+
+encoding =$>$ For MySQL, MySQLi, Postgres and DB2, specifies the character encoding to use when connecting to the database. Uses database default. 
+
+\subsection{Field Documentation}
+\hypertarget{class_d_a_t_a_b_a_s_e___c_o_n_f_i_g_a9df479534ecf05fd7575c6275d381687}{
+\index{DATABASE\_\-CONFIG@{DATABASE\_\-CONFIG}!\$default@{\$default}}
+\index{\$default@{\$default}!DATABASE_CONFIG@{DATABASE\_\-CONFIG}}
+\subsubsection[{\$default}]{\setlength{\rightskip}{0pt plus 5cm}\$default}}
+\label{class_d_a_t_a_b_a_s_e___c_o_n_f_i_g_a9df479534ecf05fd7575c6275d381687}
+{\bfseries Initial value:}
+\begin{DoxyCode}
+ array(
+                'driver' => 'mysql',
+                'persistent' => false,
+                'host' => 'localhost',
+                'login' => 'root',
+                'password' => '',
+                'database' => 'brckbrkr_main',
+                'prefix' => '',
+        )
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+web/app/config/database.php\end{DoxyCompactItemize}

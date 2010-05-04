@@ -1,0 +1,118 @@
+\hypertarget{classbrick_breaker_1_1_horizontal_racket}{
+\section{brickBreaker.HorizontalRacket Class Reference}
+\label{classbrick_breaker_1_1_horizontal_racket}\index{brickBreaker::HorizontalRacket@{brickBreaker::HorizontalRacket}}
+}
+Inheritance diagram for brickBreaker.HorizontalRacket:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2cm]{classbrick_breaker_1_1_horizontal_racket}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classbrick_breaker_1_1_horizontal_racket_aecf9f4abdeda94cc4477603aec0d3640}{HorizontalRacket} (int arenaW, int arenaH, int racketW, boolean top)
+\item 
+void \hyperlink{classbrick_breaker_1_1_horizontal_racket_a8d97c411da71162acd5ecbb32c333f8d}{draw} (Graphics g)
+\item 
+\hyperlink{classbrick_breaker_1_1_ball}{Ball} \hyperlink{classbrick_breaker_1_1_horizontal_racket_a0a504cfa7af83740b19435e73ecd7975}{checkCollision} (\hyperlink{classbrick_breaker_1_1_ball}{Ball} ball)
+\item 
+boolean \hyperlink{classbrick_breaker_1_1_horizontal_racket_a183d1d47f35fad74e603534ec74fbdb9}{checkPast} (\hyperlink{classbrick_breaker_1_1_ball}{Ball} ball)
+\item 
+boolean \hyperlink{classbrick_breaker_1_1_horizontal_racket_a12688619999a3e4d302449ab4bcd0e3d}{isTop} ()
+\item 
+boolean \hyperlink{classbrick_breaker_1_1_horizontal_racket_aef823257f470172eb2caacfa95a61b99}{isBottom} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classbrick_breaker_1_1_horizontal_racket_aecf9f4abdeda94cc4477603aec0d3640}{
+\index{brickBreaker::HorizontalRacket@{brickBreaker::HorizontalRacket}!HorizontalRacket@{HorizontalRacket}}
+\index{HorizontalRacket@{HorizontalRacket}!brickBreaker::HorizontalRacket@{brickBreaker::HorizontalRacket}}
+\subsubsection[{HorizontalRacket}]{\setlength{\rightskip}{0pt plus 5cm}brickBreaker.HorizontalRacket.HorizontalRacket (int {\em arenaW}, \/  int {\em arenaH}, \/  int {\em racketW}, \/  boolean {\em top})}}
+\label{classbrick_breaker_1_1_horizontal_racket_aecf9f4abdeda94cc4477603aec0d3640}
+Initializes the \hyperlink{classbrick_breaker_1_1_horizontal_racket}{HorizontalRacket} on the screen.
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em arenaW}]The width of the screen on which play occurs \item[{\em arenaH}]The height of the screen on which play occurs \item[{\em racketW}]The width of the racket, in pixels \item[{\em top}]True if the racket is at the top of the screen, false if it is at the bottom \end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classbrick_breaker_1_1_horizontal_racket_a0a504cfa7af83740b19435e73ecd7975}{
+\index{brickBreaker::HorizontalRacket@{brickBreaker::HorizontalRacket}!checkCollision@{checkCollision}}
+\index{checkCollision@{checkCollision}!brickBreaker::HorizontalRacket@{brickBreaker::HorizontalRacket}}
+\subsubsection[{checkCollision}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Ball} brickBreaker.HorizontalRacket.checkCollision ({\bf Ball} {\em ball})\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classbrick_breaker_1_1_horizontal_racket_a0a504cfa7af83740b19435e73ecd7975}
+Checks if the ball collides with the racket and updates the ball's position and direction.
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em ball}]The ball object to be tested \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the updated ball object 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classbrick_breaker_1_1_racket}{brickBreaker.Racket}.
+
+\hypertarget{classbrick_breaker_1_1_horizontal_racket_a183d1d47f35fad74e603534ec74fbdb9}{
+\index{brickBreaker::HorizontalRacket@{brickBreaker::HorizontalRacket}!checkPast@{checkPast}}
+\index{checkPast@{checkPast}!brickBreaker::HorizontalRacket@{brickBreaker::HorizontalRacket}}
+\subsubsection[{checkPast}]{\setlength{\rightskip}{0pt plus 5cm}boolean brickBreaker.HorizontalRacket.checkPast ({\bf Ball} {\em ball})\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classbrick_breaker_1_1_horizontal_racket_a183d1d47f35fad74e603534ec74fbdb9}
+Checks if the ball is past the racket (and thus out of play).
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em ball}]The ball object to be tested. \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if the ball has passed the racket, false if it is still in play. 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classbrick_breaker_1_1_racket}{brickBreaker.Racket}.
+
+\hypertarget{classbrick_breaker_1_1_horizontal_racket_a8d97c411da71162acd5ecbb32c333f8d}{
+\index{brickBreaker::HorizontalRacket@{brickBreaker::HorizontalRacket}!draw@{draw}}
+\index{draw@{draw}!brickBreaker::HorizontalRacket@{brickBreaker::HorizontalRacket}}
+\subsubsection[{draw}]{\setlength{\rightskip}{0pt plus 5cm}void brickBreaker.HorizontalRacket.draw (Graphics {\em g})\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classbrick_breaker_1_1_horizontal_racket_a8d97c411da71162acd5ecbb32c333f8d}
+Draws the racket on the screen.
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em g}]The graphics object on which to draw \end{DoxyParams}
+
+
+Implements \hyperlink{classbrick_breaker_1_1_racket}{brickBreaker.Racket}.
+
+\hypertarget{classbrick_breaker_1_1_horizontal_racket_aef823257f470172eb2caacfa95a61b99}{
+\index{brickBreaker::HorizontalRacket@{brickBreaker::HorizontalRacket}!isBottom@{isBottom}}
+\index{isBottom@{isBottom}!brickBreaker::HorizontalRacket@{brickBreaker::HorizontalRacket}}
+\subsubsection[{isBottom}]{\setlength{\rightskip}{0pt plus 5cm}boolean brickBreaker.HorizontalRacket.isBottom ()}}
+\label{classbrick_breaker_1_1_horizontal_racket_aef823257f470172eb2caacfa95a61b99}
+\begin{DoxyReturn}{Returns}
+Returns true if the racket is at the bottom of the screen. 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classbrick_breaker_1_1_racket}{brickBreaker.Racket}.
+
+\hypertarget{classbrick_breaker_1_1_horizontal_racket_a12688619999a3e4d302449ab4bcd0e3d}{
+\index{brickBreaker::HorizontalRacket@{brickBreaker::HorizontalRacket}!isTop@{isTop}}
+\index{isTop@{isTop}!brickBreaker::HorizontalRacket@{brickBreaker::HorizontalRacket}}
+\subsubsection[{isTop}]{\setlength{\rightskip}{0pt plus 5cm}boolean brickBreaker.HorizontalRacket.isTop ()}}
+\label{classbrick_breaker_1_1_horizontal_racket_a12688619999a3e4d302449ab4bcd0e3d}
+\begin{DoxyReturn}{Returns}
+Returns true if the racket is at the top of the screen. 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classbrick_breaker_1_1_racket}{brickBreaker.Racket}.
+
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+game/brickBreaker/\hyperlink{_horizontal_racket_8java}{HorizontalRacket.java}\end{DoxyCompactItemize}

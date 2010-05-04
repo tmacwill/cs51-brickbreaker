@@ -1,0 +1,94 @@
+\hypertarget{classbrick_breaker_1_1web_1_1_connection_util}{
+\section{brickBreaker.web.ConnectionUtil Class Reference}
+\label{classbrick_breaker_1_1web_1_1_connection_util}\index{brickBreaker::web::ConnectionUtil@{brickBreaker::web::ConnectionUtil}}
+}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{classbrick_breaker_1_1web_1_1_connection_util_a2f1cc93d9583cfc78cb27b62c7f1359a}{RequestMethod} \{ {\bfseries GET} = ( \char`\"{}GET\char`\"{} ), 
+{\bfseries POST} = ( \char`\"{}POST\char`\"{} )
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static byte\mbox{[}$\,$\mbox{]} \hyperlink{classbrick_breaker_1_1web_1_1_connection_util_a30e5317eb7d69805c2ea0be2e958d1f5}{doGet} (String urlString)  throws RequestFailureException 
+\item 
+static byte\mbox{[}$\,$\mbox{]} \hyperlink{classbrick_breaker_1_1web_1_1_connection_util_a14b57ed9409efdc30cb80f83202c4dae}{doPost} (String urlString, Map$<$ String, String $>$ postData)  throws RequestFailureException 
+\item 
+static String \hyperlink{classbrick_breaker_1_1web_1_1_connection_util_a0b446e1652608c958695ea1e258f2e9b}{encodeURLComponent} (String fragment)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class provides methods for performing HTTP requests.
+
+\begin{DoxyAuthor}{Author}
+Abraham Lin 
+\end{DoxyAuthor}
+
+
+\subsection{Member Enumeration Documentation}
+\hypertarget{classbrick_breaker_1_1web_1_1_connection_util_a2f1cc93d9583cfc78cb27b62c7f1359a}{
+\index{brickBreaker::web::ConnectionUtil@{brickBreaker::web::ConnectionUtil}!RequestMethod@{RequestMethod}}
+\index{RequestMethod@{RequestMethod}!brickBreaker::web::ConnectionUtil@{brickBreaker::web::ConnectionUtil}}
+\subsubsection[{RequestMethod}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf brickBreaker::web::ConnectionUtil::RequestMethod}}}
+\label{classbrick_breaker_1_1web_1_1_connection_util_a2f1cc93d9583cfc78cb27b62c7f1359a}
+An enumeration of all supported HTTP request methods.
+
+\begin{DoxyAuthor}{Author}
+Abraham Lin 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classbrick_breaker_1_1web_1_1_connection_util_a30e5317eb7d69805c2ea0be2e958d1f5}{
+\index{brickBreaker::web::ConnectionUtil@{brickBreaker::web::ConnectionUtil}!doGet@{doGet}}
+\index{doGet@{doGet}!brickBreaker::web::ConnectionUtil@{brickBreaker::web::ConnectionUtil}}
+\subsubsection[{doGet}]{\setlength{\rightskip}{0pt plus 5cm}static byte \mbox{[}$\,$\mbox{]} brickBreaker.web.ConnectionUtil.doGet (String {\em urlString})  throws {\bf RequestFailureException} \hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classbrick_breaker_1_1web_1_1_connection_util_a30e5317eb7d69805c2ea0be2e958d1f5}
+Performs a GET request to the specified URL target.
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em urlString}]the URL target. This parameter cannot be {\ttfamily null} \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the response
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+\item[{\em IllegalArgumentException}]if any of the arguments are {\ttfamily null} \item[{\em \hyperlink{classbrick_breaker_1_1web_1_1_request_failure_exception}{RequestFailureException}}]if the request is unsuccessful \end{DoxyExceptions}
+\hypertarget{classbrick_breaker_1_1web_1_1_connection_util_a14b57ed9409efdc30cb80f83202c4dae}{
+\index{brickBreaker::web::ConnectionUtil@{brickBreaker::web::ConnectionUtil}!doPost@{doPost}}
+\index{doPost@{doPost}!brickBreaker::web::ConnectionUtil@{brickBreaker::web::ConnectionUtil}}
+\subsubsection[{doPost}]{\setlength{\rightskip}{0pt plus 5cm}static byte \mbox{[}$\,$\mbox{]} brickBreaker.web.ConnectionUtil.doPost (String {\em urlString}, \/  Map$<$ String, String $>$ {\em postData})  throws {\bf RequestFailureException} \hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classbrick_breaker_1_1web_1_1_connection_util_a14b57ed9409efdc30cb80f83202c4dae}
+Performs a POST request to the specified URL target with the given POSTDATA.
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em urlString}]the URL target. This parameter cannot be {\ttfamily null} \item[{\em postData}]the POSTDATA. This parameter cannot be {\ttfamily null} \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the response
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+\item[{\em IllegalArgumentException}]if any of the arguments are {\ttfamily null} \item[{\em \hyperlink{classbrick_breaker_1_1web_1_1_request_failure_exception}{RequestFailureException}}]if the request is unsuccessful \end{DoxyExceptions}
+\hypertarget{classbrick_breaker_1_1web_1_1_connection_util_a0b446e1652608c958695ea1e258f2e9b}{
+\index{brickBreaker::web::ConnectionUtil@{brickBreaker::web::ConnectionUtil}!encodeURLComponent@{encodeURLComponent}}
+\index{encodeURLComponent@{encodeURLComponent}!brickBreaker::web::ConnectionUtil@{brickBreaker::web::ConnectionUtil}}
+\subsubsection[{encodeURLComponent}]{\setlength{\rightskip}{0pt plus 5cm}static String brickBreaker.web.ConnectionUtil.encodeURLComponent (String {\em fragment})\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classbrick_breaker_1_1web_1_1_connection_util_a0b446e1652608c958695ea1e258f2e9b}
+Encodes a URL fragment to {\ttfamily application/x-\/www-\/form-\/urlencoded} format, using the UTF-\/8 encoding scheme.
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em fragment}]the URL fragment to encode \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the encoded URL fragment 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+game/brickBreaker/web/ConnectionUtil.java\end{DoxyCompactItemize}

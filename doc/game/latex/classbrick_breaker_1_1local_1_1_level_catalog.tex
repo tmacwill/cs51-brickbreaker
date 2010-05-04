@@ -1,0 +1,100 @@
+\hypertarget{classbrick_breaker_1_1local_1_1_level_catalog}{
+\section{brickBreaker.local.LevelCatalog Class Reference}
+\label{classbrick_breaker_1_1local_1_1_level_catalog}\index{brickBreaker::local::LevelCatalog@{brickBreaker::local::LevelCatalog}}
+}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classbrick_breaker_1_1local_1_1_level_catalog_a3cb48b330d53535457d9aeb4f2f7fb32}{reset} ()  throws FilesystemFailureException 
+\item 
+List$<$ \hyperlink{classbrick_breaker_1_1_level}{Level} $>$ \hyperlink{classbrick_breaker_1_1local_1_1_level_catalog_a34873e8d58b5e3570da7312b714f1e13}{getLevels} ()
+\item 
+void \hyperlink{classbrick_breaker_1_1local_1_1_level_catalog_a81201df02f319ba10645c3ee711cb777}{addLevel} (\hyperlink{classbrick_breaker_1_1_level}{Level} level)  throws FilesystemFailureException 
+\item 
+String \hyperlink{classbrick_breaker_1_1local_1_1_level_catalog_acb192b0db7f4a495d3674fa6b6996a56}{getLevelID} (\hyperlink{classbrick_breaker_1_1_level}{Level} level)
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{classbrick_breaker_1_1local_1_1_level_catalog}{LevelCatalog} \hyperlink{classbrick_breaker_1_1local_1_1_level_catalog_abeb4b9d17e6743896f3f02eeaa571a42}{getInstance} ()
+\end{DoxyCompactItemize}
+\subsection*{Static Package Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classbrick_breaker_1_1local_1_1_level_catalog_a7163b269c7bce462b7cf90bbd992a500}{
+{\bfseries \mbox{[}static initializer\mbox{]}}}
+\label{classbrick_breaker_1_1local_1_1_level_catalog_a7163b269c7bce462b7cf90bbd992a500}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This singleton class provides an in-\/memory catalog of levels available for use by the application.
+
+\begin{DoxyAuthor}{Author}
+Abraham Lin 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classbrick_breaker_1_1local_1_1_level_catalog_a81201df02f319ba10645c3ee711cb777}{
+\index{brickBreaker::local::LevelCatalog@{brickBreaker::local::LevelCatalog}!addLevel@{addLevel}}
+\index{addLevel@{addLevel}!brickBreaker::local::LevelCatalog@{brickBreaker::local::LevelCatalog}}
+\subsubsection[{addLevel}]{\setlength{\rightskip}{0pt plus 5cm}void brickBreaker.local.LevelCatalog.addLevel ({\bf Level} {\em level})  throws {\bf FilesystemFailureException} }}
+\label{classbrick_breaker_1_1local_1_1_level_catalog_a81201df02f319ba10645c3ee711cb777}
+Adds a new level to the catalog, saving it to disk if necessary.
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em level}]the level to add\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+\item[{\em \hyperlink{classbrick_breaker_1_1local_1_1_filesystem_failure_exception}{FilesystemFailureException}}]if any errors occur while attempting the operation \end{DoxyExceptions}
+\hypertarget{classbrick_breaker_1_1local_1_1_level_catalog_abeb4b9d17e6743896f3f02eeaa571a42}{
+\index{brickBreaker::local::LevelCatalog@{brickBreaker::local::LevelCatalog}!getInstance@{getInstance}}
+\index{getInstance@{getInstance}!brickBreaker::local::LevelCatalog@{brickBreaker::local::LevelCatalog}}
+\subsubsection[{getInstance}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf LevelCatalog} brickBreaker.local.LevelCatalog.getInstance ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classbrick_breaker_1_1local_1_1_level_catalog_abeb4b9d17e6743896f3f02eeaa571a42}
+Returns a singleton instance of this class.
+
+\begin{DoxyReturn}{Returns}
+the instance 
+\end{DoxyReturn}
+\hypertarget{classbrick_breaker_1_1local_1_1_level_catalog_acb192b0db7f4a495d3674fa6b6996a56}{
+\index{brickBreaker::local::LevelCatalog@{brickBreaker::local::LevelCatalog}!getLevelID@{getLevelID}}
+\index{getLevelID@{getLevelID}!brickBreaker::local::LevelCatalog@{brickBreaker::local::LevelCatalog}}
+\subsubsection[{getLevelID}]{\setlength{\rightskip}{0pt plus 5cm}String brickBreaker.local.LevelCatalog.getLevelID ({\bf Level} {\em level})}}
+\label{classbrick_breaker_1_1local_1_1_level_catalog_acb192b0db7f4a495d3674fa6b6996a56}
+Returns a unique identifier for the provided level.
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em level}]the level \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the unique identifier for the level 
+\end{DoxyReturn}
+\hypertarget{classbrick_breaker_1_1local_1_1_level_catalog_a34873e8d58b5e3570da7312b714f1e13}{
+\index{brickBreaker::local::LevelCatalog@{brickBreaker::local::LevelCatalog}!getLevels@{getLevels}}
+\index{getLevels@{getLevels}!brickBreaker::local::LevelCatalog@{brickBreaker::local::LevelCatalog}}
+\subsubsection[{getLevels}]{\setlength{\rightskip}{0pt plus 5cm}List$<${\bf Level}$>$ brickBreaker.local.LevelCatalog.getLevels ()}}
+\label{classbrick_breaker_1_1local_1_1_level_catalog_a34873e8d58b5e3570da7312b714f1e13}
+Returns an immutable list of all levels in the catalog.
+
+\begin{DoxyReturn}{Returns}
+the immutable list of available levels 
+\end{DoxyReturn}
+\hypertarget{classbrick_breaker_1_1local_1_1_level_catalog_a3cb48b330d53535457d9aeb4f2f7fb32}{
+\index{brickBreaker::local::LevelCatalog@{brickBreaker::local::LevelCatalog}!reset@{reset}}
+\index{reset@{reset}!brickBreaker::local::LevelCatalog@{brickBreaker::local::LevelCatalog}}
+\subsubsection[{reset}]{\setlength{\rightskip}{0pt plus 5cm}void brickBreaker.local.LevelCatalog.reset ()  throws {\bf FilesystemFailureException} }}
+\label{classbrick_breaker_1_1local_1_1_level_catalog_a3cb48b330d53535457d9aeb4f2f7fb32}
+Resets the catalog by re-\/loading all levels from disk.
+
+
+\begin{DoxyExceptions}{Exceptions}
+\item[{\em \hyperlink{classbrick_breaker_1_1local_1_1_filesystem_failure_exception}{FilesystemFailureException}}]if any errors occur while attempting the operation \end{DoxyExceptions}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+game/brickBreaker/local/LevelCatalog.java\end{DoxyCompactItemize}

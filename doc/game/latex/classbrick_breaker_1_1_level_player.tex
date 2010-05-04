@@ -1,0 +1,179 @@
+\hypertarget{classbrick_breaker_1_1_level_player}{
+\section{brickBreaker.LevelPlayer Class Reference}
+\label{classbrick_breaker_1_1_level_player}\index{brickBreaker::LevelPlayer@{brickBreaker::LevelPlayer}}
+}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classbrick_breaker_1_1_level_player_a34f8b2db5684239038d4b5f33d7c93f6}{LevelPlayer} (\hyperlink{classbrick_breaker_1_1_level}{Level} lev)
+\item 
+int \hyperlink{classbrick_breaker_1_1_level_player_ad141c01fb30f6982c5b7932dd8ca901a}{update} ()
+\item 
+boolean \hyperlink{classbrick_breaker_1_1_level_player_aa5069116c7e903a1cf8d6663260905b2}{ballsInBounds} ()
+\item 
+boolean \hyperlink{classbrick_breaker_1_1_level_player_a298ae45b06799f0299d4b518075b9599}{isFilled} (int x, int y)
+\item 
+int \hyperlink{classbrick_breaker_1_1_level_player_a6aa16018bbba510ef65b6d43baaf8dc3}{removeBrick} (int x, int y, \hyperlink{classbrick_breaker_1_1_ball}{Ball} b)
+\item 
+int \hyperlink{classbrick_breaker_1_1_level_player_a0faa4b97a3ae3d8f473a5b70de9ab45b}{checkCollision} (\hyperlink{classbrick_breaker_1_1_ball}{Ball} b)
+\item 
+boolean \hyperlink{classbrick_breaker_1_1_level_player_a952e8b565a2c36ac471f7ab020972294}{cleared} ()
+\item 
+boolean \hyperlink{classbrick_breaker_1_1_level_player_ad4ab8305c27d7ee5a1c4a05488705a53}{racketLeft} ()
+\item 
+boolean \hyperlink{classbrick_breaker_1_1_level_player_a95c24168beb56156276b636954f210bc}{racketRight} ()
+\item 
+boolean \hyperlink{classbrick_breaker_1_1_level_player_ae31f4ca8b38e813587e795d681edfb0d}{racketTop} ()
+\item 
+boolean \hyperlink{classbrick_breaker_1_1_level_player_a6a7980415c6fed32a9f6c9271bae6220}{racketBottom} ()
+\item 
+void \hyperlink{classbrick_breaker_1_1_level_player_ae54384ce113e96099dd14d73acd7de5e}{drawComponents} (Graphics g)
+\item 
+void \hyperlink{classbrick_breaker_1_1_level_player_a1ebfab24bc0e7e7e6851f7856e486d8d}{keyPressed} (int code)
+\item 
+void \hyperlink{classbrick_breaker_1_1_level_player_a32dd9508bac5135b7f2706b807ada71e}{keyReleased} (int code)
+\item 
+\hypertarget{classbrick_breaker_1_1_level_player_a732aa75e9304df978a19452b95b6ee87}{
+\hyperlink{classbrick_breaker_1_1_level}{Level} {\bfseries getLevel} ()}
+\label{classbrick_breaker_1_1_level_player_a732aa75e9304df978a19452b95b6ee87}
+
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classbrick_breaker_1_1_level_player_a0fabd8254a778679106f0817ec18d4d8}{
+static int {\bfseries WIDTH}}
+\label{classbrick_breaker_1_1_level_player_a0fabd8254a778679106f0817ec18d4d8}
+
+\item 
+\hypertarget{classbrick_breaker_1_1_level_player_a78ba1a2042a37d401a70998c49030b7c}{
+static int {\bfseries HEIGHT}}
+\label{classbrick_breaker_1_1_level_player_a78ba1a2042a37d401a70998c49030b7c}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classbrick_breaker_1_1_level_player_a34f8b2db5684239038d4b5f33d7c93f6}{
+\index{brickBreaker::LevelPlayer@{brickBreaker::LevelPlayer}!LevelPlayer@{LevelPlayer}}
+\index{LevelPlayer@{LevelPlayer}!brickBreaker::LevelPlayer@{brickBreaker::LevelPlayer}}
+\subsubsection[{LevelPlayer}]{\setlength{\rightskip}{0pt plus 5cm}brickBreaker.LevelPlayer.LevelPlayer ({\bf Level} {\em lev})}}
+\label{classbrick_breaker_1_1_level_player_a34f8b2db5684239038d4b5f33d7c93f6}
+Constructor 
+\begin{DoxyParams}{Parameters}
+\item[{\em lev}]The \hyperlink{classbrick_breaker_1_1_level}{Level} object containing the components used by this class \end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classbrick_breaker_1_1_level_player_aa5069116c7e903a1cf8d6663260905b2}{
+\index{brickBreaker::LevelPlayer@{brickBreaker::LevelPlayer}!ballsInBounds@{ballsInBounds}}
+\index{ballsInBounds@{ballsInBounds}!brickBreaker::LevelPlayer@{brickBreaker::LevelPlayer}}
+\subsubsection[{ballsInBounds}]{\setlength{\rightskip}{0pt plus 5cm}boolean brickBreaker.LevelPlayer.ballsInBounds ()}}
+\label{classbrick_breaker_1_1_level_player_aa5069116c7e903a1cf8d6663260905b2}
+Tests whether all balls are still in play. \begin{DoxyReturn}{Returns}
+Returns true if all the balls are still in bounds 
+\end{DoxyReturn}
+\hypertarget{classbrick_breaker_1_1_level_player_a0faa4b97a3ae3d8f473a5b70de9ab45b}{
+\index{brickBreaker::LevelPlayer@{brickBreaker::LevelPlayer}!checkCollision@{checkCollision}}
+\index{checkCollision@{checkCollision}!brickBreaker::LevelPlayer@{brickBreaker::LevelPlayer}}
+\subsubsection[{checkCollision}]{\setlength{\rightskip}{0pt plus 5cm}int brickBreaker.LevelPlayer.checkCollision ({\bf Ball} {\em b})}}
+\label{classbrick_breaker_1_1_level_player_a0faa4b97a3ae3d8f473a5b70de9ab45b}
+Checks whether the given ball is colliding with any brick, and updates the bricks if needed.
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em b}]The ball to be tested \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the number of points earned (zero if no bricks were removed) 
+\end{DoxyReturn}
+\hypertarget{classbrick_breaker_1_1_level_player_a952e8b565a2c36ac471f7ab020972294}{
+\index{brickBreaker::LevelPlayer@{brickBreaker::LevelPlayer}!cleared@{cleared}}
+\index{cleared@{cleared}!brickBreaker::LevelPlayer@{brickBreaker::LevelPlayer}}
+\subsubsection[{cleared}]{\setlength{\rightskip}{0pt plus 5cm}boolean brickBreaker.LevelPlayer.cleared ()}}
+\label{classbrick_breaker_1_1_level_player_a952e8b565a2c36ac471f7ab020972294}
+Tests whether all of the bricks have been cleared from the level. \begin{DoxyReturn}{Returns}
+Returns true if all bricks have been removed (ignoring permanent bricks) 
+\end{DoxyReturn}
+\hypertarget{classbrick_breaker_1_1_level_player_ae54384ce113e96099dd14d73acd7de5e}{
+\index{brickBreaker::LevelPlayer@{brickBreaker::LevelPlayer}!drawComponents@{drawComponents}}
+\index{drawComponents@{drawComponents}!brickBreaker::LevelPlayer@{brickBreaker::LevelPlayer}}
+\subsubsection[{drawComponents}]{\setlength{\rightskip}{0pt plus 5cm}void brickBreaker.LevelPlayer.drawComponents (Graphics {\em g})}}
+\label{classbrick_breaker_1_1_level_player_ae54384ce113e96099dd14d73acd7de5e}
+Draws all of the level components on the screen. 
+\begin{DoxyParams}{Parameters}
+\item[{\em g}]Graphics object to draw with \end{DoxyParams}
+\hypertarget{classbrick_breaker_1_1_level_player_a298ae45b06799f0299d4b518075b9599}{
+\index{brickBreaker::LevelPlayer@{brickBreaker::LevelPlayer}!isFilled@{isFilled}}
+\index{isFilled@{isFilled}!brickBreaker::LevelPlayer@{brickBreaker::LevelPlayer}}
+\subsubsection[{isFilled}]{\setlength{\rightskip}{0pt plus 5cm}boolean brickBreaker.LevelPlayer.isFilled (int {\em x}, \/  int {\em y})}}
+\label{classbrick_breaker_1_1_level_player_a298ae45b06799f0299d4b518075b9599}
+Tests whether the position \mbox{[}x\mbox{]}\mbox{[}y\mbox{]} (in the 2d array of bricks) is occupied by a brick.
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em x}]The x-\/coordinate of the position in the brick grid \item[{\em y}]The y-\/coordinate of the position in the brick grid \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if the given position is occupied by a brick, false if it is empty 
+\end{DoxyReturn}
+\hypertarget{classbrick_breaker_1_1_level_player_a1ebfab24bc0e7e7e6851f7856e486d8d}{
+\index{brickBreaker::LevelPlayer@{brickBreaker::LevelPlayer}!keyPressed@{keyPressed}}
+\index{keyPressed@{keyPressed}!brickBreaker::LevelPlayer@{brickBreaker::LevelPlayer}}
+\subsubsection[{keyPressed}]{\setlength{\rightskip}{0pt plus 5cm}void brickBreaker.LevelPlayer.keyPressed (int {\em code})}}
+\label{classbrick_breaker_1_1_level_player_a1ebfab24bc0e7e7e6851f7856e486d8d}
+Actions to be performed when a key is pressed 
+\begin{DoxyParams}{Parameters}
+\item[{\em code}]Int key code \end{DoxyParams}
+\hypertarget{classbrick_breaker_1_1_level_player_a32dd9508bac5135b7f2706b807ada71e}{
+\index{brickBreaker::LevelPlayer@{brickBreaker::LevelPlayer}!keyReleased@{keyReleased}}
+\index{keyReleased@{keyReleased}!brickBreaker::LevelPlayer@{brickBreaker::LevelPlayer}}
+\subsubsection[{keyReleased}]{\setlength{\rightskip}{0pt plus 5cm}void brickBreaker.LevelPlayer.keyReleased (int {\em code})}}
+\label{classbrick_breaker_1_1_level_player_a32dd9508bac5135b7f2706b807ada71e}
+Actions to be performed when a key is released 
+\begin{DoxyParams}{Parameters}
+\item[{\em code}]Int key code \end{DoxyParams}
+\hypertarget{classbrick_breaker_1_1_level_player_a6a7980415c6fed32a9f6c9271bae6220}{
+\index{brickBreaker::LevelPlayer@{brickBreaker::LevelPlayer}!racketBottom@{racketBottom}}
+\index{racketBottom@{racketBottom}!brickBreaker::LevelPlayer@{brickBreaker::LevelPlayer}}
+\subsubsection[{racketBottom}]{\setlength{\rightskip}{0pt plus 5cm}boolean brickBreaker.LevelPlayer.racketBottom ()}}
+\label{classbrick_breaker_1_1_level_player_a6a7980415c6fed32a9f6c9271bae6220}
+Returns true if there is a racket on the bottom of the screen \hypertarget{classbrick_breaker_1_1_level_player_ad4ab8305c27d7ee5a1c4a05488705a53}{
+\index{brickBreaker::LevelPlayer@{brickBreaker::LevelPlayer}!racketLeft@{racketLeft}}
+\index{racketLeft@{racketLeft}!brickBreaker::LevelPlayer@{brickBreaker::LevelPlayer}}
+\subsubsection[{racketLeft}]{\setlength{\rightskip}{0pt plus 5cm}boolean brickBreaker.LevelPlayer.racketLeft ()}}
+\label{classbrick_breaker_1_1_level_player_ad4ab8305c27d7ee5a1c4a05488705a53}
+Returns true if there is a racket on the left side of the screen \hypertarget{classbrick_breaker_1_1_level_player_a95c24168beb56156276b636954f210bc}{
+\index{brickBreaker::LevelPlayer@{brickBreaker::LevelPlayer}!racketRight@{racketRight}}
+\index{racketRight@{racketRight}!brickBreaker::LevelPlayer@{brickBreaker::LevelPlayer}}
+\subsubsection[{racketRight}]{\setlength{\rightskip}{0pt plus 5cm}boolean brickBreaker.LevelPlayer.racketRight ()}}
+\label{classbrick_breaker_1_1_level_player_a95c24168beb56156276b636954f210bc}
+Returns true if there is a racket on the right side of the screen \hypertarget{classbrick_breaker_1_1_level_player_ae31f4ca8b38e813587e795d681edfb0d}{
+\index{brickBreaker::LevelPlayer@{brickBreaker::LevelPlayer}!racketTop@{racketTop}}
+\index{racketTop@{racketTop}!brickBreaker::LevelPlayer@{brickBreaker::LevelPlayer}}
+\subsubsection[{racketTop}]{\setlength{\rightskip}{0pt plus 5cm}boolean brickBreaker.LevelPlayer.racketTop ()}}
+\label{classbrick_breaker_1_1_level_player_ae31f4ca8b38e813587e795d681edfb0d}
+Returns true if there is a racket on the top of the screen \hypertarget{classbrick_breaker_1_1_level_player_a6aa16018bbba510ef65b6d43baaf8dc3}{
+\index{brickBreaker::LevelPlayer@{brickBreaker::LevelPlayer}!removeBrick@{removeBrick}}
+\index{removeBrick@{removeBrick}!brickBreaker::LevelPlayer@{brickBreaker::LevelPlayer}}
+\subsubsection[{removeBrick}]{\setlength{\rightskip}{0pt plus 5cm}int brickBreaker.LevelPlayer.removeBrick (int {\em x}, \/  int {\em y}, \/  {\bf Ball} {\em b})}}
+\label{classbrick_breaker_1_1_level_player_a6aa16018bbba510ef65b6d43baaf8dc3}
+Removes the box at \mbox{[}x\mbox{]}\mbox{[}y\mbox{]} in the array of bricks.
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em x}]The x-\/coordinate of the position in the brick grid \item[{\em y}]The y-\/coordinate of the position in the brick grid \item[{\em b}]The ball which just bounced against the brick \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the number of points earned by removing this brick 
+\end{DoxyReturn}
+\hypertarget{classbrick_breaker_1_1_level_player_ad141c01fb30f6982c5b7932dd8ca901a}{
+\index{brickBreaker::LevelPlayer@{brickBreaker::LevelPlayer}!update@{update}}
+\index{update@{update}!brickBreaker::LevelPlayer@{brickBreaker::LevelPlayer}}
+\subsubsection[{update}]{\setlength{\rightskip}{0pt plus 5cm}int brickBreaker.LevelPlayer.update ()}}
+\label{classbrick_breaker_1_1_level_player_ad141c01fb30f6982c5b7932dd8ca901a}
+Updates the components in the level and returns the score earned. \begin{DoxyReturn}{Returns}
+Returns the number of points earned in this timestep 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+game/brickBreaker/\hyperlink{_level_player_8java}{LevelPlayer.java}\end{DoxyCompactItemize}

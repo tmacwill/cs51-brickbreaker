@@ -1,0 +1,229 @@
+\hypertarget{classbrick_breaker_1_1_ball}{
+\section{brickBreaker.Ball Class Reference}
+\label{classbrick_breaker_1_1_ball}\index{brickBreaker::Ball@{brickBreaker::Ball}}
+}
+
+
+Inherits java::io::Serializable.
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classbrick_breaker_1_1_ball_acb18370d945b133d9c3a3d87beca7e4c}{Ball} (\hyperlink{classbrick_breaker_1_1_racket}{Racket}\mbox{[}$\,$\mbox{]} r, int radius)
+\item 
+\hyperlink{classbrick_breaker_1_1_ball_ae797eeb30e776dbe48357107816db887}{Ball} (\hyperlink{classbrick_breaker_1_1_level_player}{LevelPlayer} l, \hyperlink{classbrick_breaker_1_1_racket}{Racket}\mbox{[}$\,$\mbox{]} r, int radius)
+\item 
+void \hyperlink{classbrick_breaker_1_1_ball_adcc8436d899828fe7f3c788ed1daf8d6}{setLoc} (double x, double y, double angle)
+\item 
+void \hyperlink{classbrick_breaker_1_1_ball_a3a95a5d7eeab58dbacd89d1e304bf2d4}{setLevel} (\hyperlink{classbrick_breaker_1_1_level_player}{LevelPlayer} lev)
+\item 
+int \hyperlink{classbrick_breaker_1_1_ball_a7c119360e2434ef5c69020e8608569ff}{updatePosition} ()
+\item 
+void \hyperlink{classbrick_breaker_1_1_ball_ab2ed912dfac55974d85184840fd8be9d}{draw} (Graphics g)
+\item 
+int \hyperlink{classbrick_breaker_1_1_ball_af0651b3d0294b6843a7a5b74acb87195}{getX} ()
+\item 
+int \hyperlink{classbrick_breaker_1_1_ball_abc92d446c039bfae85f89ba82facdfc3}{getY} ()
+\item 
+int \hyperlink{classbrick_breaker_1_1_ball_ae4ca4fc89a298a422b96c3056e9b9d1a}{getRad} ()
+\item 
+void \hyperlink{classbrick_breaker_1_1_ball_a71e24748f9cb90bd9da6a910648ba84e}{setX} (double x)
+\item 
+void \hyperlink{classbrick_breaker_1_1_ball_ae15aedc6cd01476f486328369fd6a799}{setY} (double y)
+\item 
+boolean \hyperlink{classbrick_breaker_1_1_ball_ac516403ca5285c41619248f6c1e0690b}{inBounds} ()
+\item 
+void \hyperlink{classbrick_breaker_1_1_ball_a443ce0341305785eaf4da97d755bb550}{changeAngle} (double newAngle)
+\item 
+double \hyperlink{classbrick_breaker_1_1_ball_a022f1feac935da4a1480fc70f56858d4}{getAngle} ()
+\item 
+boolean \hyperlink{classbrick_breaker_1_1_ball_aff35873f2550b5b0601cfb7b31cfc368}{checkCollision} (int\mbox{[}$\,$\mbox{]} loc)
+\item 
+void \hyperlink{classbrick_breaker_1_1_ball_a102b54397819a72161278ccfeb1f5d72}{bounce} (int x, boolean horizontal)
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{classbrick_breaker_1_1_ball_ad43ce78383f0415e608cb247e5df9ecd}{resetVars} ()
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classbrick_breaker_1_1_ball_a982ccc918368e8e543cd60c79906b23b}{
+static final double {\bfseries pi} = Math.PI}
+\label{classbrick_breaker_1_1_ball_a982ccc918368e8e543cd60c79906b23b}
+
+\item 
+\hypertarget{classbrick_breaker_1_1_ball_a823ecce6d62f6f51d6295e10a02ecb96}{
+static double {\bfseries speed}}
+\label{classbrick_breaker_1_1_ball_a823ecce6d62f6f51d6295e10a02ecb96}
+
+\item 
+\hypertarget{classbrick_breaker_1_1_ball_a9dac0bf349181dcee6b23afc37651064}{
+static int {\bfseries powerLevel} = 0}
+\label{classbrick_breaker_1_1_ball_a9dac0bf349181dcee6b23afc37651064}
+
+\item 
+\hypertarget{classbrick_breaker_1_1_ball_a9bad3add0bff004075b750e2f7cf35f4}{
+static double {\bfseries ptMultiplier} = 1}
+\label{classbrick_breaker_1_1_ball_a9bad3add0bff004075b750e2f7cf35f4}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classbrick_breaker_1_1_ball_acb18370d945b133d9c3a3d87beca7e4c}{
+\index{brickBreaker::Ball@{brickBreaker::Ball}!Ball@{Ball}}
+\index{Ball@{Ball}!brickBreaker::Ball@{brickBreaker::Ball}}
+\subsubsection[{Ball}]{\setlength{\rightskip}{0pt plus 5cm}brickBreaker.Ball.Ball ({\bf Racket}\mbox{[}$\,$\mbox{]} {\em r}, \/  int {\em radius})}}
+\label{classbrick_breaker_1_1_ball_acb18370d945b133d9c3a3d87beca7e4c}
+Constructor.
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em r}]An array of all rackets in the game \item[{\em radius}]The radius of the ball, in pixels \end{DoxyParams}
+\hypertarget{classbrick_breaker_1_1_ball_ae797eeb30e776dbe48357107816db887}{
+\index{brickBreaker::Ball@{brickBreaker::Ball}!Ball@{Ball}}
+\index{Ball@{Ball}!brickBreaker::Ball@{brickBreaker::Ball}}
+\subsubsection[{Ball}]{\setlength{\rightskip}{0pt plus 5cm}brickBreaker.Ball.Ball ({\bf LevelPlayer} {\em l}, \/  {\bf Racket}\mbox{[}$\,$\mbox{]} {\em r}, \/  int {\em radius})}}
+\label{classbrick_breaker_1_1_ball_ae797eeb30e776dbe48357107816db887}
+Constructor.
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em l}]The \hyperlink{classbrick_breaker_1_1_level_player}{LevelPlayer} in which the ball exists \item[{\em r}]An array of all rackets in the game \item[{\em radius}]The radius of the ball, in pixels \end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classbrick_breaker_1_1_ball_a102b54397819a72161278ccfeb1f5d72}{
+\index{brickBreaker::Ball@{brickBreaker::Ball}!bounce@{bounce}}
+\index{bounce@{bounce}!brickBreaker::Ball@{brickBreaker::Ball}}
+\subsubsection[{bounce}]{\setlength{\rightskip}{0pt plus 5cm}void brickBreaker.Ball.bounce (int {\em x}, \/  boolean {\em horizontal})}}
+\label{classbrick_breaker_1_1_ball_a102b54397819a72161278ccfeb1f5d72}
+Bounces this ball off the given wall. The wall is either horizontal or vertical, specified by param horizontal. 
+\begin{DoxyParams}{Parameters}
+\item[{\em x}]The location of the wall \item[{\em horizontal}]True if the wall is horizontal, false if it is vertical \end{DoxyParams}
+\hypertarget{classbrick_breaker_1_1_ball_a443ce0341305785eaf4da97d755bb550}{
+\index{brickBreaker::Ball@{brickBreaker::Ball}!changeAngle@{changeAngle}}
+\index{changeAngle@{changeAngle}!brickBreaker::Ball@{brickBreaker::Ball}}
+\subsubsection[{changeAngle}]{\setlength{\rightskip}{0pt plus 5cm}void brickBreaker.Ball.changeAngle (double {\em newAngle})}}
+\label{classbrick_breaker_1_1_ball_a443ce0341305785eaf4da97d755bb550}
+Changes the ball's angle to the new value. 
+\begin{DoxyParams}{Parameters}
+\item[{\em newAngle}]The new angle \end{DoxyParams}
+\hypertarget{classbrick_breaker_1_1_ball_aff35873f2550b5b0601cfb7b31cfc368}{
+\index{brickBreaker::Ball@{brickBreaker::Ball}!checkCollision@{checkCollision}}
+\index{checkCollision@{checkCollision}!brickBreaker::Ball@{brickBreaker::Ball}}
+\subsubsection[{checkCollision}]{\setlength{\rightskip}{0pt plus 5cm}boolean brickBreaker.Ball.checkCollision (int\mbox{[}$\,$\mbox{]} {\em loc})}}
+\label{classbrick_breaker_1_1_ball_aff35873f2550b5b0601cfb7b31cfc368}
+Checks if the ball is colliding with the given object If a collision exists and changeDir is true, it changes the ball's direction
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em loc}]A block to be tested, represented by an int array containing, in order, x, y, width and height of the brick \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if the ball hit the object, false if not 
+\end{DoxyReturn}
+\hypertarget{classbrick_breaker_1_1_ball_ab2ed912dfac55974d85184840fd8be9d}{
+\index{brickBreaker::Ball@{brickBreaker::Ball}!draw@{draw}}
+\index{draw@{draw}!brickBreaker::Ball@{brickBreaker::Ball}}
+\subsubsection[{draw}]{\setlength{\rightskip}{0pt plus 5cm}void brickBreaker.Ball.draw (Graphics {\em g})}}
+\label{classbrick_breaker_1_1_ball_ab2ed912dfac55974d85184840fd8be9d}
+Draws the ball on the screen.
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em g}]The graphics object with which to draw \end{DoxyParams}
+\hypertarget{classbrick_breaker_1_1_ball_a022f1feac935da4a1480fc70f56858d4}{
+\index{brickBreaker::Ball@{brickBreaker::Ball}!getAngle@{getAngle}}
+\index{getAngle@{getAngle}!brickBreaker::Ball@{brickBreaker::Ball}}
+\subsubsection[{getAngle}]{\setlength{\rightskip}{0pt plus 5cm}double brickBreaker.Ball.getAngle ()}}
+\label{classbrick_breaker_1_1_ball_a022f1feac935da4a1480fc70f56858d4}
+Returns the ball's current angle. \hypertarget{classbrick_breaker_1_1_ball_ae4ca4fc89a298a422b96c3056e9b9d1a}{
+\index{brickBreaker::Ball@{brickBreaker::Ball}!getRad@{getRad}}
+\index{getRad@{getRad}!brickBreaker::Ball@{brickBreaker::Ball}}
+\subsubsection[{getRad}]{\setlength{\rightskip}{0pt plus 5cm}int brickBreaker.Ball.getRad ()}}
+\label{classbrick_breaker_1_1_ball_ae4ca4fc89a298a422b96c3056e9b9d1a}
+\begin{DoxyReturn}{Returns}
+Returns the ball's radius, in pixels 
+\end{DoxyReturn}
+\hypertarget{classbrick_breaker_1_1_ball_af0651b3d0294b6843a7a5b74acb87195}{
+\index{brickBreaker::Ball@{brickBreaker::Ball}!getX@{getX}}
+\index{getX@{getX}!brickBreaker::Ball@{brickBreaker::Ball}}
+\subsubsection[{getX}]{\setlength{\rightskip}{0pt plus 5cm}int brickBreaker.Ball.getX ()}}
+\label{classbrick_breaker_1_1_ball_af0651b3d0294b6843a7a5b74acb87195}
+\begin{DoxyReturn}{Returns}
+Returns the current x-\/coordinate, rounded to the nearest int 
+\end{DoxyReturn}
+\hypertarget{classbrick_breaker_1_1_ball_abc92d446c039bfae85f89ba82facdfc3}{
+\index{brickBreaker::Ball@{brickBreaker::Ball}!getY@{getY}}
+\index{getY@{getY}!brickBreaker::Ball@{brickBreaker::Ball}}
+\subsubsection[{getY}]{\setlength{\rightskip}{0pt plus 5cm}int brickBreaker.Ball.getY ()}}
+\label{classbrick_breaker_1_1_ball_abc92d446c039bfae85f89ba82facdfc3}
+\begin{DoxyReturn}{Returns}
+Returns the current y-\/coordinate, rounded to the nearest int 
+\end{DoxyReturn}
+\hypertarget{classbrick_breaker_1_1_ball_ac516403ca5285c41619248f6c1e0690b}{
+\index{brickBreaker::Ball@{brickBreaker::Ball}!inBounds@{inBounds}}
+\index{inBounds@{inBounds}!brickBreaker::Ball@{brickBreaker::Ball}}
+\subsubsection[{inBounds}]{\setlength{\rightskip}{0pt plus 5cm}boolean brickBreaker.Ball.inBounds ()}}
+\label{classbrick_breaker_1_1_ball_ac516403ca5285c41619248f6c1e0690b}
+\begin{DoxyReturn}{Returns}
+Returns true if the ball is still in play 
+\end{DoxyReturn}
+\hypertarget{classbrick_breaker_1_1_ball_ad43ce78383f0415e608cb247e5df9ecd}{
+\index{brickBreaker::Ball@{brickBreaker::Ball}!resetVars@{resetVars}}
+\index{resetVars@{resetVars}!brickBreaker::Ball@{brickBreaker::Ball}}
+\subsubsection[{resetVars}]{\setlength{\rightskip}{0pt plus 5cm}static void brickBreaker.Ball.resetVars ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classbrick_breaker_1_1_ball_ad43ce78383f0415e608cb247e5df9ecd}
+Resets all the static variables in this class to their initial values. \hypertarget{classbrick_breaker_1_1_ball_a3a95a5d7eeab58dbacd89d1e304bf2d4}{
+\index{brickBreaker::Ball@{brickBreaker::Ball}!setLevel@{setLevel}}
+\index{setLevel@{setLevel}!brickBreaker::Ball@{brickBreaker::Ball}}
+\subsubsection[{setLevel}]{\setlength{\rightskip}{0pt plus 5cm}void brickBreaker.Ball.setLevel ({\bf LevelPlayer} {\em lev})}}
+\label{classbrick_breaker_1_1_ball_a3a95a5d7eeab58dbacd89d1e304bf2d4}
+Changes the \hyperlink{classbrick_breaker_1_1_level_player}{LevelPlayer} in which the ball exists. Usually called after the first constructor, in which the \hyperlink{classbrick_breaker_1_1_level_player}{LevelPlayer} is not specified.
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em lev}]New \hyperlink{classbrick_breaker_1_1_level_player}{LevelPlayer} \end{DoxyParams}
+\hypertarget{classbrick_breaker_1_1_ball_adcc8436d899828fe7f3c788ed1daf8d6}{
+\index{brickBreaker::Ball@{brickBreaker::Ball}!setLoc@{setLoc}}
+\index{setLoc@{setLoc}!brickBreaker::Ball@{brickBreaker::Ball}}
+\subsubsection[{setLoc}]{\setlength{\rightskip}{0pt plus 5cm}void brickBreaker.Ball.setLoc (double {\em x}, \/  double {\em y}, \/  double {\em angle})}}
+\label{classbrick_breaker_1_1_ball_adcc8436d899828fe7f3c788ed1daf8d6}
+Sets the ball's location and direction to the given coordinates.
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em x}]New x-\/coordinate \item[{\em y}]New y-\/coordinate \item[{\em angle}]New Angle \end{DoxyParams}
+\hypertarget{classbrick_breaker_1_1_ball_a71e24748f9cb90bd9da6a910648ba84e}{
+\index{brickBreaker::Ball@{brickBreaker::Ball}!setX@{setX}}
+\index{setX@{setX}!brickBreaker::Ball@{brickBreaker::Ball}}
+\subsubsection[{setX}]{\setlength{\rightskip}{0pt plus 5cm}void brickBreaker.Ball.setX (double {\em x})}}
+\label{classbrick_breaker_1_1_ball_a71e24748f9cb90bd9da6a910648ba84e}
+Sets the x-\/coordinate to the new value. 
+\begin{DoxyParams}{Parameters}
+\item[{\em x}]The new x-\/coordinate \end{DoxyParams}
+\hypertarget{classbrick_breaker_1_1_ball_ae15aedc6cd01476f486328369fd6a799}{
+\index{brickBreaker::Ball@{brickBreaker::Ball}!setY@{setY}}
+\index{setY@{setY}!brickBreaker::Ball@{brickBreaker::Ball}}
+\subsubsection[{setY}]{\setlength{\rightskip}{0pt plus 5cm}void brickBreaker.Ball.setY (double {\em y})}}
+\label{classbrick_breaker_1_1_ball_ae15aedc6cd01476f486328369fd6a799}
+Sets the y-\/coordinate to the new value. 
+\begin{DoxyParams}{Parameters}
+\item[{\em y}]The new y-\/coordinate \end{DoxyParams}
+\hypertarget{classbrick_breaker_1_1_ball_a7c119360e2434ef5c69020e8608569ff}{
+\index{brickBreaker::Ball@{brickBreaker::Ball}!updatePosition@{updatePosition}}
+\index{updatePosition@{updatePosition}!brickBreaker::Ball@{brickBreaker::Ball}}
+\subsubsection[{updatePosition}]{\setlength{\rightskip}{0pt plus 5cm}int brickBreaker.Ball.updatePosition ()}}
+\label{classbrick_breaker_1_1_ball_a7c119360e2434ef5c69020e8608569ff}
+Updates the position of the ball and calculates the number of points earned.
+
+\begin{DoxyReturn}{Returns}
+Returns the number of points earned during this time step. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+game/brickBreaker/\hyperlink{_ball_8java}{Ball.java}\end{DoxyCompactItemize}

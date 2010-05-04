@@ -1,0 +1,120 @@
+\hypertarget{classbrick_breaker_1_1_vertical_racket}{
+\section{brickBreaker.VerticalRacket Class Reference}
+\label{classbrick_breaker_1_1_vertical_racket}\index{brickBreaker::VerticalRacket@{brickBreaker::VerticalRacket}}
+}
+Inheritance diagram for brickBreaker.VerticalRacket:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2cm]{classbrick_breaker_1_1_vertical_racket}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classbrick_breaker_1_1_vertical_racket_a2131363067760b416b9a857cba22c8ae}{VerticalRacket} (int arenaW, int arenaH, int racketW, boolean left)
+\item 
+void \hyperlink{classbrick_breaker_1_1_vertical_racket_ac455ce02602cbf621997042439809ee5}{draw} (Graphics g)
+\item 
+\hyperlink{classbrick_breaker_1_1_ball}{Ball} \hyperlink{classbrick_breaker_1_1_vertical_racket_a8893265e40d1d8946702d26f8c07887b}{checkCollision} (\hyperlink{classbrick_breaker_1_1_ball}{Ball} ball)
+\item 
+boolean \hyperlink{classbrick_breaker_1_1_vertical_racket_ac9edcb855d560fa5771da4e12abb4e71}{checkPast} (\hyperlink{classbrick_breaker_1_1_ball}{Ball} ball)
+\item 
+boolean \hyperlink{classbrick_breaker_1_1_vertical_racket_aa1af985933bd997bba1951e38107a5a5}{isLeft} ()
+\item 
+boolean \hyperlink{classbrick_breaker_1_1_vertical_racket_ad8c73b81712009be68fa497c48b71012}{isRight} ()
+\end{DoxyCompactItemize}
+\subsection*{Package Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classbrick_breaker_1_1_vertical_racket_a044c4e4a5a331d2b51f1a4ee3d2e2b2e}{
+boolean {\bfseries left}}
+\label{classbrick_breaker_1_1_vertical_racket_a044c4e4a5a331d2b51f1a4ee3d2e2b2e}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classbrick_breaker_1_1_vertical_racket_a2131363067760b416b9a857cba22c8ae}{
+\index{brickBreaker::VerticalRacket@{brickBreaker::VerticalRacket}!VerticalRacket@{VerticalRacket}}
+\index{VerticalRacket@{VerticalRacket}!brickBreaker::VerticalRacket@{brickBreaker::VerticalRacket}}
+\subsubsection[{VerticalRacket}]{\setlength{\rightskip}{0pt plus 5cm}brickBreaker.VerticalRacket.VerticalRacket (int {\em arenaW}, \/  int {\em arenaH}, \/  int {\em racketW}, \/  boolean {\em left})}}
+\label{classbrick_breaker_1_1_vertical_racket_a2131363067760b416b9a857cba22c8ae}
+Constructor
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em arenaW}]The width of the screen on which play occurs \item[{\em arenaH}]The height of the screen on which play occurs \item[{\em racketW}]The width of the racket, in pixels \item[{\em left}]True if the racket is at the left side of the screen, false if it is at the right \end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classbrick_breaker_1_1_vertical_racket_a8893265e40d1d8946702d26f8c07887b}{
+\index{brickBreaker::VerticalRacket@{brickBreaker::VerticalRacket}!checkCollision@{checkCollision}}
+\index{checkCollision@{checkCollision}!brickBreaker::VerticalRacket@{brickBreaker::VerticalRacket}}
+\subsubsection[{checkCollision}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Ball} brickBreaker.VerticalRacket.checkCollision ({\bf Ball} {\em ball})\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classbrick_breaker_1_1_vertical_racket_a8893265e40d1d8946702d26f8c07887b}
+Checks if the ball collides with the racket and returns the updated ball
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em ball}]\hyperlink{classbrick_breaker_1_1_ball}{Ball} object to be tested \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns the updated \hyperlink{classbrick_breaker_1_1_ball}{Ball} object 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classbrick_breaker_1_1_racket}{brickBreaker.Racket}.
+
+\hypertarget{classbrick_breaker_1_1_vertical_racket_ac9edcb855d560fa5771da4e12abb4e71}{
+\index{brickBreaker::VerticalRacket@{brickBreaker::VerticalRacket}!checkPast@{checkPast}}
+\index{checkPast@{checkPast}!brickBreaker::VerticalRacket@{brickBreaker::VerticalRacket}}
+\subsubsection[{checkPast}]{\setlength{\rightskip}{0pt plus 5cm}boolean brickBreaker.VerticalRacket.checkPast ({\bf Ball} {\em ball})\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classbrick_breaker_1_1_vertical_racket_ac9edcb855d560fa5771da4e12abb4e71}
+Checks if the ball is past the racket (and thus out of play)
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em ball}]\hyperlink{classbrick_breaker_1_1_ball}{Ball} to be tested \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns true if the ball is past the racket, false if not 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{classbrick_breaker_1_1_racket}{brickBreaker.Racket}.
+
+\hypertarget{classbrick_breaker_1_1_vertical_racket_ac455ce02602cbf621997042439809ee5}{
+\index{brickBreaker::VerticalRacket@{brickBreaker::VerticalRacket}!draw@{draw}}
+\index{draw@{draw}!brickBreaker::VerticalRacket@{brickBreaker::VerticalRacket}}
+\subsubsection[{draw}]{\setlength{\rightskip}{0pt plus 5cm}void brickBreaker.VerticalRacket.draw (Graphics {\em g})\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}
+\label{classbrick_breaker_1_1_vertical_racket_ac455ce02602cbf621997042439809ee5}
+Draws the racket on the screen.
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em g}]Graphics object used to draw \end{DoxyParams}
+
+
+Implements \hyperlink{classbrick_breaker_1_1_racket}{brickBreaker.Racket}.
+
+\hypertarget{classbrick_breaker_1_1_vertical_racket_aa1af985933bd997bba1951e38107a5a5}{
+\index{brickBreaker::VerticalRacket@{brickBreaker::VerticalRacket}!isLeft@{isLeft}}
+\index{isLeft@{isLeft}!brickBreaker::VerticalRacket@{brickBreaker::VerticalRacket}}
+\subsubsection[{isLeft}]{\setlength{\rightskip}{0pt plus 5cm}boolean brickBreaker.VerticalRacket.isLeft ()}}
+\label{classbrick_breaker_1_1_vertical_racket_aa1af985933bd997bba1951e38107a5a5}
+Returns true if the racket is on the left side of the screen. 
+
+Reimplemented from \hyperlink{classbrick_breaker_1_1_racket}{brickBreaker.Racket}.
+
+\hypertarget{classbrick_breaker_1_1_vertical_racket_ad8c73b81712009be68fa497c48b71012}{
+\index{brickBreaker::VerticalRacket@{brickBreaker::VerticalRacket}!isRight@{isRight}}
+\index{isRight@{isRight}!brickBreaker::VerticalRacket@{brickBreaker::VerticalRacket}}
+\subsubsection[{isRight}]{\setlength{\rightskip}{0pt plus 5cm}boolean brickBreaker.VerticalRacket.isRight ()}}
+\label{classbrick_breaker_1_1_vertical_racket_ad8c73b81712009be68fa497c48b71012}
+Returns true if the racket is on the right side of the screen. 
+
+Reimplemented from \hyperlink{classbrick_breaker_1_1_racket}{brickBreaker.Racket}.
+
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+game/brickBreaker/\hyperlink{_vertical_racket_8java}{VerticalRacket.java}\end{DoxyCompactItemize}

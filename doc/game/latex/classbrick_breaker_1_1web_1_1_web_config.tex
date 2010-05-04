@@ -1,0 +1,129 @@
+\hypertarget{classbrick_breaker_1_1web_1_1_web_config}{
+\section{brickBreaker.web.WebConfig Class Reference}
+\label{classbrick_breaker_1_1web_1_1_web_config}\index{brickBreaker::web::WebConfig@{brickBreaker::web::WebConfig}}
+}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{classbrick_breaker_1_1web_1_1_web_config_a67fb01568cd83c5fa0685d95df6ca638}{Protocol} \{ {\bfseries HTTP} = ( \char`\"{}http\char`\"{} )
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classbrick_breaker_1_1web_1_1_web_config_a67fb01568cd83c5fa0685d95df6ca638}{Protocol} \hyperlink{classbrick_breaker_1_1web_1_1_web_config_a3718624e9a8e0cb7d4321cbadc716fae}{getProtocol} ()
+\item 
+void \hyperlink{classbrick_breaker_1_1web_1_1_web_config_acc5392f5644d6ca1a30736ca776a24eb}{setProtocol} (\hyperlink{classbrick_breaker_1_1web_1_1_web_config_a67fb01568cd83c5fa0685d95df6ca638}{Protocol} protocol)
+\item 
+String \hyperlink{classbrick_breaker_1_1web_1_1_web_config_a0face1c0ade730029ff6389b5a610112}{getHost} ()
+\item 
+void \hyperlink{classbrick_breaker_1_1web_1_1_web_config_a9746602db48181b7228b39c85bb7b34e}{setHost} (String host)
+\item 
+String \hyperlink{classbrick_breaker_1_1web_1_1_web_config_a2c7cb30ccc2b83bceada6faccc4f37fc}{getPath} ()
+\item 
+void \hyperlink{classbrick_breaker_1_1web_1_1_web_config_a3f4efd872b5cc690c9511a4d2e49ee89}{setPath} (String path)
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{classbrick_breaker_1_1web_1_1_web_config}{WebConfig} \hyperlink{classbrick_breaker_1_1web_1_1_web_config_aea2e81e51a4834d9d0bbc1705d7c4bfc}{getInstance} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This singleton class provides a centralized means of storing details about the remote server.
+
+\begin{DoxyAuthor}{Author}
+Abraham Lin 
+\end{DoxyAuthor}
+
+
+\subsection{Member Enumeration Documentation}
+\hypertarget{classbrick_breaker_1_1web_1_1_web_config_a67fb01568cd83c5fa0685d95df6ca638}{
+\index{brickBreaker::web::WebConfig@{brickBreaker::web::WebConfig}!Protocol@{Protocol}}
+\index{Protocol@{Protocol}!brickBreaker::web::WebConfig@{brickBreaker::web::WebConfig}}
+\subsubsection[{Protocol}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf brickBreaker::web::WebConfig::Protocol}}}
+\label{classbrick_breaker_1_1web_1_1_web_config_a67fb01568cd83c5fa0685d95df6ca638}
+This class enumerates all network protocols supported by the application.
+
+\begin{DoxyAuthor}{Author}
+Abraham Lin 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classbrick_breaker_1_1web_1_1_web_config_a0face1c0ade730029ff6389b5a610112}{
+\index{brickBreaker::web::WebConfig@{brickBreaker::web::WebConfig}!getHost@{getHost}}
+\index{getHost@{getHost}!brickBreaker::web::WebConfig@{brickBreaker::web::WebConfig}}
+\subsubsection[{getHost}]{\setlength{\rightskip}{0pt plus 5cm}String brickBreaker.web.WebConfig.getHost ()}}
+\label{classbrick_breaker_1_1web_1_1_web_config_a0face1c0ade730029ff6389b5a610112}
+Returns the hostname of the current remote server.
+
+\begin{DoxyReturn}{Returns}
+the hostname of the current remote server 
+\end{DoxyReturn}
+\hypertarget{classbrick_breaker_1_1web_1_1_web_config_aea2e81e51a4834d9d0bbc1705d7c4bfc}{
+\index{brickBreaker::web::WebConfig@{brickBreaker::web::WebConfig}!getInstance@{getInstance}}
+\index{getInstance@{getInstance}!brickBreaker::web::WebConfig@{brickBreaker::web::WebConfig}}
+\subsubsection[{getInstance}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf WebConfig} brickBreaker.web.WebConfig.getInstance ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classbrick_breaker_1_1web_1_1_web_config_aea2e81e51a4834d9d0bbc1705d7c4bfc}
+Returns this {\ttfamily \hyperlink{classbrick_breaker_1_1web_1_1_web_config}{WebConfig}}.
+
+\begin{DoxyReturn}{Returns}
+this {\ttfamily \hyperlink{classbrick_breaker_1_1web_1_1_web_config}{WebConfig}} 
+\end{DoxyReturn}
+\hypertarget{classbrick_breaker_1_1web_1_1_web_config_a2c7cb30ccc2b83bceada6faccc4f37fc}{
+\index{brickBreaker::web::WebConfig@{brickBreaker::web::WebConfig}!getPath@{getPath}}
+\index{getPath@{getPath}!brickBreaker::web::WebConfig@{brickBreaker::web::WebConfig}}
+\subsubsection[{getPath}]{\setlength{\rightskip}{0pt plus 5cm}String brickBreaker.web.WebConfig.getPath ()}}
+\label{classbrick_breaker_1_1web_1_1_web_config_a2c7cb30ccc2b83bceada6faccc4f37fc}
+Returns the path to the application on the remote server.
+
+\begin{DoxyReturn}{Returns}
+the path 
+\end{DoxyReturn}
+\hypertarget{classbrick_breaker_1_1web_1_1_web_config_a3718624e9a8e0cb7d4321cbadc716fae}{
+\index{brickBreaker::web::WebConfig@{brickBreaker::web::WebConfig}!getProtocol@{getProtocol}}
+\index{getProtocol@{getProtocol}!brickBreaker::web::WebConfig@{brickBreaker::web::WebConfig}}
+\subsubsection[{getProtocol}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Protocol} brickBreaker.web.WebConfig.getProtocol ()}}
+\label{classbrick_breaker_1_1web_1_1_web_config_a3718624e9a8e0cb7d4321cbadc716fae}
+Returns the current network protocol used for accessing the remote server.
+
+\begin{DoxyReturn}{Returns}
+the current network protocol 
+\end{DoxyReturn}
+\hypertarget{classbrick_breaker_1_1web_1_1_web_config_a9746602db48181b7228b39c85bb7b34e}{
+\index{brickBreaker::web::WebConfig@{brickBreaker::web::WebConfig}!setHost@{setHost}}
+\index{setHost@{setHost}!brickBreaker::web::WebConfig@{brickBreaker::web::WebConfig}}
+\subsubsection[{setHost}]{\setlength{\rightskip}{0pt plus 5cm}void brickBreaker.web.WebConfig.setHost (String {\em host})}}
+\label{classbrick_breaker_1_1web_1_1_web_config_a9746602db48181b7228b39c85bb7b34e}
+Sets the hostname of the remote server.
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em host}]the new hostname \end{DoxyParams}
+\hypertarget{classbrick_breaker_1_1web_1_1_web_config_a3f4efd872b5cc690c9511a4d2e49ee89}{
+\index{brickBreaker::web::WebConfig@{brickBreaker::web::WebConfig}!setPath@{setPath}}
+\index{setPath@{setPath}!brickBreaker::web::WebConfig@{brickBreaker::web::WebConfig}}
+\subsubsection[{setPath}]{\setlength{\rightskip}{0pt plus 5cm}void brickBreaker.web.WebConfig.setPath (String {\em path})}}
+\label{classbrick_breaker_1_1web_1_1_web_config_a3f4efd872b5cc690c9511a4d2e49ee89}
+Sets the path to the application on the remote server.
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em path}]the new path \end{DoxyParams}
+\hypertarget{classbrick_breaker_1_1web_1_1_web_config_acc5392f5644d6ca1a30736ca776a24eb}{
+\index{brickBreaker::web::WebConfig@{brickBreaker::web::WebConfig}!setProtocol@{setProtocol}}
+\index{setProtocol@{setProtocol}!brickBreaker::web::WebConfig@{brickBreaker::web::WebConfig}}
+\subsubsection[{setProtocol}]{\setlength{\rightskip}{0pt plus 5cm}void brickBreaker.web.WebConfig.setProtocol ({\bf Protocol} {\em protocol})}}
+\label{classbrick_breaker_1_1web_1_1_web_config_acc5392f5644d6ca1a30736ca776a24eb}
+Sets the network protocol used for accessing the remote server.
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em protocol}]the new network protocol \end{DoxyParams}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+game/brickBreaker/web/WebConfig.java\end{DoxyCompactItemize}

@@ -1,0 +1,68 @@
+\hypertarget{classbrick_breaker_1_1local_1_1_local_data_service}{
+\section{brickBreaker.local.LocalDataService Class Reference}
+\label{classbrick_breaker_1_1local_1_1_local_data_service}\index{brickBreaker::local::LocalDataService@{brickBreaker::local::LocalDataService}}
+}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{classbrick_breaker_1_1local_1_1_local_data_service_a01f5a08e38cd865add34f24a7634cf38}{saveLevel} (\hyperlink{classbrick_breaker_1_1_level}{Level} level, String filename)  throws FilesystemFailureException 
+\item 
+static BiMap$<$ String, \hyperlink{classbrick_breaker_1_1_level}{Level} $>$ \hyperlink{classbrick_breaker_1_1local_1_1_local_data_service_a498aa81a0d3ac82f0818dd9e3df6ee3d}{loadAllLevelsFromDisk} ()  throws FilesystemFailureException 
+\item 
+static String \hyperlink{classbrick_breaker_1_1local_1_1_local_data_service_a81493703f640a10d1b66fe2110f01d48}{calculateHash} (\hyperlink{classbrick_breaker_1_1_level}{Level} level)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class provides methods for persisting and loading levels by using the local filesystem.
+
+\begin{DoxyAuthor}{Author}
+Abraham Lin 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classbrick_breaker_1_1local_1_1_local_data_service_a81493703f640a10d1b66fe2110f01d48}{
+\index{brickBreaker::local::LocalDataService@{brickBreaker::local::LocalDataService}!calculateHash@{calculateHash}}
+\index{calculateHash@{calculateHash}!brickBreaker::local::LocalDataService@{brickBreaker::local::LocalDataService}}
+\subsubsection[{calculateHash}]{\setlength{\rightskip}{0pt plus 5cm}static String brickBreaker.local.LocalDataService.calculateHash ({\bf Level} {\em level})\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classbrick_breaker_1_1local_1_1_local_data_service_a81493703f640a10d1b66fe2110f01d48}
+Calculates the MD5 hash for the provided level.
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em level}]the level \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the MD5 hash of the level 
+\end{DoxyReturn}
+\hypertarget{classbrick_breaker_1_1local_1_1_local_data_service_a498aa81a0d3ac82f0818dd9e3df6ee3d}{
+\index{brickBreaker::local::LocalDataService@{brickBreaker::local::LocalDataService}!loadAllLevelsFromDisk@{loadAllLevelsFromDisk}}
+\index{loadAllLevelsFromDisk@{loadAllLevelsFromDisk}!brickBreaker::local::LocalDataService@{brickBreaker::local::LocalDataService}}
+\subsubsection[{loadAllLevelsFromDisk}]{\setlength{\rightskip}{0pt plus 5cm}static BiMap$<$String, {\bf Level}$>$ brickBreaker.local.LocalDataService.loadAllLevelsFromDisk ()  throws {\bf FilesystemFailureException} \hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classbrick_breaker_1_1local_1_1_local_data_service_a498aa81a0d3ac82f0818dd9e3df6ee3d}
+Loads all existing levels from the filesystem.
+
+\begin{DoxyReturn}{Returns}
+a list of all loaded levels
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+\item[{\em \hyperlink{classbrick_breaker_1_1local_1_1_filesystem_failure_exception}{FilesystemFailureException}}]if any errors occur while attempting the operation \end{DoxyExceptions}
+\hypertarget{classbrick_breaker_1_1local_1_1_local_data_service_a01f5a08e38cd865add34f24a7634cf38}{
+\index{brickBreaker::local::LocalDataService@{brickBreaker::local::LocalDataService}!saveLevel@{saveLevel}}
+\index{saveLevel@{saveLevel}!brickBreaker::local::LocalDataService@{brickBreaker::local::LocalDataService}}
+\subsubsection[{saveLevel}]{\setlength{\rightskip}{0pt plus 5cm}static void brickBreaker.local.LocalDataService.saveLevel ({\bf Level} {\em level}, \/  String {\em filename})  throws {\bf FilesystemFailureException} \hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classbrick_breaker_1_1local_1_1_local_data_service_a01f5a08e38cd865add34f24a7634cf38}
+Saves the specified level using the provided filename.
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em level}]the level to save \item[{\em filename}]the filename for the level file\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+\item[{\em \hyperlink{classbrick_breaker_1_1local_1_1_filesystem_failure_exception}{FilesystemFailureException}}]if any errors occur while attempting the operation \end{DoxyExceptions}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+game/brickBreaker/local/LocalDataService.java\end{DoxyCompactItemize}

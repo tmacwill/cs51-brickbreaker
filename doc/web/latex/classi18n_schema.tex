@@ -1,0 +1,61 @@
+\hypertarget{classi18n_schema}{
+\section{i18nSchema Class Reference}
+\label{classi18n_schema}\index{i18nSchema@{i18nSchema}}
+}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classi18n_schema_a3520fea3fe761944de85bdb84faff032}{
+{\bfseries before} (\$event=array())}
+\label{classi18n_schema_a3520fea3fe761944de85bdb84faff032}
+
+\item 
+\hypertarget{classi18n_schema_a39eb72bb9d764d16cdf7fc1e1a84c504}{
+{\bfseries after} (\$event=array())}
+\label{classi18n_schema_a39eb72bb9d764d16cdf7fc1e1a84c504}
+
+\end{DoxyCompactItemize}
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classi18n_schema_ab2fc40d43824ea3e1ce5d86dee0d763b}{
+{\bfseries \$name} = 'i18n'}
+\label{classi18n_schema_ab2fc40d43824ea3e1ce5d86dee0d763b}
+
+\item 
+{\bfseries \$i18n}
+\end{DoxyCompactItemize}
+
+
+\subsection{Field Documentation}
+\hypertarget{classi18n_schema_a93ac093ed9c4497f0f02e1ebbee5335e}{
+\index{i18nSchema@{i18nSchema}!\$i18n@{\$i18n}}
+\index{\$i18n@{\$i18n}!i18nSchema@{i18nSchema}}
+\subsubsection[{\$i18n}]{\setlength{\rightskip}{0pt plus 5cm}\$i18n}}
+\label{classi18n_schema_a93ac093ed9c4497f0f02e1ebbee5335e}
+{\bfseries Initial value:}
+\begin{DoxyCode}
+ array(
+                        'id' => array('type'=>'integer', 'null' => false, 'defaul
+      t' => NULL, 'length' => 10, 'key' => 'primary'),
+                        'locale' => array('type'=>'string', 'null' => false, 'len
+      gth' => 6, 'key' => 'index'),
+                        'model' => array('type'=>'string', 'null' => false, 'key'
+       => 'index'),
+                        'foreign_key' => array('type'=>'integer', 'null' => false
+      , 'length' => 10, 'key' => 'index'),
+                        'field' => array('type'=>'string', 'null' => false, 'key'
+       => 'index'),
+                        'content' => array('type'=>'text', 'null' => true, 'defau
+      lt' => NULL),
+                        'indexes' => array('PRIMARY' => array('column' => 'id', '
+      unique' => 1), 'locale' => array('column' => 'locale', 'unique' => 0), 'model' =>
+       array('column' => 'model', 'unique' => 0), 'row_id' => array('column' => 'foreig
+      n_key', 'unique' => 0), 'field' => array('column' => 'field', 'unique' => 0))
+                )
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+web/app/config/sql/i18n.php\end{DoxyCompactItemize}
