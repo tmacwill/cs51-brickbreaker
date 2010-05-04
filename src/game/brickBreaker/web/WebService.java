@@ -283,7 +283,7 @@ public class WebService {
 		List<OnlineLevel> onlineLevels = getOnlineLevels( );
 		boolean found = false;
 		int numOnlineLevels = onlineLevels.size( );
-		for( int i = 0; i < numOnlineLevels; i++ ) {
+		for( int i = 0; !found && i < numOnlineLevels; i++ ) {
 			OnlineLevel onlineLevel = onlineLevels.get( i );
 			found = ( onlineLevel.getLevelID( ).equals( levelID ) );
 		}
