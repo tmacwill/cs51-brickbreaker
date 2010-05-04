@@ -213,7 +213,7 @@ public class WebService {
                 }
 
                 if (!found) {
-                    return;
+                    throw new RuntimeException( "Level has not been uploaded yet" );
                 }
 		
 		Key publicKey = EncryptionUtil.getPublicKey( );
@@ -459,13 +459,14 @@ public class WebService {
 				.append( "</score>" )
 				.append( "</score>" )
 				.toString( );
-		postData.put( "key", EncryptionUtil.encryptData(
+
+                postData.put( "key", EncryptionUtil.encryptData(
 				publicKey,
 				symmetricKey.getEncoded( ) ) );
 		postData.put( XML_PARAM_NAME, EncryptionUtil.encryptData(
 				symmetricKey,
 				data.getBytes( ) ) );
-		
+                
 		return postData;
 	}
 }

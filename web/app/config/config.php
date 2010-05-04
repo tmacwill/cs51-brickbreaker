@@ -12,8 +12,8 @@
 	// description of a blob that can be uploaded by user
 	Configure::write('blob_description', 'Level');
 	
-	// name of private key file, MUST be saved in /app
-	Configure::write('private_key_file', '../brickbreaker_x10hosting_com_private.pem');
+	// name of private key file
+	Configure::write('private_key_file', 'cloud_cs50_net.pem');
 	
 	// initialization vector for AES
 	Configure::write('aes_iv', 'fedcba9876543210');

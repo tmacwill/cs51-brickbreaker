@@ -48,7 +48,7 @@ public class PasswordBox extends JFrame {
         upperPane.add(buttonPane);
 
         add(upperPane);
-        add(new JLabel("Don't have an account?  Go to http://brickbreaker.zxq.net to sign up!"));
+        add(new JLabel("Don't have an account?  Go to http://bit.ly/cs51-brickbreaker to sign up!"));
 
         pack();
         setResizable(false);

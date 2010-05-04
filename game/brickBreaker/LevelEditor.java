@@ -220,10 +220,10 @@ public class LevelEditor extends PRPanel {
      * @return true if valid, false otherwise
      */
     private boolean checkGridInput() {
+        r = Integer.parseInt(rowInput.getText());
+        c = Integer.parseInt(colInput.getText());
+        players = Integer.parseInt(numPlayers.getText());
         try {
-            r = Integer.parseInt(rowInput.getText());
-            c = Integer.parseInt(colInput.getText());
-            players = Integer.parseInt(numPlayers.getText());
             if (minRows <= r && r <= maxRows && minCols <= c && c <= maxCols && minPlayers <= players && players <= maxPlayers)
                 return true;
             else
