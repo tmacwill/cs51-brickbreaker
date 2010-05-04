@@ -11,16 +11,20 @@
 	<tr>
 		<th><?php echo $paginator->sort('Title', 'title'); ?></th>
 		<th><?php echo $paginator->sort('Downloads', 'downloads'); ?></th>
-		<th>Actions</th>
+		<?php if (!empty($blobs) && $blobs[0]['User']['id'] == $session_uid): ?>
+			<th>Actions</th>
+		<?php endif; ?>
 	</tr>
 	<?php foreach ($blobs as $blob): ?>
 		<tr>
 			<td><?php echo $html->link($blob['Blob']['title'], array('controller' => 'blobs', 'action' => 'view', $blob['Blob']['id'])); ?></td>
 			<td><?php echo $blob['Blob']['downloads']; ?></td>
-			<td>
-				<?php echo $html->link('Edit', array('controller' => 'blobs', 'action' => 'edit', $blob['Blob']['id'])); ?> |
-				<?php echo $html->link('Delete', array('controller' => 'blobs', 'action' => 'delete', $blob['Blob']['id'])); ?>
-			</td>
+			<?php if (!empty($blobs) && $blobs[0]['User']['id'] == $session_uid): ?>
+				<td>
+					<?php echo $html->link('Edit', array('controller' => 'blobs', 'action' => 'edit', $blob['Blob']['id'])); ?> |
+					<?php echo $html->link('Delete', array('controller' => 'blobs', 'action' => 'delete', $blob['Blob']['id'])); ?>
+				</td>
+			<?php endif; ?>
 		</tr>
 	<?php endforeach; ?>
 </table>
