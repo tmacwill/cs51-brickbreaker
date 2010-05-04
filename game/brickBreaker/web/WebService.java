@@ -28,11 +28,11 @@ import brickBreaker.local.LevelCatalog;
  */
 public class WebService {
 	private static final String URL_SUFFIX = ".xml";
-	
+
 	private static final String XML_PARAM_NAME = "postdata";
-	
+
 	private static final String CLIENT_KEY = "2d4d4bb4ef2948f7974e072b0c613d97";
-	
+
 	private static final String USER_VERIFY_PATH = "/users/verify";
 	private static final String LEVEL_BROWSE_PATH = "/blobs/results";
 	private static final String LEVEL_DOWNLOAD_PATH = "/blobs/download";
@@ -51,24 +51,24 @@ public class WebService {
 	 */
 	public static boolean verifyUser( String username, String password ) {
 		boolean isValidUser = false;
-		
+
 		String userVerifyURL = getUserVerifyURL( );
 		Map<String, String> userVerifyReqest = getUserVerifyRequest(
 				username,
 				password );
-		
+
 		String response = new String( ConnectionUtil.doPost(
 				userVerifyURL,
 				userVerifyReqest ) );
-                Document document = XMLUtil.parseXML( response );
+		Document document = XMLUtil.parseXML( response );
 		if( document != null ) {
 			NodeList userNodes = document.getElementsByTagName( "std_class" );
 			isValidUser = ( userNodes.getLength( ) > 0 );
 		}
-		
+
 		return isValidUser;
 	}
-	
+
 	/**
 	 * Returns a list of all levels available on the remote server.
 	 * 
@@ -76,7 +76,7 @@ public class WebService {
 	 */
 	public static List<OnlineLevel> getOnlineLevels( ) {
 		List<OnlineLevel> onlineLevels = new ArrayList<OnlineLevel>( );
-		
+
 		String levelBrowseURL = getLevelBrowseURL( );
 		String response = new String( ConnectionUtil.doGet( levelBrowseURL ) );
 		Document document = XMLUtil.parseXML( response );
@@ -90,22 +90,23 @@ public class WebService {
 				onlineLevels.add( new OnlineLevel( id, title ) );
 			}
 		}
-		
+
 		return onlineLevels;
 	}
-	
+
 	/**
 	 * Downloads the level with the specified unique identifier.
 	 * 
-	 * @param levelID the unique identifier
+	 * @param levelID
+	 *            the unique identifier
 	 * @return the downloaded level
 	 */
 	public static Level downloadLevel( String levelID ) {
 		Level level = null;
-		
+
 		String levelDownloadURL = getLevelDownloadURL( levelID );
 		byte[] response = ConnectionUtil.doGet( levelDownloadURL );
-		
+
 		ByteArrayInputStream byteStream = new ByteArrayInputStream( response );
 		try {
 			ObjectInputStream objStream = new ObjectInputStream( byteStream );
@@ -116,7 +117,7 @@ public class WebService {
 		} catch( ClassNotFoundException e ) {
 			throw new RuntimeException( "Could not read level data", e );
 		}
-		
+
 		return level;
 	}
 
@@ -137,20 +138,21 @@ public class WebService {
 		} catch( IOException e ) {
 			throw new RuntimeException( "Could not read level data", e );
 		}
-		
+
 		byte[] levelData = byteStream.toByteArray( );
 		String encodedLevelData = Base64.encodeBase64String( levelData );
-		
+
 		String userID = getUserID( );
 		if( userID == null ) {
 			throw new RuntimeException( "Invalid login credentials" );
 		}
-		
+
 		String levelUploadURL = getLevelUploadURL( );
-		Map<String, String> levelUploadRequest = getLevelUploadRequest( userID,
+		Map<String, String> levelUploadRequest = getLevelUploadRequest(
+				userID,
 				title,
 				encodedLevelData );
-		
+
 		ConnectionUtil.doPost( levelUploadURL, levelUploadRequest );
 	}
 
@@ -164,25 +166,26 @@ public class WebService {
 	 */
 	public static List<HighScore> retrieveHighScores( Level level ) {
 		List<HighScore> highScores = new ArrayList<HighScore>( );
-		
+
 		String levelID = LevelCatalog.getInstance( ).getLevelID( level );
-		
+
 		String scoreRetrieveURL = getScoreRetrieveURL( levelID );
-		String response = new String( ConnectionUtil.doGet( scoreRetrieveURL ) );
+		String response = new String( 
+				ConnectionUtil.doGet( scoreRetrieveURL ) );
 		Document document = XMLUtil.parseXML( response );
 		if( document != null ) {
 			NodeList scoreNodes = document.getElementsByTagName( "score" );
 			int numLevels = scoreNodes.getLength( );
 			for( int i = 0; i < numLevels; i++ ) {
 				Element score = (Element)scoreNodes.item( i );
-				String name = ((Element)score.getFirstChild( ))
+				String name = ( (Element)score.getFirstChild( ) )
 						.getAttribute( "username" );
-				long highScore = Long
-						.parseLong( score.getAttribute( "score" ) );
+				long highScore = Long.parseLong( 
+						score.getAttribute( "score" ) );
 				highScores.add( new HighScore( name, highScore ) );
 			}
 		}
-		
+
 		return highScores;
 	}
 
@@ -196,26 +199,24 @@ public class WebService {
 	 */
 	public static void submitScore( Level level, long score ) {
 		String levelID = LevelCatalog.getInstance( ).getLevelID( level );
-		
+
 		String userID = getUserID( );
 		if( userID == null ) {
 			throw new RuntimeException( "Invalid login credentials" );
 		}
 
-                // make sure level is found online before submitting score
-                List<OnlineLevel> onlineLevels = getOnlineLevels();
-                boolean found = false;
-                // iterate through all online levels to check if level is online
-                for (OnlineLevel onlineLevel : onlineLevels) {
-                    if (onlineLevel.getLevelID().equals(LevelCatalog.getInstance().getLevelID(level))) {
-                        found = true;
-                    }
-                }
+		// Make sure level is found online before submitting score
+		List<OnlineLevel> onlineLevels = getOnlineLevels( );
+		boolean found = false;
+		int numOnlineLevels = onlineLevels.size( );
+		for( int i = 0; i < numOnlineLevels; i++ ) {
+			OnlineLevel onlineLevel = onlineLevels.get( i );
+			found = ( onlineLevel.getLevelID( ).equals( levelID ) );
+		}
+		if( !found ) {
+			throw new RuntimeException( "Level has not been uploaded yet" );
+		}
 
-                if (!found) {
-                    throw new RuntimeException( "Level has not been uploaded yet" );
-                }
-		
 		Key publicKey = EncryptionUtil.getPublicKey( );
 		Key symmetricKey = EncryptionUtil.generateSymmetricKey( );
 		String scoreSubmitURL = getScoreSubmitURL( );
@@ -225,7 +226,7 @@ public class WebService {
 				score,
 				publicKey,
 				symmetricKey );
-		
+
 		ConnectionUtil.doPost( scoreSubmitURL, scoreSubmitRequest );
 	}
 
@@ -237,12 +238,12 @@ public class WebService {
 	 */
 	private static String getUserID( ) {
 		String userID = null;
-		
+
 		String userVerifyURL = getUserVerifyURL( );
 		UserConfig userConfig = UserConfig.getInstance( );
 		Map<String, String> userVerifyReqest = getUserVerifyRequest( userConfig
 				.getUsername( ), userConfig.getPassword( ) );
-		
+
 		String response = new String( ConnectionUtil.doPost(
 				userVerifyURL,
 				userVerifyReqest ) );
@@ -252,14 +253,14 @@ public class WebService {
 			if( userNodes.getLength( ) > 0 ) {
 				Node userNode = userNodes.item( 0 );
 				if( userNode.getNodeType( ) == Node.ELEMENT_NODE ) {
-					userID = ((Element)userNode).getAttribute( "id" );
+					userID = ( (Element)userNode ).getAttribute( "id" );
 				}
 			}
 		}
-		
+
 		return userID;
 	}
-	
+
 	/**
 	 * Returns the base URL to the remote server.
 	 * 
@@ -273,7 +274,7 @@ public class WebService {
 				.append( webConfig.getHost( ) )
 				.append( webConfig.getPath( ) );
 	}
-	
+
 	/**
 	 * Returns the full URL for verifying user identities.
 	 * 
@@ -283,7 +284,7 @@ public class WebService {
 		return new StringBuilder( )
 				.append( getBaseURL( ) )
 				.append( USER_VERIFY_PATH )
-				.append( URL_SUFFIX	)
+				.append( URL_SUFFIX )
 				.toString( );
 	}
 
@@ -311,10 +312,10 @@ public class WebService {
 				.append( "</user>" )
 				.toString( );
 		postData.put( XML_PARAM_NAME, data );
-		
+
 		return postData;
 	}
-	
+
 	/**
 	 * Returns the full URL for browsing levels.
 	 * 
@@ -324,7 +325,7 @@ public class WebService {
 		return new StringBuilder( )
 				.append( getBaseURL( ) )
 				.append( LEVEL_BROWSE_PATH )
-				.append( URL_SUFFIX	)
+				.append( URL_SUFFIX )
 				.toString( );
 	}
 
@@ -354,10 +355,10 @@ public class WebService {
 		return new StringBuilder( )
 				.append( getBaseURL( ) )
 				.append( LEVEL_UPLOAD_PATH )
-				.append( URL_SUFFIX	)
+				.append( URL_SUFFIX )
 				.toString( );
 	}
-	
+
 	/**
 	 * Returns the parameters used in requests for uploading levels.
 	 * 
@@ -389,7 +390,7 @@ public class WebService {
 				.append( "</blob>" )
 				.toString( );
 		postData.put( XML_PARAM_NAME, data );
-		
+
 		return postData;
 	}
 
@@ -405,12 +406,12 @@ public class WebService {
 		return new StringBuilder( )
 				.append( getBaseURL( ) )
 				.append( SCORE_RETRIEVE_PATH )
-				.append( "/" )
-				.append( ConnectionUtil.encodeURLComponent( levelID ) )
-				.append( URL_SUFFIX	)
+				.append( "/" ).append( 
+						ConnectionUtil.encodeURLComponent( levelID ) )
+				.append( URL_SUFFIX )
 				.toString( );
 	}
-	
+
 	/**
 	 * Returns the full URL for submitting high scores.
 	 * 
@@ -420,7 +421,7 @@ public class WebService {
 		return new StringBuilder( )
 				.append( getBaseURL( ) )
 				.append( SCORE_SUBMIT_PATH )
-				.append( URL_SUFFIX	)
+				.append( URL_SUFFIX )
 				.toString( );
 	}
 
@@ -460,13 +461,13 @@ public class WebService {
 				.append( "</score>" )
 				.toString( );
 
-                postData.put( "key", EncryptionUtil.encryptData(
+		postData.put( "key", EncryptionUtil.encryptData(
 				publicKey,
 				symmetricKey.getEncoded( ) ) );
 		postData.put( XML_PARAM_NAME, EncryptionUtil.encryptData(
 				symmetricKey,
 				data.getBytes( ) ) );
-                
+
 		return postData;
 	}
 }
