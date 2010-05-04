@@ -179,12 +179,17 @@ public class Ball implements Serializable
      * Changes the ball's angle to the new value.
      * @param newAngle The new angle
      */
-    private void changeAngle(double newAngle) {
+    public void changeAngle(double newAngle) {
         angle = newAngle % (2*pi);
         while (angle < 0) angle += 2*pi;
         velX = speed*Math.cos(angle);
         velY=  speed*Math.sin(angle);
     }
+
+    /**
+     * Returns the ball's current angle.
+     */
+    public double getAngle() { return angle; }
     
     /**
      * Checks if the ball is colliding with the given object
@@ -232,6 +237,7 @@ public class Ball implements Serializable
             posX = 2*x - posX;
             changeAngle(pi-angle);
         }
+        changeAngle(angle + 0.2*Math.random()-0.1);
     }
         
 }
