@@ -43,6 +43,9 @@
   
   <h1>Detailed description of components</h1>
   <h2>Client Components</h2>
+  <p>
+    Code documentation can be found <a href="../game/html/index.html">here.</a>
+  </p>
   <h3>Start.java</h3>
   <p>
    Start is the JFrame that all of the game screens (IdlePanel, LevelEditor, and GamePanel) are switched in and out of. Each of these panels extends PRPanel, which contains basic methods describing how to start, stop, pause, and resume the panel. When a panel is switched out, it is paused, its actionListener is removed, and it is set to be invisible. When a panel is switched in, it is started, its actionListener is added (if necessary), and it is set to be visible. Each of the panels takes a Start object as a parameter. When the user switches panels, the appropriate methods from the Start object are called.
@@ -154,6 +157,7 @@
   </p>
   
   <h2>Web Components</h2>
+  <p>Code documentation can be found <a href="../web/html/index.html">here.</a></p>
   <h3>Structure</h3>
   <p>The Brick Breaker web engine uses the CakePHP framework, which provides the structure for a Model-View-Controller application. All of the web code is stored in /web/app. Model files establish relations between databases. For example, a score belongs to a user, so when a score is queried, the user_id column in the scores database is used to fetch the corresponding user information. The controllers contain the majority of the logic of the application. Using the appropriate models, the controllers make database queries and send the results to the view. CakePHP's URL structure allows a function in a controller to be called using /controller/action/arguments. The controller also recognizes an XML request (often a GET request from the client) by examining the end of the URL for the .xml extension, and will send data in the appropriate format to the view. Each controller is also designed to recognize the difference between a client and a web request, such that a POST request in the documented format can be sent to a controller to add new data to the database. The views are the pages that the user views from the browser. Each function in a controller has its own view, and each view file is stored in a folder corresponding to its controller and function name. Views for XML output are stored in the "xml" directory, and use CakePHP's built-in functions for outputting an array as XML. In order to paramatrize the views, the Configure object was used to read the configuration variables set in config.php rather than simply outputting "Brick Breaker" and "Levels."</p>
   <h3>users_controller.php</h3>
