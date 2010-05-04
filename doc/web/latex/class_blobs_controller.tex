@@ -1,0 +1,125 @@
+\hypertarget{class_blobs_controller}{
+\section{BlobsController Class Reference}
+\label{class_blobs_controller}\index{BlobsController@{BlobsController}}
+}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_blobs_controller_a837ba24a1c3095ae67613238d866f79a}{add} ()
+\item 
+\hyperlink{class_blobs_controller_ac89dd29d2229bbc37879d31f95d06e97}{beforeRender} ()
+\item 
+\hyperlink{class_blobs_controller_af41f268d662f2a4ffbe597d0580467a1}{browse} ()
+\item 
+\hyperlink{class_blobs_controller_a2f8258add505482d7f00ea26493a5723}{delete} (\$id)
+\item 
+\hyperlink{class_blobs_controller_ad6a5f919a44257e2b5a5109cc6fc5fe2}{download} (\$id)
+\item 
+\hyperlink{class_blobs_controller_a9fd85873077eb2ff7e455de3b95af38f}{edit} (\$id= '')
+\item 
+\hyperlink{class_blobs_controller_ab633a32e024a1dc81243c199d7a8e4d7}{results} (\$query= '')
+\item 
+\hyperlink{class_blobs_controller_a796bf438724e047aeef18579732a3780}{search} ()
+\item 
+\hyperlink{class_blobs_controller_ad69dd4607977cae05ebe19d1ae604fb1}{test} ()
+\item 
+\hyperlink{class_blobs_controller_a93a99cdd06e6a3044ed7e56db0f9419a}{view} (\$id)
+\end{DoxyCompactItemize}
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_blobs_controller_ab2fc40d43824ea3e1ce5d86dee0d763b}{
+{\bfseries \$name} = 'Blobs'}
+\label{class_blobs_controller_ab2fc40d43824ea3e1ce5d86dee0d763b}
+
+\item 
+\hypertarget{class_blobs_controller_a2409c247baf67a1d4c6b9a1789cfc088}{
+{\bfseries \$components} = array('RequestHandler')}
+\label{class_blobs_controller_a2409c247baf67a1d4c6b9a1789cfc088}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Controller for scores. 
+
+\subsection{Member Function Documentation}
+\hypertarget{class_blobs_controller_a837ba24a1c3095ae67613238d866f79a}{
+\index{BlobsController@{BlobsController}!add@{add}}
+\index{add@{add}!BlobsController@{BlobsController}}
+\subsubsection[{add}]{\setlength{\rightskip}{0pt plus 5cm}add ()}}
+\label{class_blobs_controller_a837ba24a1c3095ae67613238d866f79a}
+Add a new blob. Used by both web interface and client. Format of request POSTDATA: 
+\begin{DoxyCode}
+ <blob>
+   <client-key>abcdef123456</client-key>
+   <user-id>123</user-id>
+   <title>A Random Title</title>
+   <data>Some base64 encoded data</data>
+ </blob>
+\end{DoxyCode}
+ \hypertarget{class_blobs_controller_ac89dd29d2229bbc37879d31f95d06e97}{
+\index{BlobsController@{BlobsController}!beforeRender@{beforeRender}}
+\index{beforeRender@{beforeRender}!BlobsController@{BlobsController}}
+\subsubsection[{beforeRender}]{\setlength{\rightskip}{0pt plus 5cm}beforeRender ()}}
+\label{class_blobs_controller_ac89dd29d2229bbc37879d31f95d06e97}
+Called before rendering of each view. Used by web interface. \hypertarget{class_blobs_controller_af41f268d662f2a4ffbe597d0580467a1}{
+\index{BlobsController@{BlobsController}!browse@{browse}}
+\index{browse@{browse}!BlobsController@{BlobsController}}
+\subsubsection[{browse}]{\setlength{\rightskip}{0pt plus 5cm}browse ()}}
+\label{class_blobs_controller_af41f268d662f2a4ffbe597d0580467a1}
+Browse all blobs. Used by both web interface and client. \hypertarget{class_blobs_controller_a2f8258add505482d7f00ea26493a5723}{
+\index{BlobsController@{BlobsController}!delete@{delete}}
+\index{delete@{delete}!BlobsController@{BlobsController}}
+\subsubsection[{delete}]{\setlength{\rightskip}{0pt plus 5cm}delete (\$ {\em id})}}
+\label{class_blobs_controller_a2f8258add505482d7f00ea26493a5723}
+Delete a blob. Used by web interface. 
+\begin{DoxyParams}{Parameters}
+\item[{\em \$id}]The id of the blob to delete. \end{DoxyParams}
+\hypertarget{class_blobs_controller_ad6a5f919a44257e2b5a5109cc6fc5fe2}{
+\index{BlobsController@{BlobsController}!download@{download}}
+\index{download@{download}!BlobsController@{BlobsController}}
+\subsubsection[{download}]{\setlength{\rightskip}{0pt plus 5cm}download (\$ {\em id})}}
+\label{class_blobs_controller_ad6a5f919a44257e2b5a5109cc6fc5fe2}
+Download blob data. Used by both web interface and client. 
+\begin{DoxyParams}{Parameters}
+\item[{\em \$id}]The id of the blob to download. \end{DoxyParams}
+\hypertarget{class_blobs_controller_a9fd85873077eb2ff7e455de3b95af38f}{
+\index{BlobsController@{BlobsController}!edit@{edit}}
+\index{edit@{edit}!BlobsController@{BlobsController}}
+\subsubsection[{edit}]{\setlength{\rightskip}{0pt plus 5cm}edit (\$ {\em id} = {\ttfamily ''})}}
+\label{class_blobs_controller_a9fd85873077eb2ff7e455de3b95af38f}
+Edit blob data. Used by web interface. 
+\begin{DoxyParams}{Parameters}
+\item[{\em \$id}]The id of the blob to edit \end{DoxyParams}
+\hypertarget{class_blobs_controller_ab633a32e024a1dc81243c199d7a8e4d7}{
+\index{BlobsController@{BlobsController}!results@{results}}
+\index{results@{results}!BlobsController@{BlobsController}}
+\subsubsection[{results}]{\setlength{\rightskip}{0pt plus 5cm}results (\$ {\em query} = {\ttfamily ''})}}
+\label{class_blobs_controller_ab633a32e024a1dc81243c199d7a8e4d7}
+Show results for search query. Used by both web interface and client. 
+\begin{DoxyParams}{Parameters}
+\item[{\em \$query}]Search query. If none given, data for all blobs will be fetched. \end{DoxyParams}
+\hypertarget{class_blobs_controller_a796bf438724e047aeef18579732a3780}{
+\index{BlobsController@{BlobsController}!search@{search}}
+\index{search@{search}!BlobsController@{BlobsController}}
+\subsubsection[{search}]{\setlength{\rightskip}{0pt plus 5cm}search ()}}
+\label{class_blobs_controller_a796bf438724e047aeef18579732a3780}
+Search for blobs. Used by web interface. Will redirect user to results view with query. \hypertarget{class_blobs_controller_ad69dd4607977cae05ebe19d1ae604fb1}{
+\index{BlobsController@{BlobsController}!test@{test}}
+\index{test@{test}!BlobsController@{BlobsController}}
+\subsubsection[{test}]{\setlength{\rightskip}{0pt plus 5cm}test ()}}
+\label{class_blobs_controller_ad69dd4607977cae05ebe19d1ae604fb1}
+Test controller functionality. \hypertarget{class_blobs_controller_a93a99cdd06e6a3044ed7e56db0f9419a}{
+\index{BlobsController@{BlobsController}!view@{view}}
+\index{view@{view}!BlobsController@{BlobsController}}
+\subsubsection[{view}]{\setlength{\rightskip}{0pt plus 5cm}view (\$ {\em id})}}
+\label{class_blobs_controller_a93a99cdd06e6a3044ed7e56db0f9419a}
+View page for blob, with creator and download link. Used by web interface. 
+\begin{DoxyParams}{Parameters}
+\item[{\em \$id}]The id of the blob to view \end{DoxyParams}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+web/app/controllers/\hyperlink{blobs__controller_8php}{blobs\_\-controller.php}\end{DoxyCompactItemize}

@@ -1,0 +1,122 @@
+\hypertarget{classbrick_breaker_1_1web_1_1_web_service}{
+\section{brickBreaker.web.WebService Class Reference}
+\label{classbrick_breaker_1_1web_1_1_web_service}\index{brickBreaker::web::WebService@{brickBreaker::web::WebService}}
+}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static boolean \hyperlink{classbrick_breaker_1_1web_1_1_web_service_a8643c4061b5d45c94fb04bd7f8e7a6c1}{verifyUser} (String username, String password)  throws WebException 
+\item 
+static List$<$ \hyperlink{classbrick_breaker_1_1web_1_1_online_level}{OnlineLevel} $>$ \hyperlink{classbrick_breaker_1_1web_1_1_web_service_af93134d4498f18f2483593520017f069}{getOnlineLevels} ()  throws WebException 
+\item 
+static \hyperlink{classbrick_breaker_1_1_level}{Level} \hyperlink{classbrick_breaker_1_1web_1_1_web_service_a7b62956bb6e061279fc3e3223a2b0d60}{downloadLevel} (String levelID)  throws WebException 
+\item 
+static void \hyperlink{classbrick_breaker_1_1web_1_1_web_service_ae6a847822ec25d4383104f83896c528d}{uploadLevel} (\hyperlink{classbrick_breaker_1_1_level}{Level} level, String title)  throws WebException 
+\item 
+static List$<$ \hyperlink{classbrick_breaker_1_1web_1_1_high_score}{HighScore} $>$ \hyperlink{classbrick_breaker_1_1web_1_1_web_service_a4dd0376683c3179b7bb6ff169833e5e6}{retrieveHighScores} (\hyperlink{classbrick_breaker_1_1_level}{Level} level)  throws WebException 
+\item 
+static void \hyperlink{classbrick_breaker_1_1web_1_1_web_service_a518c7c9660da1e22973ec62effaf6c70}{submitScore} (\hyperlink{classbrick_breaker_1_1_level}{Level} level, long score)  throws WebException 
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class provides web-\/based services for interacting with a remote server.
+
+\begin{DoxyAuthor}{Author}
+Abraham Lin 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classbrick_breaker_1_1web_1_1_web_service_a7b62956bb6e061279fc3e3223a2b0d60}{
+\index{brickBreaker::web::WebService@{brickBreaker::web::WebService}!downloadLevel@{downloadLevel}}
+\index{downloadLevel@{downloadLevel}!brickBreaker::web::WebService@{brickBreaker::web::WebService}}
+\subsubsection[{downloadLevel}]{\setlength{\rightskip}{0pt plus 5cm}static {\bf Level} brickBreaker.web.WebService.downloadLevel (String {\em levelID})  throws {\bf WebException} \hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classbrick_breaker_1_1web_1_1_web_service_a7b62956bb6e061279fc3e3223a2b0d60}
+Downloads the level with the specified unique identifier.
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em levelID}]the unique identifier \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the downloaded level
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+\item[{\em \hyperlink{classbrick_breaker_1_1web_1_1_web_exception}{WebException}}]if any errors occur while attempting the operation \end{DoxyExceptions}
+\hypertarget{classbrick_breaker_1_1web_1_1_web_service_af93134d4498f18f2483593520017f069}{
+\index{brickBreaker::web::WebService@{brickBreaker::web::WebService}!getOnlineLevels@{getOnlineLevels}}
+\index{getOnlineLevels@{getOnlineLevels}!brickBreaker::web::WebService@{brickBreaker::web::WebService}}
+\subsubsection[{getOnlineLevels}]{\setlength{\rightskip}{0pt plus 5cm}static List$<${\bf OnlineLevel}$>$ brickBreaker.web.WebService.getOnlineLevels ()  throws {\bf WebException} \hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classbrick_breaker_1_1web_1_1_web_service_af93134d4498f18f2483593520017f069}
+Returns a list of all levels available on the remote server.
+
+\begin{DoxyReturn}{Returns}
+the list of available levels
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+\item[{\em \hyperlink{classbrick_breaker_1_1web_1_1_web_exception}{WebException}}]if any errors occur while attempting the operation \end{DoxyExceptions}
+\hypertarget{classbrick_breaker_1_1web_1_1_web_service_a4dd0376683c3179b7bb6ff169833e5e6}{
+\index{brickBreaker::web::WebService@{brickBreaker::web::WebService}!retrieveHighScores@{retrieveHighScores}}
+\index{retrieveHighScores@{retrieveHighScores}!brickBreaker::web::WebService@{brickBreaker::web::WebService}}
+\subsubsection[{retrieveHighScores}]{\setlength{\rightskip}{0pt plus 5cm}static List$<${\bf HighScore}$>$ brickBreaker.web.WebService.retrieveHighScores ({\bf Level} {\em level})  throws {\bf WebException} \hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classbrick_breaker_1_1web_1_1_web_service_a4dd0376683c3179b7bb6ff169833e5e6}
+Retrieves high scores for the specified level from the remote server.
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em level}]the level \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a list of high scores for that level retrieved from the remote server
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+\item[{\em \hyperlink{classbrick_breaker_1_1web_1_1_web_exception}{WebException}}]if any errors occur while attempting the operation \end{DoxyExceptions}
+\hypertarget{classbrick_breaker_1_1web_1_1_web_service_a518c7c9660da1e22973ec62effaf6c70}{
+\index{brickBreaker::web::WebService@{brickBreaker::web::WebService}!submitScore@{submitScore}}
+\index{submitScore@{submitScore}!brickBreaker::web::WebService@{brickBreaker::web::WebService}}
+\subsubsection[{submitScore}]{\setlength{\rightskip}{0pt plus 5cm}static void brickBreaker.web.WebService.submitScore ({\bf Level} {\em level}, \/  long {\em score})  throws {\bf WebException} \hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classbrick_breaker_1_1web_1_1_web_service_a518c7c9660da1e22973ec62effaf6c70}
+Submits a new high score to the remote server.
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em level}]the level with which the score is associated \item[{\em score}]the score\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+\item[{\em \hyperlink{classbrick_breaker_1_1web_1_1_web_exception}{WebException}}]if any errors occur while attempting the operation \end{DoxyExceptions}
+\hypertarget{classbrick_breaker_1_1web_1_1_web_service_ae6a847822ec25d4383104f83896c528d}{
+\index{brickBreaker::web::WebService@{brickBreaker::web::WebService}!uploadLevel@{uploadLevel}}
+\index{uploadLevel@{uploadLevel}!brickBreaker::web::WebService@{brickBreaker::web::WebService}}
+\subsubsection[{uploadLevel}]{\setlength{\rightskip}{0pt plus 5cm}static void brickBreaker.web.WebService.uploadLevel ({\bf Level} {\em level}, \/  String {\em title})  throws {\bf WebException} \hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classbrick_breaker_1_1web_1_1_web_service_ae6a847822ec25d4383104f83896c528d}
+Uploads a level to a remote server.
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em level}]the level to upload \item[{\em title}]the name for the level\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+\item[{\em \hyperlink{classbrick_breaker_1_1web_1_1_web_exception}{WebException}}]if any errors occur while attempting the operation \end{DoxyExceptions}
+\hypertarget{classbrick_breaker_1_1web_1_1_web_service_a8643c4061b5d45c94fb04bd7f8e7a6c1}{
+\index{brickBreaker::web::WebService@{brickBreaker::web::WebService}!verifyUser@{verifyUser}}
+\index{verifyUser@{verifyUser}!brickBreaker::web::WebService@{brickBreaker::web::WebService}}
+\subsubsection[{verifyUser}]{\setlength{\rightskip}{0pt plus 5cm}static boolean brickBreaker.web.WebService.verifyUser (String {\em username}, \/  String {\em password})  throws {\bf WebException} \hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classbrick_breaker_1_1web_1_1_web_service_a8643c4061b5d45c94fb04bd7f8e7a6c1}
+Returns whether the given login credentials are valid.
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em username}]the username \item[{\em password}]the password \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+whether the given username/password pair is valid
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+\item[{\em \hyperlink{classbrick_breaker_1_1web_1_1_web_exception}{WebException}}]if any errors occur while attempting the operation \end{DoxyExceptions}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+game/brickBreaker/web/WebService.java\end{DoxyCompactItemize}

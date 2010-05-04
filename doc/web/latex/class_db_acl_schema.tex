@@ -1,0 +1,114 @@
+\hypertarget{class_db_acl_schema}{
+\section{DbAclSchema Class Reference}
+\label{class_db_acl_schema}\index{DbAclSchema@{DbAclSchema}}
+}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_db_acl_schema_a3520fea3fe761944de85bdb84faff032}{
+{\bfseries before} (\$event=array())}
+\label{class_db_acl_schema_a3520fea3fe761944de85bdb84faff032}
+
+\item 
+\hypertarget{class_db_acl_schema_a39eb72bb9d764d16cdf7fc1e1a84c504}{
+{\bfseries after} (\$event=array())}
+\label{class_db_acl_schema_a39eb72bb9d764d16cdf7fc1e1a84c504}
+
+\end{DoxyCompactItemize}
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_db_acl_schema_ab2fc40d43824ea3e1ce5d86dee0d763b}{
+{\bfseries \$name} = 'DbAcl'}
+\label{class_db_acl_schema_ab2fc40d43824ea3e1ce5d86dee0d763b}
+
+\item 
+{\bfseries \$acos}
+\item 
+{\bfseries \$aros}
+\item 
+{\bfseries \$aros\_\-acos}
+\end{DoxyCompactItemize}
+
+
+\subsection{Field Documentation}
+\hypertarget{class_db_acl_schema_a422728e97547c25d5c36a37a736eaf3c}{
+\index{DbAclSchema@{DbAclSchema}!\$acos@{\$acos}}
+\index{\$acos@{\$acos}!DbAclSchema@{DbAclSchema}}
+\subsubsection[{\$acos}]{\setlength{\rightskip}{0pt plus 5cm}\$acos}}
+\label{class_db_acl_schema_a422728e97547c25d5c36a37a736eaf3c}
+{\bfseries Initial value:}
+\begin{DoxyCode}
+ array(
+                        'id' => array('type'=>'integer', 'null' => false, 'defaul
+      t' => NULL, 'length' => 10, 'key' => 'primary'),
+                        'parent_id' => array('type'=>'integer', 'null' => true, '
+      default' => NULL, 'length' => 10),
+                        'model' => array('type'=>'string', 'null' => true),
+                        'foreign_key' => array('type'=>'integer', 'null' => true,
+       'default' => NULL, 'length' => 10),
+                        'alias' => array('type'=>'string', 'null' => true),
+                        'lft' => array('type'=>'integer', 'null' => true, 'defaul
+      t' => NULL, 'length' => 10),
+                        'rght' => array('type'=>'integer', 'null' => true, 'defau
+      lt' => NULL, 'length' => 10),
+                        'indexes' => array('PRIMARY' => array('column' => 'id', '
+      unique' => 1))
+                )
+\end{DoxyCode}
+\hypertarget{class_db_acl_schema_aa6897cad82be8e7b7727ceb6d40b1f2e}{
+\index{DbAclSchema@{DbAclSchema}!\$aros@{\$aros}}
+\index{\$aros@{\$aros}!DbAclSchema@{DbAclSchema}}
+\subsubsection[{\$aros}]{\setlength{\rightskip}{0pt plus 5cm}\$aros}}
+\label{class_db_acl_schema_aa6897cad82be8e7b7727ceb6d40b1f2e}
+{\bfseries Initial value:}
+\begin{DoxyCode}
+ array(
+                        'id' => array('type'=>'integer', 'null' => false, 'defaul
+      t' => NULL, 'length' => 10, 'key' => 'primary'),
+                        'parent_id' => array('type'=>'integer', 'null' => true, '
+      default' => NULL, 'length' => 10),
+                        'model' => array('type'=>'string', 'null' => true),
+                        'foreign_key' => array('type'=>'integer', 'null' => true,
+       'default' => NULL, 'length' => 10),
+                        'alias' => array('type'=>'string', 'null' => true),
+                        'lft' => array('type'=>'integer', 'null' => true, 'defaul
+      t' => NULL, 'length' => 10),
+                        'rght' => array('type'=>'integer', 'null' => true, 'defau
+      lt' => NULL, 'length' => 10),
+                        'indexes' => array('PRIMARY' => array('column' => 'id', '
+      unique' => 1))
+                )
+\end{DoxyCode}
+\hypertarget{class_db_acl_schema_a3a0eae870cd1ad11190f9360b9e71e6b}{
+\index{DbAclSchema@{DbAclSchema}!\$aros\_\-acos@{\$aros\_\-acos}}
+\index{\$aros\_\-acos@{\$aros\_\-acos}!DbAclSchema@{DbAclSchema}}
+\subsubsection[{\$aros\_\-acos}]{\setlength{\rightskip}{0pt plus 5cm}\$aros\_\-acos}}
+\label{class_db_acl_schema_a3a0eae870cd1ad11190f9360b9e71e6b}
+{\bfseries Initial value:}
+\begin{DoxyCode}
+ array(
+                        'id' => array('type'=>'integer', 'null' => false, 'defaul
+      t' => NULL, 'length' => 10, 'key' => 'primary'),
+                        'aro_id' => array('type'=>'integer', 'null' => false, 'le
+      ngth' => 10, 'key' => 'index'),
+                        'aco_id' => array('type'=>'integer', 'null' => false, 'le
+      ngth' => 10),
+                        '_create' => array('type'=>'string', 'null' => false, 'de
+      fault' => '0', 'length' => 2),
+                        '_read' => array('type'=>'string', 'null' => false, 'defa
+      ult' => '0', 'length' => 2),
+                        '_update' => array('type'=>'string', 'null' => false, 'de
+      fault' => '0', 'length' => 2),
+                        '_delete' => array('type'=>'string', 'null' => false, 'de
+      fault' => '0', 'length' => 2),
+                        'indexes' => array('PRIMARY' => array('column' => 'id', '
+      unique' => 1), 'ARO_ACO_KEY' => array('column' => array('aro_id', 'aco_id'), 'uni
+      que' => 1))
+                )
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+web/app/config/sql/db\_\-acl.php\end{DoxyCompactItemize}

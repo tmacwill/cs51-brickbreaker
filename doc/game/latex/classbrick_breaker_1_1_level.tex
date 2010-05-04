@@ -1,0 +1,186 @@
+\hypertarget{classbrick_breaker_1_1_level}{
+\section{brickBreaker.Level Class Reference}
+\label{classbrick_breaker_1_1_level}\index{brickBreaker::Level@{brickBreaker::Level}}
+}
+
+
+Inherits java::io::Serializable.
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classbrick_breaker_1_1_level_ac98f98fe72c9000911b79fabd548e44e}{Level} (\hyperlink{classbrick_breaker_1_1_brick}{Brick}\mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} bricks, \hyperlink{classbrick_breaker_1_1_ball}{Ball}\mbox{[}$\,$\mbox{]} balls, \hyperlink{classbrick_breaker_1_1_racket}{Racket}\mbox{[}$\,$\mbox{]} rack, String name)
+\item 
+\hyperlink{classbrick_breaker_1_1_level_aa88640ad04ca2a8b471be22a39bd2f75}{Level} (\hyperlink{classbrick_breaker_1_1_brick}{Brick}\mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} bricks, \hyperlink{classbrick_breaker_1_1_ball}{Ball}\mbox{[}$\,$\mbox{]} balls, \hyperlink{classbrick_breaker_1_1_racket}{Racket}\mbox{[}$\,$\mbox{]} rack)
+\item 
+\hyperlink{classbrick_breaker_1_1_level_ab814f5c562c5703aedf3569501b44845}{Level} (\hyperlink{classbrick_breaker_1_1_brick}{Brick}\mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} bricks, int players, String name)
+\item 
+void \hyperlink{classbrick_breaker_1_1_level_a2cf993a57ad58665d34d09b9366a39b4}{initBricks} (\hyperlink{classbrick_breaker_1_1_brick}{Brick}\mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} bricks)
+\item 
+void \hyperlink{classbrick_breaker_1_1_level_a9658a9bfa4707f92de4891f913377202}{setName} (String name)
+\item 
+\hypertarget{classbrick_breaker_1_1_level_a236ad90c2a8f2193dd154e5b3b424371}{
+void {\bfseries setBricks} (\hyperlink{classbrick_breaker_1_1_brick}{Brick}\mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} b)}
+\label{classbrick_breaker_1_1_level_a236ad90c2a8f2193dd154e5b3b424371}
+
+\item 
+\hypertarget{classbrick_breaker_1_1_level_ac52e444e4bbbee478dbf4450932eda60}{
+void {\bfseries setRacket} (\hyperlink{classbrick_breaker_1_1_racket}{Racket}\mbox{[}$\,$\mbox{]} r)}
+\label{classbrick_breaker_1_1_level_ac52e444e4bbbee478dbf4450932eda60}
+
+\item 
+\hypertarget{classbrick_breaker_1_1_level_af4d0305aa2202b4aa4d91a6b37fa262b}{
+void {\bfseries setBalls} (\hyperlink{classbrick_breaker_1_1_ball}{Ball}\mbox{[}$\,$\mbox{]} b)}
+\label{classbrick_breaker_1_1_level_af4d0305aa2202b4aa4d91a6b37fa262b}
+
+\item 
+\hyperlink{classbrick_breaker_1_1_racket}{Racket}\mbox{[}$\,$\mbox{]} \hyperlink{classbrick_breaker_1_1_level_abc80d5b2ae6aa9f6884dddef4a08d82b}{getRackets} ()
+\item 
+\hyperlink{classbrick_breaker_1_1_ball}{Ball}\mbox{[}$\,$\mbox{]} \hyperlink{classbrick_breaker_1_1_level_aabd74f57cf3043d6bae8b98953344e4b}{getBalls} ()
+\item 
+\hyperlink{classbrick_breaker_1_1_brick}{Brick}\mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} \hyperlink{classbrick_breaker_1_1_level_a32fa1d0bdac9b8fc1b0256b793ebeb8c}{getBricks} ()
+\item 
+int \hyperlink{classbrick_breaker_1_1_level_a21baab3427644fa78d1b7e98757b3609}{brickWidth} ()
+\item 
+int \hyperlink{classbrick_breaker_1_1_level_adf924d8f95efb086b49b5709c6b5e48e}{brickHeight} ()
+\item 
+int \hyperlink{classbrick_breaker_1_1_level_a3bba82793ace6907c19b5b7d21c9d0c2}{numCols} ()
+\item 
+int \hyperlink{classbrick_breaker_1_1_level_a87616f7c125b41d686d6c50477601200}{numRows} ()
+\item 
+String \hyperlink{classbrick_breaker_1_1_level_a3ef4e701ca616ff080c401586e04387b}{getName} ()
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classbrick_breaker_1_1_level_ac206c1e0a98a683035f3e199dc993e58}{
+static int {\bfseries WIDTH} = GamePanel.ARENA\_\-WIDTH}
+\label{classbrick_breaker_1_1_level_ac206c1e0a98a683035f3e199dc993e58}
+
+\item 
+\hypertarget{classbrick_breaker_1_1_level_a9e137692bbe309075c83d9d8eef09655}{
+static int {\bfseries HEIGHT} = GamePanel.ARENA\_\-HEIGHT}
+\label{classbrick_breaker_1_1_level_a9e137692bbe309075c83d9d8eef09655}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classbrick_breaker_1_1_level_ac98f98fe72c9000911b79fabd548e44e}{
+\index{brickBreaker::Level@{brickBreaker::Level}!Level@{Level}}
+\index{Level@{Level}!brickBreaker::Level@{brickBreaker::Level}}
+\subsubsection[{Level}]{\setlength{\rightskip}{0pt plus 5cm}brickBreaker.Level.Level (Brickbricks\mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]}, \/  {\bf Ball}\mbox{[}$\,$\mbox{]} {\em balls}, \/  {\bf Racket}\mbox{[}$\,$\mbox{]} {\em rack}, \/  String {\em name})}}
+\label{classbrick_breaker_1_1_level_ac98f98fe72c9000911b79fabd548e44e}
+Constructor
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em bricks}]2-\/dimensional array of bricks \item[{\em balls}]All existing balls \item[{\em rack}]All existing rackets \item[{\em name}]String identifier (used in user interface) \end{DoxyParams}
+\hypertarget{classbrick_breaker_1_1_level_aa88640ad04ca2a8b471be22a39bd2f75}{
+\index{brickBreaker::Level@{brickBreaker::Level}!Level@{Level}}
+\index{Level@{Level}!brickBreaker::Level@{brickBreaker::Level}}
+\subsubsection[{Level}]{\setlength{\rightskip}{0pt plus 5cm}brickBreaker.Level.Level (Brickbricks\mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]}, \/  {\bf Ball}\mbox{[}$\,$\mbox{]} {\em balls}, \/  {\bf Racket}\mbox{[}$\,$\mbox{]} {\em rack})}}
+\label{classbrick_breaker_1_1_level_aa88640ad04ca2a8b471be22a39bd2f75}
+Constructor
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em bricks}]2-\/dimensional array of bricks \item[{\em balls}]All existing balls \item[{\em rack}]All existing rackets \end{DoxyParams}
+\hypertarget{classbrick_breaker_1_1_level_ab814f5c562c5703aedf3569501b44845}{
+\index{brickBreaker::Level@{brickBreaker::Level}!Level@{Level}}
+\index{Level@{Level}!brickBreaker::Level@{brickBreaker::Level}}
+\subsubsection[{Level}]{\setlength{\rightskip}{0pt plus 5cm}brickBreaker.Level.Level ({\bf Brick} {\em bricks}\mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]}, \/  int {\em players}, \/  String {\em name})}}
+\label{classbrick_breaker_1_1_level_ab814f5c562c5703aedf3569501b44845}
+Constructor
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em bricks}]2-\/dimensional array of bricks \item[{\em players}]Number of players \item[{\em name}]String identifier (used in user interface) \end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classbrick_breaker_1_1_level_adf924d8f95efb086b49b5709c6b5e48e}{
+\index{brickBreaker::Level@{brickBreaker::Level}!brickHeight@{brickHeight}}
+\index{brickHeight@{brickHeight}!brickBreaker::Level@{brickBreaker::Level}}
+\subsubsection[{brickHeight}]{\setlength{\rightskip}{0pt plus 5cm}int brickBreaker.Level.brickHeight ()}}
+\label{classbrick_breaker_1_1_level_adf924d8f95efb086b49b5709c6b5e48e}
+\begin{DoxyReturn}{Returns}
+The height of each brick (in pixels) 
+\end{DoxyReturn}
+\hypertarget{classbrick_breaker_1_1_level_a21baab3427644fa78d1b7e98757b3609}{
+\index{brickBreaker::Level@{brickBreaker::Level}!brickWidth@{brickWidth}}
+\index{brickWidth@{brickWidth}!brickBreaker::Level@{brickBreaker::Level}}
+\subsubsection[{brickWidth}]{\setlength{\rightskip}{0pt plus 5cm}int brickBreaker.Level.brickWidth ()}}
+\label{classbrick_breaker_1_1_level_a21baab3427644fa78d1b7e98757b3609}
+\begin{DoxyReturn}{Returns}
+The width of each brick (in pixels) 
+\end{DoxyReturn}
+\hypertarget{classbrick_breaker_1_1_level_aabd74f57cf3043d6bae8b98953344e4b}{
+\index{brickBreaker::Level@{brickBreaker::Level}!getBalls@{getBalls}}
+\index{getBalls@{getBalls}!brickBreaker::Level@{brickBreaker::Level}}
+\subsubsection[{getBalls}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Ball} \mbox{[}$\,$\mbox{]} brickBreaker.Level.getBalls ()}}
+\label{classbrick_breaker_1_1_level_aabd74f57cf3043d6bae8b98953344e4b}
+\begin{DoxyReturn}{Returns}
+The array of balls 
+\end{DoxyReturn}
+\hypertarget{classbrick_breaker_1_1_level_a32fa1d0bdac9b8fc1b0256b793ebeb8c}{
+\index{brickBreaker::Level@{brickBreaker::Level}!getBricks@{getBricks}}
+\index{getBricks@{getBricks}!brickBreaker::Level@{brickBreaker::Level}}
+\subsubsection[{getBricks}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Brick} \mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]} brickBreaker.Level.getBricks ()}}
+\label{classbrick_breaker_1_1_level_a32fa1d0bdac9b8fc1b0256b793ebeb8c}
+\begin{DoxyReturn}{Returns}
+The 2d array of bricks 
+\end{DoxyReturn}
+\hypertarget{classbrick_breaker_1_1_level_a3ef4e701ca616ff080c401586e04387b}{
+\index{brickBreaker::Level@{brickBreaker::Level}!getName@{getName}}
+\index{getName@{getName}!brickBreaker::Level@{brickBreaker::Level}}
+\subsubsection[{getName}]{\setlength{\rightskip}{0pt plus 5cm}String brickBreaker.Level.getName ()}}
+\label{classbrick_breaker_1_1_level_a3ef4e701ca616ff080c401586e04387b}
+\begin{DoxyReturn}{Returns}
+The name of this level 
+\end{DoxyReturn}
+\hypertarget{classbrick_breaker_1_1_level_abc80d5b2ae6aa9f6884dddef4a08d82b}{
+\index{brickBreaker::Level@{brickBreaker::Level}!getRackets@{getRackets}}
+\index{getRackets@{getRackets}!brickBreaker::Level@{brickBreaker::Level}}
+\subsubsection[{getRackets}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Racket} \mbox{[}$\,$\mbox{]} brickBreaker.Level.getRackets ()}}
+\label{classbrick_breaker_1_1_level_abc80d5b2ae6aa9f6884dddef4a08d82b}
+\begin{DoxyReturn}{Returns}
+The array of rackets 
+\end{DoxyReturn}
+\hypertarget{classbrick_breaker_1_1_level_a2cf993a57ad58665d34d09b9366a39b4}{
+\index{brickBreaker::Level@{brickBreaker::Level}!initBricks@{initBricks}}
+\index{initBricks@{initBricks}!brickBreaker::Level@{brickBreaker::Level}}
+\subsubsection[{initBricks}]{\setlength{\rightskip}{0pt plus 5cm}void brickBreaker.Level.initBricks ({\bf Brick} {\em bricks}\mbox{[}$\,$\mbox{]}\mbox{[}$\,$\mbox{]})}}
+\label{classbrick_breaker_1_1_level_a2cf993a57ad58665d34d09b9366a39b4}
+Sets the location of each brick in the level. 
+\begin{DoxyParams}{Parameters}
+\item[{\em bricks}]2d array of all existing bricks \end{DoxyParams}
+\hypertarget{classbrick_breaker_1_1_level_a3bba82793ace6907c19b5b7d21c9d0c2}{
+\index{brickBreaker::Level@{brickBreaker::Level}!numCols@{numCols}}
+\index{numCols@{numCols}!brickBreaker::Level@{brickBreaker::Level}}
+\subsubsection[{numCols}]{\setlength{\rightskip}{0pt plus 5cm}int brickBreaker.Level.numCols ()}}
+\label{classbrick_breaker_1_1_level_a3bba82793ace6907c19b5b7d21c9d0c2}
+\begin{DoxyReturn}{Returns}
+The number of columns of bricks across the screen 
+\end{DoxyReturn}
+\hypertarget{classbrick_breaker_1_1_level_a87616f7c125b41d686d6c50477601200}{
+\index{brickBreaker::Level@{brickBreaker::Level}!numRows@{numRows}}
+\index{numRows@{numRows}!brickBreaker::Level@{brickBreaker::Level}}
+\subsubsection[{numRows}]{\setlength{\rightskip}{0pt plus 5cm}int brickBreaker.Level.numRows ()}}
+\label{classbrick_breaker_1_1_level_a87616f7c125b41d686d6c50477601200}
+\begin{DoxyReturn}{Returns}
+The number of rows of bricks down the screen 
+\end{DoxyReturn}
+\hypertarget{classbrick_breaker_1_1_level_a9658a9bfa4707f92de4891f913377202}{
+\index{brickBreaker::Level@{brickBreaker::Level}!setName@{setName}}
+\index{setName@{setName}!brickBreaker::Level@{brickBreaker::Level}}
+\subsubsection[{setName}]{\setlength{\rightskip}{0pt plus 5cm}void brickBreaker.Level.setName (String {\em name})}}
+\label{classbrick_breaker_1_1_level_a9658a9bfa4707f92de4891f913377202}
+Sets the level's name to the new string 
+\begin{DoxyParams}{Parameters}
+\item[{\em name}]New name \end{DoxyParams}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+game/brickBreaker/\hyperlink{_level_8java}{Level.java}\end{DoxyCompactItemize}

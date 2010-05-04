@@ -1,0 +1,119 @@
+\hypertarget{classbrick_breaker_1_1_brick}{
+\section{brickBreaker.Brick Class Reference}
+\label{classbrick_breaker_1_1_brick}\index{brickBreaker::Brick@{brickBreaker::Brick}}
+}
+Inheritance diagram for brickBreaker.Brick:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3cm]{classbrick_breaker_1_1_brick}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classbrick_breaker_1_1_brick_a48498f7c136cce1f0742ec4406ac2831}{Brick} (int pts, int hits, Color c)
+\item 
+void \hyperlink{classbrick_breaker_1_1_brick_a6f9ff21504eab68a2b9b9e6a87ed0f52}{setLoc} (int x, int y, int wid, int hgt)
+\item 
+int \hyperlink{classbrick_breaker_1_1_brick_a8b7ce8ba47ffe6de06c0c6121cdaa231}{bounce} (\hyperlink{classbrick_breaker_1_1_ball}{Ball} ball)
+\item 
+boolean \hyperlink{classbrick_breaker_1_1_brick_ac333dcbd252242dc78ece37b8a661ce0}{removed} ()
+\item 
+int\mbox{[}$\,$\mbox{]} \hyperlink{classbrick_breaker_1_1_brick_afb94388b2aac0dd371265db241fddbcf}{getLoc} ()
+\item 
+void \hyperlink{classbrick_breaker_1_1_brick_a109d6d8023e528284c1726ee55c3e50e}{powerUp} (\hyperlink{classbrick_breaker_1_1_ball}{Ball} b)
+\item 
+boolean \hyperlink{classbrick_breaker_1_1_brick_a5fa03da94163b3dc3707c030e85a1405}{permanent} ()
+\item 
+void \hyperlink{classbrick_breaker_1_1_brick_afe45c6bf60b36b267eeb3a8bb978d06c}{draw} (Graphics g)
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classbrick_breaker_1_1_brick_a48498f7c136cce1f0742ec4406ac2831}{
+\index{brickBreaker::Brick@{brickBreaker::Brick}!Brick@{Brick}}
+\index{Brick@{Brick}!brickBreaker::Brick@{brickBreaker::Brick}}
+\subsubsection[{Brick}]{\setlength{\rightskip}{0pt plus 5cm}brickBreaker.Brick.Brick (int {\em pts}, \/  int {\em hits}, \/  Color {\em c})}}
+\label{classbrick_breaker_1_1_brick_a48498f7c136cce1f0742ec4406ac2831}
+Constructor.
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em pts}]Points earned for destroying this brick \item[{\em hits}]Number of hits needed to remove this brick \item[{\em c}]Color of brick \end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classbrick_breaker_1_1_brick_a8b7ce8ba47ffe6de06c0c6121cdaa231}{
+\index{brickBreaker::Brick@{brickBreaker::Brick}!bounce@{bounce}}
+\index{bounce@{bounce}!brickBreaker::Brick@{brickBreaker::Brick}}
+\subsubsection[{bounce}]{\setlength{\rightskip}{0pt plus 5cm}int brickBreaker.Brick.bounce ({\bf Ball} {\em ball})}}
+\label{classbrick_breaker_1_1_brick_a8b7ce8ba47ffe6de06c0c6121cdaa231}
+Updates this brick after the ball has bounced off it. 
+\begin{DoxyParams}{Parameters}
+\item[{\em ball}]The ball that bounced off the brick \end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The number of points earned 
+\end{DoxyReturn}
+\hypertarget{classbrick_breaker_1_1_brick_afe45c6bf60b36b267eeb3a8bb978d06c}{
+\index{brickBreaker::Brick@{brickBreaker::Brick}!draw@{draw}}
+\index{draw@{draw}!brickBreaker::Brick@{brickBreaker::Brick}}
+\subsubsection[{draw}]{\setlength{\rightskip}{0pt plus 5cm}void brickBreaker.Brick.draw (Graphics {\em g})}}
+\label{classbrick_breaker_1_1_brick_afe45c6bf60b36b267eeb3a8bb978d06c}
+Draws the brick on the screen. 
+\begin{DoxyParams}{Parameters}
+\item[{\em g}]The graphics object with which to draw. \end{DoxyParams}
+\hypertarget{classbrick_breaker_1_1_brick_afb94388b2aac0dd371265db241fddbcf}{
+\index{brickBreaker::Brick@{brickBreaker::Brick}!getLoc@{getLoc}}
+\index{getLoc@{getLoc}!brickBreaker::Brick@{brickBreaker::Brick}}
+\subsubsection[{getLoc}]{\setlength{\rightskip}{0pt plus 5cm}int \mbox{[}$\,$\mbox{]} brickBreaker.Brick.getLoc ()}}
+\label{classbrick_breaker_1_1_brick_afb94388b2aac0dd371265db241fddbcf}
+Returns the location and dimensions of the brick as an int array \begin{DoxyReturn}{Returns}
+Returns an array containing, in order, the x and y coordinates of the upper left corner and the width and height 
+\end{DoxyReturn}
+\hypertarget{classbrick_breaker_1_1_brick_a5fa03da94163b3dc3707c030e85a1405}{
+\index{brickBreaker::Brick@{brickBreaker::Brick}!permanent@{permanent}}
+\index{permanent@{permanent}!brickBreaker::Brick@{brickBreaker::Brick}}
+\subsubsection[{permanent}]{\setlength{\rightskip}{0pt plus 5cm}boolean brickBreaker.Brick.permanent ()}}
+\label{classbrick_breaker_1_1_brick_a5fa03da94163b3dc3707c030e85a1405}
+\begin{DoxyReturn}{Returns}
+Returns true if the brick cannot be removed. Default = false 
+\end{DoxyReturn}
+
+
+Reimplemented in \hyperlink{classbrick_breaker_1_1_permanent_brick_a5095518bc2226f3257202d99e37d8ae4}{brickBreaker.PermanentBrick}.
+
+\hypertarget{classbrick_breaker_1_1_brick_a109d6d8023e528284c1726ee55c3e50e}{
+\index{brickBreaker::Brick@{brickBreaker::Brick}!powerUp@{powerUp}}
+\index{powerUp@{powerUp}!brickBreaker::Brick@{brickBreaker::Brick}}
+\subsubsection[{powerUp}]{\setlength{\rightskip}{0pt plus 5cm}void brickBreaker.Brick.powerUp ({\bf Ball} {\em b})}}
+\label{classbrick_breaker_1_1_brick_a109d6d8023e528284c1726ee55c3e50e}
+Powers up the ball (e.g. faster speed, higher point multiplier, etc). 
+\begin{DoxyParams}{Parameters}
+\item[{\em b}]The ball to be updated \end{DoxyParams}
+
+
+Reimplemented in \hyperlink{classbrick_breaker_1_1_power_brick_aa5f41bb48fc63ed441ec2e9892ccdac3}{brickBreaker.PowerBrick}.
+
+\hypertarget{classbrick_breaker_1_1_brick_ac333dcbd252242dc78ece37b8a661ce0}{
+\index{brickBreaker::Brick@{brickBreaker::Brick}!removed@{removed}}
+\index{removed@{removed}!brickBreaker::Brick@{brickBreaker::Brick}}
+\subsubsection[{removed}]{\setlength{\rightskip}{0pt plus 5cm}boolean brickBreaker.Brick.removed ()}}
+\label{classbrick_breaker_1_1_brick_ac333dcbd252242dc78ece37b8a661ce0}
+\begin{DoxyReturn}{Returns}
+Returns whether or not the brick has been removed 
+\end{DoxyReturn}
+\hypertarget{classbrick_breaker_1_1_brick_a6f9ff21504eab68a2b9b9e6a87ed0f52}{
+\index{brickBreaker::Brick@{brickBreaker::Brick}!setLoc@{setLoc}}
+\index{setLoc@{setLoc}!brickBreaker::Brick@{brickBreaker::Brick}}
+\subsubsection[{setLoc}]{\setlength{\rightskip}{0pt plus 5cm}void brickBreaker.Brick.setLoc (int {\em x}, \/  int {\em y}, \/  int {\em wid}, \/  int {\em hgt})}}
+\label{classbrick_breaker_1_1_brick_a6f9ff21504eab68a2b9b9e6a87ed0f52}
+Sets the location and dimensions of the brick to the new parameters.
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em x}]New x-\/coordinate of upper left corner \item[{\em y}]New y-\/coordinate of upper left corner \item[{\em wid}]New width \item[{\em hgt}]New height \end{DoxyParams}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+game/brickBreaker/\hyperlink{_brick_8java}{Brick.java}\end{DoxyCompactItemize}

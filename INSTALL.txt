@@ -1,3 +1,5 @@
+To install the Brick Breaker game, simply uncompress FinalProject.jar and run brickbreaker.sh!
+
 To install the web engine, first copy all files in the /web directory to your web server.
 Then, open /web/app/config/database.php and change the appropriate values to match the credientials of your database.
 Then, open /web/app/config/config.php and change any values you see fit.

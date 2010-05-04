@@ -1,0 +1,91 @@
+\hypertarget{classbrick_breaker_1_1web_1_1_encryption_util}{
+\section{brickBreaker.web.EncryptionUtil Class Reference}
+\label{classbrick_breaker_1_1web_1_1_encryption_util}\index{brickBreaker::web::EncryptionUtil@{brickBreaker::web::EncryptionUtil}}
+}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static int \hyperlink{classbrick_breaker_1_1web_1_1_encryption_util_a3504c386ef5a1beb2410a140fa641b1f}{init} ()  throws EncryptionFailureException, 			FilesystemFailureException 
+\item 
+static String \hyperlink{classbrick_breaker_1_1web_1_1_encryption_util_ae0698d40ded2bf0a720b0c4720b9a79e}{encryptData} (Key key, byte\mbox{[}$\,$\mbox{]} data)  throws EncryptionFailureException 
+\item 
+static Key \hyperlink{classbrick_breaker_1_1web_1_1_encryption_util_ac1c5c210199ba00750b5dd06845cb784}{getPublicKey} ()
+\item 
+static Key \hyperlink{classbrick_breaker_1_1web_1_1_encryption_util_abcaff8736b7a22264577aa8a992733b2}{generateSymmetricKey} ()  throws EncryptionFailureException 
+\end{DoxyCompactItemize}
+\subsection*{Static Package Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classbrick_breaker_1_1web_1_1_encryption_util_a8c24fabe20b012d5d453fbb22d5c322e}{
+{\bfseries \mbox{[}static initializer\mbox{]}}}
+\label{classbrick_breaker_1_1web_1_1_encryption_util_a8c24fabe20b012d5d453fbb22d5c322e}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class provides methods for performing encryption.
+
+\begin{DoxyAuthor}{Author}
+Abraham Lin 
+\end{DoxyAuthor}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classbrick_breaker_1_1web_1_1_encryption_util_ae0698d40ded2bf0a720b0c4720b9a79e}{
+\index{brickBreaker::web::EncryptionUtil@{brickBreaker::web::EncryptionUtil}!encryptData@{encryptData}}
+\index{encryptData@{encryptData}!brickBreaker::web::EncryptionUtil@{brickBreaker::web::EncryptionUtil}}
+\subsubsection[{encryptData}]{\setlength{\rightskip}{0pt plus 5cm}static String brickBreaker.web.EncryptionUtil.encryptData (Key {\em key}, \/  byte\mbox{[}$\,$\mbox{]} {\em data})  throws {\bf EncryptionFailureException} \hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classbrick_breaker_1_1web_1_1_encryption_util_ae0698d40ded2bf0a720b0c4720b9a79e}
+Encrypts the supplied data using the supplied key.
+
+
+\begin{DoxyParams}{Parameters}
+\item[{\em key}]the encryption key \item[{\em data}]the data to encrypt\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the encrypted data in base64-\/encoded form
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+\item[{\em \hyperlink{classbrick_breaker_1_1web_1_1_encryption_failure_exception}{EncryptionFailureException}}]if any errors occur while attempting the operation \end{DoxyExceptions}
+\hypertarget{classbrick_breaker_1_1web_1_1_encryption_util_abcaff8736b7a22264577aa8a992733b2}{
+\index{brickBreaker::web::EncryptionUtil@{brickBreaker::web::EncryptionUtil}!generateSymmetricKey@{generateSymmetricKey}}
+\index{generateSymmetricKey@{generateSymmetricKey}!brickBreaker::web::EncryptionUtil@{brickBreaker::web::EncryptionUtil}}
+\subsubsection[{generateSymmetricKey}]{\setlength{\rightskip}{0pt plus 5cm}static Key brickBreaker.web.EncryptionUtil.generateSymmetricKey ()  throws {\bf EncryptionFailureException} \hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classbrick_breaker_1_1web_1_1_encryption_util_abcaff8736b7a22264577aa8a992733b2}
+Generates a new symmetric key.
+
+\begin{DoxyReturn}{Returns}
+the new key
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+\item[{\em \hyperlink{classbrick_breaker_1_1web_1_1_encryption_failure_exception}{EncryptionFailureException}}]if any errors occur while attempting the operation \end{DoxyExceptions}
+\hypertarget{classbrick_breaker_1_1web_1_1_encryption_util_ac1c5c210199ba00750b5dd06845cb784}{
+\index{brickBreaker::web::EncryptionUtil@{brickBreaker::web::EncryptionUtil}!getPublicKey@{getPublicKey}}
+\index{getPublicKey@{getPublicKey}!brickBreaker::web::EncryptionUtil@{brickBreaker::web::EncryptionUtil}}
+\subsubsection[{getPublicKey}]{\setlength{\rightskip}{0pt plus 5cm}static Key brickBreaker.web.EncryptionUtil.getPublicKey ()\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classbrick_breaker_1_1web_1_1_encryption_util_ac1c5c210199ba00750b5dd06845cb784}
+Returns the public key for the current remote server.
+
+\begin{DoxyReturn}{Returns}
+the public key for the current remote server 
+\end{DoxyReturn}
+\hypertarget{classbrick_breaker_1_1web_1_1_encryption_util_a3504c386ef5a1beb2410a140fa641b1f}{
+\index{brickBreaker::web::EncryptionUtil@{brickBreaker::web::EncryptionUtil}!init@{init}}
+\index{init@{init}!brickBreaker::web::EncryptionUtil@{brickBreaker::web::EncryptionUtil}}
+\subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}static int brickBreaker.web.EncryptionUtil.init ()  throws {\bf EncryptionFailureException}, 			{\bf FilesystemFailureException} \hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}
+\label{classbrick_breaker_1_1web_1_1_encryption_util_a3504c386ef5a1beb2410a140fa641b1f}
+Loads all available public keys into memory.
+
+\begin{DoxyReturn}{Returns}
+the number of keys that were successfully loaded
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+\item[{\em \hyperlink{classbrick_breaker_1_1web_1_1_encryption_failure_exception}{EncryptionFailureException}}]if an encryption-\/related error occurs while attempting the operation \item[{\em FilesystemFailureException}]if a filesystem-\/related error occurs while attempting the operation \end{DoxyExceptions}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+game/brickBreaker/web/EncryptionUtil.java\end{DoxyCompactItemize}
