@@ -137,7 +137,7 @@ public class GamePanel extends PRPanel implements ActionListener, KeyListener
         if (dbImage == null) {  // create the buffer
             dbImage = createImage(PWIDTH, PHEIGHT);
             if (dbImage == null) {
-                System.out.println("dbImage is null");
+                //System.out.println("dbImage is null");
                 return;
             }
             else

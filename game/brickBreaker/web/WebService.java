@@ -213,7 +213,7 @@ public class WebService {
                 }
 
                 if (!found) {
-                    throw new RuntimeException( "Level has not been uploaded yet" );
+                    return;
                 }
 		
 		Key publicKey = EncryptionUtil.getPublicKey( );
