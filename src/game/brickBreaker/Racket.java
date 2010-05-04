@@ -4,10 +4,12 @@ import java.awt.*;
 import java.io.Serializable;
 
 /**
- * Abstract class Racket - write a description of the class here
+ * Represents a racket on one side of the screen, controlled by the user to keep the ball in the air.
  *
- * @author (your name here)
- * @version (version number or date here)
+ * @author Jacob Pritt
+ * @version 4/30/10
+ * @file Racket.java
+ * @see HorizontalRacket.java, VerticalRacket.java
  */
 public abstract class Racket implements Serializable
 {
@@ -25,22 +27,34 @@ public abstract class Racket implements Serializable
     public static int thickness = 5;
     protected boolean movingRight, movingLeft;
 
+    /**
+     * Sets variable movingLeft to true.
+     */
     public void setMovingLeft() {
         movingLeft = true;
         movingRight = false;
     }
 
+    /**
+     * Sets variable movingRight to true.
+     */
     public void setMovingRight() {
         movingRight = true;
         movingLeft = false;
     }
 
+    /**
+     * Stops the racket from moving altogether.
+     */
     public void stop() {
         movingLeft = false;
         movingRight = false;
         speed = 0;
     }
 
+    /**
+     * Updates the racket's position on the screen, making sure it doesn't move outside the bounds of the screen.
+     */
     public void updatePos() {
         if (movingRight) speed = Math.min(speed+2, maxSpeed);
         else if (movingLeft) speed = Math.max(speed-2, -maxSpeed);
@@ -51,33 +65,82 @@ public abstract class Racket implements Serializable
         }
     }
 
-    // Move the racket left/up
+    /**
+     * Moves the racket left (up for VerticalRackets)
+     */
     public  void moveLeft() {
         posX = Math.max(width/2., posX-speed);
     }
 
-    // Move the racket right/down
+    /**
+     * Moves the racket right (down for VerticalRackets)
+     */
     public  void moveRight() {
         posX = Math.min(range-width/2., posX+speed);
     }
 
+    /**
+     * Returns the coordinate of the left end of the racket.
+     */
     public int getLeft() { return Math.round((long)(posX-width/2.)); }
+
+    /**
+     * Returns the coordinate of the right end of the racket.
+     */
     public int getRight() { return Math.round((long)(posX+width/2)); }
+
+    /**
+     * Returns the x-coordinate of the center of the racket.
+     */
     public int getX() { return Math.round((long)posX); }
+
+    /**
+     * Returns the y-coordinate of the center of the racket.
+     * @return
+     */
     public int getY() { return Math.round((long)posY); }
+
+    /**
+     * Returns the width of the racket, in pixels.
+     * @return
+     */
     public int getWidth() { return width; }
 
-    // Draw the racket on the screen
+    /**
+     * Draws the racket on the screen.
+     * @param g Graphics object with which to draw.
+     */
     public abstract void draw(Graphics g);
 
-    // Checks if the ball collides with the racket and updates the ball
+    /**
+     * Checks if the ball collides with the racket and updates the ball.
+     * @param ball Ball object to check
+     */
     public abstract Ball checkCollision(Ball ball);
 
-    // Checks if the ball is past the racket (and thus out of play)
+    /**
+     * Checks if the ball is past the racket (and thus out of play).
+     * @param ball Ball object to check
+     */
     public abstract boolean checkPast(Ball ball);
 
+    /**
+     * Returns true if the racket is on the left side of the screen.
+     */
     public boolean isLeft() { return false; }
+
+    /**
+     * Returns true if the racket is on the right side of the screen.
+     */
     public boolean isRight() { return false; }
+
+    /**
+     * Returns true if the racket is on the top of the screen.
+     */
     public boolean isTop() { return false; }
+
+    /**
+     * Returns true if the racket is on the bottom of the screen.
+     */
     public boolean isBottom() { return false; }
 }
