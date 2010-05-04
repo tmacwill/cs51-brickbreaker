@@ -1,12 +1,12 @@
 package brickBreaker.web;
 
 /**
- * This class provides an application-specific wrapper for runtime exceptions
- * caused by a failure to complete a request to a remote server.
+ * This class provides an application-specific wrapper for exceptions caused by
+ * a failure to complete a request to a remote server.
  * 
  * @author Abraham Lin
  */
-public class RequestFailureException extends RuntimeException {
+public class RequestFailureException extends Exception {
 	private static final long serialVersionUID = 1L;
 
 	/**

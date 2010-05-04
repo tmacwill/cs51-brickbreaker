@@ -15,15 +15,26 @@ import brickBreaker.Level;
  * @author Abraham Lin
  */
 public class LevelCatalog {
-	private static final LevelCatalog INSTANCE = new LevelCatalog( );
+	private static final LevelCatalog INSTANCE;
+	static {
+		try {
+			INSTANCE = new LevelCatalog( );
+		} catch( FilesystemFailureException e ) {
+			// Unrecoverable state
+			throw new RuntimeException( e );
+		}
+	}
 
 	private BiMap<String, Level> levelData;
 
 	/**
 	 * Constructs a new catalog containing all levels present on the local
 	 * system.
+	 * 
+	 * @throws FilesystemFailureException 
+	 *             if any errors occur while attempting the operation
 	 */
-	private LevelCatalog( ) {
+	private LevelCatalog( ) throws FilesystemFailureException {
 		reset( );
 	}
 	
@@ -35,11 +46,14 @@ public class LevelCatalog {
 	public static LevelCatalog getInstance( ) {
 		return INSTANCE;
 	}
-	
+
 	/**
 	 * Resets the catalog by re-loading all levels from disk.
+	 * 
+	 * @throws FilesystemFailureException
+	 *             if any errors occur while attempting the operation
 	 */
-	public void reset( ) {
+	public void reset( ) throws FilesystemFailureException {
 		levelData = LocalDataService.loadAllLevelsFromDisk( );
 	}
 	
@@ -58,8 +72,11 @@ public class LevelCatalog {
 	 * 
 	 * @param level
 	 *            the level to add
+	 * 
+	 * @throws FilesystemFailureException 
+	 *             if any errors occur while attempting the operation
 	 */
-	public void addLevel( Level level ) {
+	public void addLevel( Level level ) throws FilesystemFailureException {
 		// Compute the ID for the level
 		String levelID = LocalDataService.calculateHash( level );
 

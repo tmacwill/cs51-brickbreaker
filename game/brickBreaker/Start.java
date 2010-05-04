@@ -3,6 +3,8 @@ package brickBreaker;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+
+import brickBreaker.local.FilesystemFailureException;
 import brickBreaker.web.*;
 
 public class Start extends JFrame implements WindowListener
@@ -137,24 +139,33 @@ public class Start extends JFrame implements WindowListener
         //WebConfig.getInstance().setPath("/brickbreaker");
 
         
-        EncryptionUtil.init();
-        PasswordBox pass = new PasswordBox();
+        try {
+			System.out.println( "Loaded " + EncryptionUtil.init() + " keys" );
+			PasswordBox pass = new PasswordBox();
 
-        // wait to get result from password box
-        while (!pass.checkLogin() && !pass.checkSkipped()) {
-            try {
-                Thread.sleep(200);
-            }
-            catch (Exception e) { }
-        }
-        // destroy password window
-        pass.setVisible(false);
+	        // wait to get result from password box
+	        while (!pass.checkLogin() && !pass.checkSkipped()) {
+	            try {
+	                Thread.sleep(200);
+	            }
+	            catch (Exception e) { }
+	        }
+	        // destroy password window
+	        pass.setVisible(false);
 
-        // user has been logged in
-        if (pass.checkLogin())
-            new Start(true);
-        else
-            new Start(false);
+	        // user has been logged in
+	        if (pass.checkLogin())
+	            new Start(true);
+	        else
+	            new Start(false);
+		} catch (EncryptionFailureException e) {
+			// can't login
+			new Start(false);
+		} catch (FilesystemFailureException e) {
+			// can't load public keys
+			new Start(false);
+		}
+        
     }
 
 } // end of Main class

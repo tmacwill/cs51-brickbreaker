@@ -415,7 +415,9 @@ public class LevelEditor extends PRPanel {
         if (running) {
             name = levelName.getText(); //FIXME: sanitize input
             Level l = new Level(bricks, players, name);
-            LevelCatalog.getInstance().addLevel(l);
+            try {
+				LevelCatalog.getInstance().addLevel(l);
+			} catch (FilesystemFailureException e) { }
         }
     }//GEN-LAST:event_saveDesignActionPerformed
 

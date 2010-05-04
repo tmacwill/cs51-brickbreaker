@@ -61,7 +61,8 @@ public class ConnectionUtil {
 	 * @throws RequestFailureException
 	 *             if the request is unsuccessful
 	 */
-	public static byte[] doGet( String urlString ) {
+	public static byte[] doGet( String urlString )
+			throws RequestFailureException {
 		if( urlString == null ) {
 			throw new IllegalArgumentException( 
 					"Argument 'url' cannot be null" );
@@ -85,7 +86,8 @@ public class ConnectionUtil {
 	 * @throws RequestFailureException
 	 *             if the request is unsuccessful
 	 */
-	public static byte[] doPost( String urlString, Map<String, String> postData ) {
+	public static byte[] doPost( String urlString, Map<String, String> postData )
+			throws RequestFailureException {
 		if( urlString == null ) {
 			throw new IllegalArgumentException( 
 					"Argument 'url' cannot be null" );
@@ -116,7 +118,7 @@ public class ConnectionUtil {
 	 *             if the request is unsuccessful
 	 */
 	private static byte[] doRequest( RequestMethod method, String urlString,
-			Map<String, String> postData ) {
+			Map<String, String> postData ) throws RequestFailureException {
 		assert method != null : "method is null";
 		assert urlString != null : "urlString is null";
 		

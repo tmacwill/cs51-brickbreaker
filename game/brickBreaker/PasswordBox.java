@@ -69,16 +69,18 @@ public class PasswordBox extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String username = nameField.getText();
                 String password = passwordField.getText();
-                if (WebService.verifyUser(username, password)) {
-                    // save user credentials in UserConfig object
-                    passed = true;
-                    UserConfig.getInstance().setUsername(username);
-                    UserConfig.getInstance().setPassword(password);
-                }
-                else {
-                    // show error message if combination is incorrect
-                    JOptionPane.showMessageDialog(null, "Incorrect username/password combination");
-                }
+                try {
+					if (WebService.verifyUser(username, password)) {
+					    // save user credentials in UserConfig object
+					    passed = true;
+					    UserConfig.getInstance().setUsername(username);
+					    UserConfig.getInstance().setPassword(password);
+					}
+					else {
+					    // show error message if combination is incorrect
+					    JOptionPane.showMessageDialog(null, "Incorrect username/password combination");
+					}
+				} catch (Exception ex) { }
             }
         });
 

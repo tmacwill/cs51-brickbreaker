@@ -48,8 +48,12 @@ public class WebService {
 	 * @param password
 	 *            the password
 	 * @return whether the given username/password pair is valid
+	 * 
+	 * @throws WebException
+	 *             if any errors occur while attempting the operation
 	 */
-	public static boolean verifyUser( String username, String password ) {
+	public static boolean verifyUser( String username, String password )
+			throws WebException {
 		boolean isValidUser = false;
 
 		String userVerifyURL = getUserVerifyURL( );
@@ -57,10 +61,22 @@ public class WebService {
 				username,
 				password );
 
-		String response = new String( ConnectionUtil.doPost(
-				userVerifyURL,
-				userVerifyReqest ) );
-		Document document = XMLUtil.parseXML( response );
+		String response;
+		try {
+			response = new String( ConnectionUtil.doPost(
+					userVerifyURL,
+					userVerifyReqest ) );
+		} catch( RequestFailureException e ) {
+			throw new WebException(
+					"Could not successfully contact remote server",
+					e );
+		}
+		Document document;
+		try {
+			document = XMLUtil.parseXML( response );
+		} catch( XMLParseFailureException e ) {
+			throw new WebException( "Could not parse the response", e );
+		}
 		if( document != null ) {
 			NodeList userNodes = document.getElementsByTagName( "std_class" );
 			isValidUser = ( userNodes.getLength( ) > 0 );
@@ -73,13 +89,28 @@ public class WebService {
 	 * Returns a list of all levels available on the remote server.
 	 * 
 	 * @return the list of available levels
+	 * 
+	 * @throws WebException
+	 *             if any errors occur while attempting the operation
 	 */
-	public static List<OnlineLevel> getOnlineLevels( ) {
+	public static List<OnlineLevel> getOnlineLevels( ) throws WebException {
 		List<OnlineLevel> onlineLevels = new ArrayList<OnlineLevel>( );
 
 		String levelBrowseURL = getLevelBrowseURL( );
-		String response = new String( ConnectionUtil.doGet( levelBrowseURL ) );
-		Document document = XMLUtil.parseXML( response );
+		String response;
+		try {
+			response = new String( ConnectionUtil.doGet( levelBrowseURL ) );
+		} catch( RequestFailureException e ) {
+			throw new WebException(
+					"Could not successfully contact remote server",
+					e );
+		}
+		Document document;
+		try {
+			document = XMLUtil.parseXML( response );
+		} catch( XMLParseFailureException e ) {
+			throw new WebException( "Could not parse the response", e );
+		}
 		if( document != null ) {
 			NodeList levelNodes = document.getElementsByTagName( "blob" );
 			int numLevels = levelNodes.getLength( );
@@ -100,12 +131,22 @@ public class WebService {
 	 * @param levelID
 	 *            the unique identifier
 	 * @return the downloaded level
+	 * 
+	 * @throws WebException
+	 *             if any errors occur while attempting the operation
 	 */
-	public static Level downloadLevel( String levelID ) {
+	public static Level downloadLevel( String levelID ) throws WebException {
 		Level level = null;
 
 		String levelDownloadURL = getLevelDownloadURL( levelID );
-		byte[] response = ConnectionUtil.doGet( levelDownloadURL );
+		byte[] response;
+		try {
+			response = ConnectionUtil.doGet( levelDownloadURL );
+		} catch( RequestFailureException e ) {
+			throw new WebException(
+					"Could not successfully contact remote server",
+					e );
+		}
 
 		ByteArrayInputStream byteStream = new ByteArrayInputStream( response );
 		try {
@@ -113,9 +154,9 @@ public class WebService {
 			level = (Level)objStream.readObject( );
 			objStream.close( );
 		} catch( IOException e ) {
-			throw new RuntimeException( "Could not read level data", e );
+			throw new WebException( "Could not read level data", e );
 		} catch( ClassNotFoundException e ) {
-			throw new RuntimeException( "Could not read level data", e );
+			throw new WebException( "Could not read level data", e );
 		}
 
 		return level;
@@ -128,23 +169,29 @@ public class WebService {
 	 *            the level to upload
 	 * @param title
 	 *            the name for the level
+	 * 
+	 * @throws WebException
+	 *             if any errors occur while attempting the operation
 	 */
-	public static void uploadLevel( Level level, String title ) {
+	public static void uploadLevel( Level level, String title )
+			throws WebException {
 		ByteArrayOutputStream byteStream = new ByteArrayOutputStream( );
 		try {
 			ObjectOutputStream objStream = new ObjectOutputStream( byteStream );
 			objStream.writeObject( level );
 			objStream.close( );
 		} catch( IOException e ) {
-			throw new RuntimeException( "Could not read level data", e );
+			throw new WebException( "Could not read level data", e );
 		}
 
 		byte[] levelData = byteStream.toByteArray( );
 		String encodedLevelData = Base64.encodeBase64String( levelData );
 
-		String userID = getUserID( );
-		if( userID == null ) {
-			throw new RuntimeException( "Invalid login credentials" );
+		String userID;
+		try {
+			userID = getUserID( );
+		} catch( InvalidUserException e ) {
+			throw new WebException( e );
 		}
 
 		String levelUploadURL = getLevelUploadURL( );
@@ -153,7 +200,13 @@ public class WebService {
 				title,
 				encodedLevelData );
 
-		ConnectionUtil.doPost( levelUploadURL, levelUploadRequest );
+		try {
+			ConnectionUtil.doPost( levelUploadURL, levelUploadRequest );
+		} catch( RequestFailureException e ) {
+			throw new WebException(
+					"Could not successfully contact remote server",
+					e );
+		}
 	}
 
 	/**
@@ -163,22 +216,37 @@ public class WebService {
 	 *            the level
 	 * @return a list of high scores for that level retrieved from the remote
 	 *         server
+	 * 
+	 * @throws WebException
+	 *             if any errors occur while attempting the operation
 	 */
-	public static List<HighScore> retrieveHighScores( Level level ) {
+	public static List<HighScore> retrieveHighScores( Level level )
+			throws WebException {
 		List<HighScore> highScores = new ArrayList<HighScore>( );
 
 		String levelID = LevelCatalog.getInstance( ).getLevelID( level );
 
 		String scoreRetrieveURL = getScoreRetrieveURL( levelID );
-		String response = new String( 
-				ConnectionUtil.doGet( scoreRetrieveURL ) );
-		Document document = XMLUtil.parseXML( response );
+		String response;
+		try {
+			response = new String( ConnectionUtil.doGet( scoreRetrieveURL ) );
+		} catch( RequestFailureException e ) {
+			throw new WebException(
+					"Could not successfully contact remote server",
+					e );
+		}
+		Document document;
+		try {
+			document = XMLUtil.parseXML( response );
+		} catch( XMLParseFailureException e ) {
+			throw new WebException( "Could not parse the response", e );
+		}
 		if( document != null ) {
 			NodeList scoreNodes = document.getElementsByTagName( "score" );
 			int numLevels = scoreNodes.getLength( );
 			for( int i = 0; i < numLevels; i++ ) {
 				Element score = (Element)scoreNodes.item( i );
-				String name = ( (Element)score.getFirstChild( ) )
+				String name = ((Element)score.getFirstChild( ))
 						.getAttribute( "username" );
 				long highScore = Long.parseLong( 
 						score.getAttribute( "score" ) );
@@ -196,13 +264,19 @@ public class WebService {
 	 *            the level with which the score is associated
 	 * @param score
 	 *            the score
+	 * 
+	 * @throws WebException
+	 *             if any errors occur while attempting the operation
 	 */
-	public static void submitScore( Level level, long score ) {
+	public static void submitScore( Level level, long score )
+			throws WebException {
 		String levelID = LevelCatalog.getInstance( ).getLevelID( level );
 
-		String userID = getUserID( );
-		if( userID == null ) {
-			throw new RuntimeException( "Invalid login credentials" );
+		String userID;
+		try {
+			userID = getUserID( );
+		} catch( InvalidUserException e ) {
+			throw new WebException( e );
 		}
 
 		// Make sure level is found online before submitting score
@@ -214,20 +288,31 @@ public class WebService {
 			found = ( onlineLevel.getLevelID( ).equals( levelID ) );
 		}
 		if( !found ) {
-			throw new RuntimeException( "Level has not been uploaded yet" );
+			throw new WebException( "Level has not been uploaded yet" );
 		}
 
-		Key publicKey = EncryptionUtil.getPublicKey( );
-		Key symmetricKey = EncryptionUtil.generateSymmetricKey( );
 		String scoreSubmitURL = getScoreSubmitURL( );
-		Map<String, String> scoreSubmitRequest = getScoreSubmitRequest(
-				userID,
-				levelID,
-				score,
-				publicKey,
-				symmetricKey );
+		Map<String, String> scoreSubmitRequest;
+		try {
+			Key publicKey = EncryptionUtil.getPublicKey( );
+			Key symmetricKey = EncryptionUtil.generateSymmetricKey( );
+			scoreSubmitRequest = getScoreSubmitRequest(
+					userID,
+					levelID,
+					score,
+					publicKey,
+					symmetricKey );
+		} catch( EncryptionFailureException e ) {
+			throw new WebException( "Failed to properly encrypt data", e );
+		}
 
-		ConnectionUtil.doPost( scoreSubmitURL, scoreSubmitRequest );
+		try {
+			ConnectionUtil.doPost( scoreSubmitURL, scoreSubmitRequest );
+		} catch( RequestFailureException e ) {
+			throw new WebException(
+					"Could not successfully contact remote server",
+					e );
+		}
 	}
 
 	/**
@@ -235,27 +320,43 @@ public class WebService {
 	 * 
 	 * @return the current user's ID if the supplied credentials are valid;
 	 *         otherwise, returns <code>null</code>
+	 * 
+	 * @throws InvalidUserException
+	 *             if the user's identity cannot be determined
+	 * @throws WebException
+	 *             if any errors occur while attempting the operation
 	 */
-	private static String getUserID( ) {
-		String userID = null;
+	private static String getUserID( ) throws InvalidUserException,
+			WebException {
+		String userID;
 
 		String userVerifyURL = getUserVerifyURL( );
 		UserConfig userConfig = UserConfig.getInstance( );
 		Map<String, String> userVerifyReqest = getUserVerifyRequest( userConfig
 				.getUsername( ), userConfig.getPassword( ) );
 
-		String response = new String( ConnectionUtil.doPost(
-				userVerifyURL,
-				userVerifyReqest ) );
-		Document document = XMLUtil.parseXML( response );
-		if( document != null ) {
-			NodeList userNodes = document.getElementsByTagName( "std_class" );
-			if( userNodes.getLength( ) > 0 ) {
-				Node userNode = userNodes.item( 0 );
-				if( userNode.getNodeType( ) == Node.ELEMENT_NODE ) {
-					userID = ( (Element)userNode ).getAttribute( "id" );
-				}
-			}
+		String response;
+		try {
+			response = new String( ConnectionUtil.doPost(
+					userVerifyURL,
+					userVerifyReqest ) );
+		} catch( RequestFailureException e ) {
+			throw new WebException(
+					"Could not successfully contact remote server",
+					e );
+		}
+		Document document;
+		try {
+			document = XMLUtil.parseXML( response );
+		} catch( XMLParseFailureException e ) {
+			throw new WebException( "Could not parse the response", e );
+		}
+		NodeList userNodes = document.getElementsByTagName( "std_class" );
+		if( userNodes.getLength( ) > 0 ) {
+			Node userNode = userNodes.item( 0 );
+			userID = ((Element)userNode).getAttribute( "id" );
+		} else {
+			throw new InvalidUserException( "Could not log in successfully" );
 		}
 
 		return userID;
@@ -440,9 +541,13 @@ public class WebService {
 	 * @param symmetricKey
 	 *            the symmetric key to be used for encrypting the score data
 	 * @return the parameters
+	 * 
+	 * @throws EncryptionFailureException
+	 *             if any errors occur while attempting the operation
 	 */
 	private static Map<String, String> getScoreSubmitRequest( String userID,
-			String levelID, long score, Key publicKey, Key symmetricKey ) {
+			String levelID, long score, Key publicKey, Key symmetricKey )
+			throws EncryptionFailureException {
 		Map<String, String> postData = new HashMap<String, String>( );
 		String data = new StringBuilder( 256 )
 				.append( "<score>" )

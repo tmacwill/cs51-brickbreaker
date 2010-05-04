@@ -88,7 +88,9 @@ public class IdlePanel extends PRPanel { //implements ActionListener, KeyListene
      * Loads levels from the disk and adds them to the displayed list
      */
     private void initLevelList() {
-        LevelCatalog.getInstance().reset();
+        try {
+			LevelCatalog.getInstance().reset();
+		} catch (FilesystemFailureException e) { }
         levelObjectList = LevelCatalog.getInstance().getLevels();
         levelList.removeAll();
         for (Level l : levelObjectList) {
@@ -101,7 +103,9 @@ public class IdlePanel extends PRPanel { //implements ActionListener, KeyListene
      */
     private void initOnlineLevelList() {
         onlineLevelListDisplay.removeAll();
-        onlineLevelList = WebService.getOnlineLevels();
+        try {
+			onlineLevelList = WebService.getOnlineLevels();
+		} catch (Exception e) { }
         for (OnlineLevel l : onlineLevelList) {
             onlineLevelListDisplay.add(l.getTitle());
         }
@@ -298,7 +302,9 @@ public class IdlePanel extends PRPanel { //implements ActionListener, KeyListene
            else if (code == KeyEvent.VK_F1) {
                int i = levelList.getSelectedIndex();
                Level lev = levelObjectList.get(i);
-               WebService.uploadLevel(lev, lev.getName());
+               try {
+				WebService.uploadLevel(lev, lev.getName());
+			} catch (Exception e) { }
            }
         }
     }//GEN-LAST:event_levelListKeyPressed
@@ -322,8 +328,10 @@ public class IdlePanel extends PRPanel { //implements ActionListener, KeyListene
                 int i = onlineLevelListDisplay.getSelectedIndex();
                 OnlineLevel ol = onlineLevelList.get(i);
                 String levelID = ol.getLevelID();
-                Level l = WebService.downloadLevel(levelID);
-                LevelCatalog.getInstance().addLevel(l);
+                try {
+                    Level l = WebService.downloadLevel(levelID);
+					LevelCatalog.getInstance().addLevel(l);
+				} catch (Exception e) { }
                 reset();
             }
         }

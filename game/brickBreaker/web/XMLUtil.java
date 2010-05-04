@@ -23,9 +23,13 @@ public class XMLUtil {
 	 * @param xmlString
 	 *            the XML document in <code>String</code> form
 	 * @return the XML document in <code>Document</code> form
+	 * 
+	 * @throws XMLParseFailureException
+	 *             if any errors occur while attempting the encryption process
 	 */
-	public static Document parseXML( String xmlString ) {
-		Document document = null;
+	public static Document parseXML( String xmlString )
+			throws XMLParseFailureException {
+		Document document;
 		
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance( );
 		try {

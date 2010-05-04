@@ -58,13 +58,21 @@ public class EncryptionUtil {
 	// All available public keys
 	private static final Map<String, Key> PUBLIC_KEYS = 
 			new HashMap<String, Key>( );
-	
+
 	/**
 	 * Loads all available public keys into memory.
 	 * 
 	 * @return the number of keys that were successfully loaded
+	 * 
+	 * @throws EncryptionFailureException
+	 *             if an encryption-related error occurs while attempting the
+	 *             operation
+	 * @throws FilesystemFailureException
+	 *             if a filesystem-related error occurs while attempting the
+	 *             operation
 	 */
-	public static int init( ) {
+	public static int init( ) throws EncryptionFailureException,
+			FilesystemFailureException {
 		loadPublicKeys( );
 		
 		return PUBLIC_KEYS.size( );
@@ -79,8 +87,12 @@ public class EncryptionUtil {
 	 *            the data to encrypt
 	 * 
 	 * @return the encrypted data in base64-encoded form
+	 * 
+	 * @throws EncryptionFailureException
+	 *             if any errors occur while attempting the operation
 	 */
-	public static String encryptData( Key key, byte[] data ) {
+	public static String encryptData( Key key, byte[] data )
+			throws EncryptionFailureException {
 		try {
 			String keyAlgorithm = key.getAlgorithm( );
 			String algorithm = ALGORITHMS.get( keyAlgorithm );
@@ -128,11 +140,17 @@ public class EncryptionUtil {
 					e );
 		}
 	}
-	
+
 	/**
 	 * Loads all available public keys from disk.
+	 * 
+	 * @throws EncryptionFailureException
+	 *             if any errors occur while attempting the operation
+	 * @throws FilesystemFailureException
+	 *             if any errors occur while attempting the operation
 	 */
-	private static void loadPublicKeys( ) {
+	private static void loadPublicKeys( ) throws EncryptionFailureException,
+			FilesystemFailureException {
 		try {
 			KeyFactory factory = KeyFactory
 					.getInstance( ASYMMETRIC_KEYGEN_ALGORITHM );
@@ -201,8 +219,11 @@ public class EncryptionUtil {
 	 * Generates a new symmetric key.
 	 * 
 	 * @return the new key
+	 * 
+	 * @throws EncryptionFailureException
+	 *             if any errors occur while attempting the operation
 	 */
-	public static Key generateSymmetricKey( ) {
+	public static Key generateSymmetricKey( ) throws EncryptionFailureException {
 		KeyGenerator keygen;
 		try {
 			keygen = KeyGenerator.getInstance( SYMMETRIC_KEYGEN_ALGORITHM );

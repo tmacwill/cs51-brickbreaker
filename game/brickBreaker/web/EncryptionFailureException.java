@@ -1,12 +1,12 @@
 package brickBreaker.web;
 
 /**
- * This class provides an application-specific wrapper for runtime exceptions
- * caused by a failure to encrypt data.
+ * This class provides an application-specific wrapper for exceptions caused by
+ * a failure to encrypt data.
  * 
  * @author Abraham Lin
  */
-public class EncryptionFailureException extends RuntimeException {
+public class EncryptionFailureException extends Exception {
 	private static final long serialVersionUID = 1L;
 
 	/**

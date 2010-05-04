@@ -1,12 +1,12 @@
 package brickBreaker.local;
 
 /**
- * This class provides an application-specific wrapper for runtime exceptions
- * caused by a failure in interacting with the local filesystem.
+ * This class provides an application-specific wrapper for exceptions caused by
+ * a failure in interacting with the local filesystem.
  * 
  * @author Abraham Lin
  */
-public class FilesystemFailureException extends RuntimeException {
+public class FilesystemFailureException extends Exception {
 	private static final long serialVersionUID = 1L;
 
 	/**

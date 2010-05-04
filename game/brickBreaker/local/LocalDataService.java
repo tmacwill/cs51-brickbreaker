@@ -35,8 +35,12 @@ public class LocalDataService {
 	 *            the level to save
 	 * @param filename
 	 *            the filename for the level file
+	 * 
+	 * @throws FilesystemFailureException 
+	 *             if any errors occur while attempting the operation
 	 */
-	public static void saveLevel( Level level, String filename ) {
+	public static void saveLevel( Level level, String filename )
+			throws FilesystemFailureException {
 		try {
 			File levelsDir = new File( Thread
 					.currentThread( )
@@ -61,13 +65,17 @@ public class LocalDataService {
 					e );
 		}
 	}
-	
+
 	/**
 	 * Loads all existing levels from the filesystem.
 	 * 
 	 * @return a list of all loaded levels
+	 * 
+	 * @throws FilesystemFailureException
+	 *             if any errors occur while attempting the operation
 	 */
-	public static BiMap<String, Level> loadAllLevelsFromDisk( ) {
+	public static BiMap<String, Level> loadAllLevelsFromDisk( )
+			throws FilesystemFailureException {
 		Map<String, Level> levels = new LinkedHashMap<String, Level>( );
 		
 		File levelsDir;
