@@ -1,141 +1,167 @@
-<html>
-  <body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+  <title>Internals</title>
+ </head>
+ <body>
+  <h1>Development environment</h1>
+  <h2>Client</h2>
+  <ul>
+  <li>Java 6 SDK (compiler) (<a href="http://java.sun.com/">http://java.sun.com/</a>)</li>
+  <li>Google Collections Library (<a href="http://code.google.com/p/google-collections/">http://code.google.com/p/google-collections/</a>)</li>
+  <li>Apache Commons Lang (<a href="http://commons.apache.org/lang/">http://commons.apache.org/lang/</a>)</li>
+  <li>Apache Commons Codec (<a href="http://commons.apache.org/codec/">http://commons.apache.org/codec/</a>)</li>
+  <li>Netbeans AbsoluteLayout (distributed with the Netbeans IDE - <a href="http://netbeans.org/">http://netbeans.org/</a>)</li>
+  </ul>
+  <h2>Web</h2>
+  <ul>
+  <li>CakePHP 1.2.x (<a href="http://cakephp.org/">http://cakephp.org/</a>)</li>
+  </ul>
+  <h2>Miscellaneous</h2>
+  <ul>
+  <li>Git (<a href="http://git-scm.com/">http://git-scm.com/</a>)</li>
+  <li>Doxygen (<a href="http://www.doxygen.org">http://www.doxygen.org</a>)</li>
+  </ul>
   
-	<p>Detailed documentation for the game component can be foud <a href="../game/html/index.html">here</a>.</p>
-	<p>Detailed documentation for the web component can be foud <a href="../web/html/index.html">here</a>.</p>
+  <h1>Production environment</h1>
+  <h2>Client</h2>
+  <ul>
+  <li>Java 6 JVM (any OS) (<a href="http://java.sun.com/">http://java.sun.com/</a>)</li>
+  </ul>
+  <h2>Web</h2>
+  <ul>
+  <li>Apache 2.x with mod_rewrite (<a href="http://httpd.apache.org/">http://httpd.apache.org/</a>)</li>
+  <li>PHP 5 with mcrypt, openssl (<a href="http://php.net/">http://php.net/</a>)</li>
+  <li>MySQL 5.x (<a href="http://www.mysql.com/">http://www.mysql.com/</a>)</li>
+  </ul>
+  
+  <h1>Installation instructions</h1>
+  <ol>
+  <li>Clone the Git repository at <a href="http://github.com/tmac721/cs51-brickbreaker">http://github.com/tmac721/cs51-brickbreaker</a></li>
+  <li>Follow the instructions in INSTALL.txt (located in the root directory of the source)</li>
+  </ol>
+  
+  <h1>Detailed description of components</h1>
+  <h2>Client Components</h2>
+  <h3>Start.java</h3>
+  <p>
+   Start is the JFrame that all of the game screens (IdlePanel, LevelEditor, and GamePanel) are switched in and out of. Each of these panels extends PRPanel, which contains basic methods describing how to start, stop, pause, and resume the panel. When a panel is switched out, it is paused, its actionListener is removed, and it is set to be invisible. When a panel is switched in, it is started, its actionListener is added (if necessary), and it is set to be visible. Each of the panels takes a Start object as a parameter. When the user switches panels, the appropriate methods from the Start object are called.
+  </p>
 
-    <h1>Start.java</h1>
-    <p>
-      Start is the JFrame that all of the game screens (IdlePanel, LevelEditor, and GamePanel) are switched in and out of. Each of these panels extends PRPanel, which contains basic methods describing how to start, stop, pause, and resume the panel. When a panel is switched out, it is paused, its actionListener is removed, and it is set to be invisible. When a panel is switched in, it is started, its actionListener is added (if necessary), and it is set to be visible. Each of the panels takes a Start object as a parameter. When the user switches panels, the appropriate methods from the Start object are called.
-    </p>
+  <h3>IdlePanel.java</h3>
+  <p>
+   IdlePanel is the panel from which the user can begin a game, enter LevelEditor, or browse online levels. IdlePanel takes a Start object in its constructor, and calls Start's methods (startEditor, startGame) to handle panel flipping. When it is started (or restarted), IdlePanel loads levels from the disk (from the "Levels" directory) and adds them to a graphical list. When the user chooses to browse online levels, the method getOnlineLevels in the WebService class is called, which returns a list of OnlineLevel objects, which consist of a level name and a level ID. The name is extracted and displayed in a graphical list. When the user downloads a level, the level ID is extracted and is used in a call to the downloadLevel method in the WebService class.
+  </p>
 
-    <h1>IdlePanel.java</h1>
-    <p>
-      IdlePanel is the panel from which the user can begin a game, enter LevelEditor, or browse online levels. IdlePanel takes a Start object in its constructor, and calls Start's methods (startEditor, startGame) to handle panel flipping. When it is started (or restarted), IdlePanel loads levels from the disk (from the "Levels" directory) and adds them to a graphical list. When the user chooses to browse online levels, the method getOnlineLevels in the WebService class is called, which returns a list of OnlineLevel objects, which consist of a level name and a level ID. The name is extracted and displayed in a graphical list. When the user downloads a level, the level ID is extracted and is used in a call to the downloadLevel method in the WebService class.
-    </p>
+  <h3>LevelEditor.java</h3>
+  <p>
+   LevelEditor is the panel within which the user can design his or her own levels. After specifying the number of rows/columns/players, a grid can be generated. In this grid, the user can left-click or right-click to place a regular brick or a permanent brick respectively. This is all done with simple event-handling. The user may also click and drag the mouse to place a string of regular bricks. Since a "mouse-dragged event" will be instantiated multiple times as the mouse moves through a given block in the grid, the last two bricks that were changed are remembered and shielded from further change. This prevents flickering and enables the user to be less precise while dragging the mouse. A button event calls the addLevel method from the LevelCatalog class, which writes the level object to the disk.
+  </p>
+  
+  <h3>LevelPlayer.java</h3>
+  <p>LevelPlayer controls the methods associated with playing a level, so that each level is free to contain only class variables (to make serialization easy). The LevelPlayer constructor takes a Level object containing all the components in the level. The class takes care of updating components, processing user key input for the rackets, and checking when the player wins or loses.</p>
+  
+  <h3>Level.java</h3>
+  <p>Level contains all of the information needed to initiate a level, having only a few get and set methods to access variables. This makes Level objects easy to serialize and save. The main components contained in a Level are a 2d array of bricks, a list of rackets and a list of balls.</p>
+  
+  <h3>Brick.java</h3>
+  <p>Brick represents a brick on the screen, which interacts with the ball. Each brick contains an integer corresponding to the number of times it must be hit by a ball before being removed. Brick also contain a number of points, which is added to the player's score when the brick is removed. Brick itself is an abstract class, but is extended by several specific types of bricks. The StandardBrick is worth 10 points and only takes one hit to remove, and the PermanentBrick can never be removed. The PowerupBrick increases the speed of the ball and the point multiplier when it is removed (but this brick type is currently not supported by LevelEditor.)</p>
+  
+  <h3>Ball.java</h3>
+  <p>Ball represents a ball object, which bounces off blocks, rackets and balls. Each ball is described by a speed, direction in radians, and position (x,y). After each call to update, ball updates its position and checks for any collisions with walls or rackets. LevelPlayer takes care of testing when balls collide with Brick objects.</p>
+  
+  <h3>Racket.java</h3>
+  <p>Racket represents a racket object, which moves along the top or bottom of the screen and is controlled by the user to keep the ball in play. Racket itself is an abstract class and is extended by both HorizontalRacket and VerticalRacket. HorizontalRacket represents rackets on the top and bottom of the screen and is fully supported in the game. VerticalRacket represents rackets on the left and right of the screen, but is not currently supported in the LevelEditor.</p>
+  
+  <h3>local.FilesystemFailureException</h3>
+  <p>
+   FilesystemFailureException is an application-specific wrapper for Exceptions related to issues with reading/writing files to the local filesystem. User interfaces should catch this exception and provide an appropriate notification for the end user.
+  </p>
+  
+  <h3>local.LevelCatalog</h3>
+  <p>
+   LevelCatalog provides an in-memory representation of all levels available for use. In addition to providing level data, this class also handles the addition of new levels, transparently persisting them as necessary. Level data is stored as a set of ID-to-level mappings, where the ID is the MD5 hash of the raw serialized representation of the level. Access to this mapping is indirectly provided by utility functions that allow for "inverse" lookups as well as access to copies of the underlying level set. Unless there is a compelling reason to do otherwise, this class should be used in preference to LocalDataService by higher-level callers.
+  </p>
+  
+  <h3>local.LocalDataService</h3>
+  <p>
+   LocalDataService handles low-level access to the local filesystem. All read/write operations that interact with the local filesystem are handled by this class, including serialization of level data. All data is written to the "levels" directory on the JVM classpath - this is normally the "levels" directory provided in the BrickBreaker package, but can be overridden if desired. In general, higher-level callers should not use this class directly; rather, they should use the higher-level abstractions provided by LevelCatalog.
+  </p>
+  
+  <h3>web.ConnectionUtil</h3>
+  <p>
+   ConnectionUtil is responsible for managing HTTP requests (GET and POST). As this class performs low-level operations involving raw manipulation of input and output, this class should generally not be used by higher-level callers; rather, callers should make use of the higher-level abstractions provided by WebService.
+  </p>
+  
+  <h3>web.EncryptionFailureException</h3>
+  <p>
+   EncryptionFailureException is an application-specific wrapper for Exceptions related to issues with encrypting data.
+  </p>
+  
+  <h3>web.EncryptionUtil</h3>
+  <p>
+   EncryptionUtil directly handles encryption of data using either RSA or AES-128. This class is also responsible for loading public keys from the "keys" folder on the classpath - these keys are specific to the remote servers being used. Unless there is a compelling reason to do so, this class should not be used directly by higher-level callers; rather, callers should make use of the higher-level abstractions provided by WebService.
+  </p>
+  
+  <h3>web.HighScore</h3>
+  <p>
+   HighScore is a wrapper for high score data obtained from a remote server.
+  </p>
+  
+  <h3>web.InvalidUserException</h3>
+  <p>
+   EncryptionFailureException is an application-specific Exception denoting a failure to ascertain the identity of the current user. User interfaces should catch this exception and provide an appropriate notification for the end user.
+  </p>
+  
+  <h3>web.OnlineLevel</h3>
+  <p>
+   OnlineLevel is a wrapper for level data obtained from a remote server.
+  </p>
+  
+  <h3>web.RequestFailureException</h3>
+  <p>
+   RequestFailureException is an application-specific wrapper for Exceptions related to issues with performing HTTP requests.
+  </p>
+  
+  <h3>web.UserConfig</h3>
+  <p>
+   UserConfig is a globally-available configuration object containing login credentials for communications with remote servers.
+  </p>
+  
+  <h3>web.WebConfig</h3>
+  <p>
+   WebConfig is a globally-available configuration object containing details about the location of the remote server.
+  </p>
+  
+  <h3>web.WebException</h3>
+  <p>
+   WebException is an application-specific wrapper for all errors that may result from performing web-related functions. User interfaces should catch this exception and provide an appropriate notification for the end user.
+  </p>
+  
+  <h3>web.WebService</h3>
+  <p>
+   WebService provides high-level abstractions for all tasks that involve interactions with the remote server (e.g. verifying user credentials, downloading online levels, uploading local levels, retrieving high scores, submitting high scores). All higher-level callers (namely user interfaces) should make use of this class rather than using low-level utility classes directly.
+  </p>
+  
+  <h3>web.XMLParseFailureException</h3>
+  <p>
+   XMLParseFailureException is an application-specific wrapper for Exceptions related to issues with parsing XML strings into well-formed documents.
+  </p>
+  
+  <h3>web.XMLUtil</h3>
+  <p>
+   XMLUtil is responsible for converting string representations of XML documents into their DOM representations.
+  </p>
+  
+  <h2>Web Components</h2>
+  <h3>Structure</h3>
+  <p>The Brick Breaker web engine uses the CakePHP framework, which provides the structure for a Model-View-Controller application. All of the web code is stored in /web/app. Model files establish relations between databases. For example, a score belongs to a user, so when a score is queried, the user_id column in the scores database is used to fetch the corresponding user information. The controllers contain the majority of the logic of the application. Using the appropriate models, the controllers make database queries and send the results to the view. CakePHP's URL structure allows a function in a controller to be called using /controller/action/arguments. The controller also recognizes an XML request (often a GET request from the client) by examining the end of the URL for the .xml extension, and will send data in the appropriate format to the view. Each controller is also designed to recognize the difference between a client and a web request, such that a POST request in the documented format can be sent to a controller to add new data to the database. The views are the pages that the user views from the browser. Each function in a controller has its own view, and each view file is stored in a folder corresponding to its controller and function name. Views for XML output are stored in the "xml" directory, and use CakePHP's built-in functions for outputting an array as XML. In order to paramatrize the views, the Configure object was used to read the configuration variables set in config.php rather than simply outputting "Brick Breaker" and "Levels."</p>
+  <h3>users_controller.php</h3>
+  <p>The users controller interacts with the users database. The add function, which adds a new user to the database, is its most commonly used function. After a user submitts a form, stored in the view /users/add.ctp, this function sanitizes the database input using CakePHP's sanitization library after making sure the chosen username is unique and the password and confirm password fields match. The login and logout functions create and destroy session credentials that store the user's ID and username, respectively. The check_login function is used in the web interface by redirecting a user to the login page if he or she is not logged in after trying to perform an action that requires credentials (e.g. uploading a new level). The client-side analogue of this function is verify, which parses an XML request containing a username and password and returns an XML response containing the user's ID if they are valid.</p>
+  <h3>blobs_controller.php</h3>
+  <p>The blobs controller handles both web requests and POST requests to interact with the blobs database. The add function checks the global $_POST variable to determine what type of request is being performed; a client request will populate the "$_POST['postdata']" field, and a web request will be stored in "$this->data". Then, after parsing the request and base64_decoding the binary blob data, the controller calculates a unique hash for each level using only the level data itself. Using an MD5 hash of the level data allows both the client and the server to calculate the same unique hash for a given level, which is used to avoid uploading/downloading duplicate levels and ensuring that a level is uploaded before a high score is posted. When a blob is added, it is linked to a particular user, either by reading the appropriate session variable (for a web request) or the user-id element (for a client request). Other notable tricks can be found in the download function, which uses the "Content-Disposition" HTTP header to output the level data so that the user will be presented with a save file dialog when a non-textual file is downloaded, and the search function, which utilizes the special "%" SQL character in order to match a title even if it is not typed in its entirety.</p>
+  <h3>scores_controller.php</h3>
+  <p>The scores controller handles client requests to add new high scores and web requests to view them. As an added security feature, POST requests from the client are encrypted before being sent to the server using AES and RSA, due to size limitations on the RSA algorithm. The XML POSTDATA is encrypted using the AES symmetric key, then the symmetric key is encrypted using the RSA public key. Both are then sent to the server, which first decrypts the symmetric key using the RSA private key, then decrypts the XML data using the decrypted AES key. The resulting XML is then parsed and the appropriate data is added to the database, again using the MD5 hash of the level data to link a score to a specific level. From the web interface, high scores can be viewed for a specific level or all levels. The /scores/view function takes an optional argument that designates a level ID; when this argument is given, the scores database is queried for scores matching the ID, and when it is not, all scores are returned. The same technique is used in the blobs controller to browse all levels at the same time or only by a given user.</p>
 
-    <h1>LevelEditor.java</h1>
-    <p>
-      LevelEditor is the panel within which the user can design his or her own levels. After specifying the number of rows/columns/players, a grid can be generated. In this grid, the user can left-click or right-click to place a regular brick or a permanent brick respectively. This is all done with simple event-handling. The user may also click and drag the mouse to place a string of regular bricks. Since a "mouse-dragged event" will be instantiated multiple times as the mouse moves through a given block in the grid, the last two bricks that were changed are remembered and shielded from further change. This prevents flickering and enables the user to be less precise while dragging the mouse. A button event calls the addLevel method from the LevelCatalog class, which writes the level object to the disk.
-    </p>
-    
-    <h1>local.FilesystemFailureException</h1>
-    <p>
-      FilesystemFailureException is an application-specific wrapper for Exceptions related to issues with reading/writing files to the local filesystem. User interfaces should catch this exception and provide an appropriate notification for the end user.
-    </p>
-    
-    <h1>local.LevelCatalog</h1>
-    <p>
-      LevelCatalog provides an in-memory representation of all levels available for use. In addition to providing level data, this class also handles the addition of new levels, transparently persisting them as necessary. Level data is stored as a set of ID-to-level mappings, where the ID is the MD5 hash of the raw serialized representation of the level. Access to this mapping is indirectly provided by utility functions that allow for "inverse" lookups as well as access to copies of the underlying level set. Unless there is a compelling reason to do otherwise, this class should be used in preference to LocalDataService by higher-level callers.
-    </p>
-    
-    <h1>local.LocalDataService</h1>
-    <p>
-      LocalDataService handles low-level access to the local filesystem. All read/write operations that interact with the local filesystem are handled by this class, including serialization of level data. All data is written to the "levels" directory on the JVM classpath - this is normally the "levels" directory provided in the BrickBreaker package, but can be overridden if desired. In general, higher-level callers should not use this class directly; rather, they should use the higher-level abstractions provided by LevelCatalog.
-    </p>
-    
-    <h1>web.ConnectionUtil</h1>
-    <p>
-      ConnectionUtil is responsible for managing HTTP requests (GET and POST). As this class performs low-level operations involving raw manipulation of input and output, this class should generally not be used by higher-level callers; rather, callers should make use of the higher-level abstractions provided by WebService.
-    </p>
-    
-    <h1>web.EncryptionFailureException</h1>
-    <p>
-      EncryptionFailureException is an application-specific wrapper for Exceptions related to issues with encrypting data.
-    </p>
-    
-    <h1>web.EncryptionUtil</h1>
-    <p>
-      EncryptionUtil directly handles encryption of data using either RSA or AES-128. This class is also responsible for loading public keys from the "keys" folder on the classpath - these keys are specific to the remote servers being used. Unless there is a compelling reason to do so, this class should not be used directly by higher-level callers; rather, callers should make use of the higher-level abstractions provided by WebService.
-    </p>
-    
-    <h1>web.HighScore</h1>
-    <p>
-      HighScore is a wrapper for high score data obtained from a remote server.
-    </p>
-    
-    <h1>web.InvalidUserException</h1>
-    <p>
-      EncryptionFailureException is an application-specific Exception denoting a failure to ascertain the identity of the current user. User interfaces should catch this exception and provide an appropriate notification for the end user.
-    </p>
-    
-    <h1>web.OnlineLevel</h1>
-    <p>
-      OnlineLevel is a wrapper for level data obtained from a remote server.
-    </p>
-    
-    <h1>web.RequestFailureException</h1>
-    <p>
-      RequestFailureException is an application-specific wrapper for Exceptions related to issues with performing HTTP requests.
-    </p>
-    
-    <h1>web.UserConfig</h1>
-    <p>
-      UserConfig is a globally-available configuration object containing login credentials for communications with remote servers.
-    </p>
-    
-    <h1>web.WebConfig</h1>
-    <p>
-      WebConfig is a globally-available configuration object containing details about the location of the remote server.
-    </p>
-    
-    <h1>web.WebException</h1>
-    <p>
-      WebException is an application-specific wrapper for all errors that may result from performing web-related functions. User interfaces should catch this exception and provide an appropriate notification for the end user.
-    </p>
-    
-    <h1>web.WebService</h1>
-    <p>
-      WebService provides high-level abstractions for all tasks that involve interactions with the remote server (e.g. verifying user credentials, downloading online levels, uploading local levels, retrieving high scores, submitting high scores). All higher-level callers (namely user interfaces) should make use of this class rather than using low-level utility classes directly.
-    </p>
-    
-    <h1>web.XMLParseFailureException</h1>
-    <p>
-      XMLParseFailureException is an application-specific wrapper for Exceptions related to issues with parsing XML strings into well-formed documents.
-    </p>
-    
-    <h1>web.XMLUtil</h1>
-    <p>
-      XMLUtil is responsible for converting string representations of XML documents into their DOM representations.
-    </p>
-    
-    <h1>Web Components</h1>
-		<h2>Structure</h2>
-		 <p>The Brick Breaker web engine uses the CakePHP framework, which provides the structure for a Model-View-Controller application. 
-		 All of the web code is stored in /web/app. Model files establish relations between databases. For example, a score belongs to a user, so when
-		 a score is queried, the user_id column in the scores database is used to fetch the corresponding user information.
-		 The controllers contain the majority of the logic of the application. Using the appropriate models, the controllers make database queries and send
-		 the results to the view. CakePHP's URL structure allows a function in a controller to be called using /controller/action/arguments. 
-		 The controller also recognizes an XML request (often a GET request from the client) by examining the end of the URL for the .xml extension, and will send data in the appropriate
-		 format to the view. Each controller is also designed to recognize the difference between a client and a web request, such that a POST request in the documented format
-		 can be sent to a controller to add new data to the database.
-		 The views are the pages that the user views from the browser. Each function in a controller has its own view, and each view file is stored in a folder
-		 corresponding to its controller and function name. Views for XML output are stored in the "xml" directory, and use CakePHP's built-in functions for
-		 outputting an array as XML. In order to paramatrize the views, the Configure object was used to read the configuration variables set in config.php rather than
-		 simply outputting "Brick Breaker" and "Levels."</p>
-		 <h2>users_controller.php</h2>
-			<p>The users controller interacts with the users database. The add function, which adds a new user to the database, is its most commonly used function. 
-			After a user submitts a form, stored in the view /users/add.ctp, this function sanitizes the database input using CakePHP's sanitization library after making sure
-			the chosen username is unique and the password and confirm password fields match. The login and logout functions create and destroy session credentials that store
-			the user's ID and username, respectively. The check_login function is used in the web interface by redirecting a user to the login page if he or she is not logged in after
-			trying to perform an action that requires credentials (e.g. uploading a new level). The client-side analogue of this function is verify, which parses an XML request
-			containing a username and password and returns an XML response containing the user's ID if they are valid.</p>
-		 <h2>blobs_controller.php</h2>
-			<p>The blobs controller handles both web requests and POST requests to interact with the blobs database. The add function checks the global $_POST variable to determine
-			what type of request is being performed; a client request will populate the "$_POST['postdata']" field, and a web request will be stored in "$this->data". Then, after parsing the request
-			and base64_decoding the binary blob data, the controller calculates a unique hash for each level using only the level data itself. Using an MD5 hash of the level data allows both the
-			client and the server to calculate the same unique hash for a given level, which is used to avoid uploading/downloading duplicate levels and ensuring that a level is uploaded before
-			a high score is posted. When a blob is added, it is linked to a particular user, either by reading the appropriate session variable (for a web request) or the user-id element (for a client request).
-			Other notable tricks can be found in the download function, which uses the "Content-Disposition" HTTP header to output the level data so that the user will be presented with a save file dialog
-			when a non-textual file is downloaded, and the search function, which utilizes the special "%" SQL character in order to match a title even if it is not typed in its entirety.</p>
-		<h2>scores_controller.php</h2>
-			<p>The scores controller handles client requests to add new high scores and web requests to view them. As an added security feature, POST requests from the client are
-			encrypted before being sent to the server using AES and RSA, due to size limitations on the RSA algorithm. The XML POSTDATA is encrypted using the AES symmetric key, then
-			the symmetric key is encrypted using the RSA public key. Both are then sent to the server, which first decrypts the symmetric key using the RSA private key, then decrypts the
-			XML data using the decrypted AES key. The resulting XML is then parsed and the appropriate data is added to the database, again using the MD5 hash of the level data to link
-			a score to a specific level. From the web interface, high scores can be viewed for a specific level or all levels. The /scores/view function takes an optional argument that designates
-			a level ID; when this argument is given, the scores database is queried for scores matching the ID, and when it is not, all scores are returned. The same technique is used in the blobs controller
-			to browse all levels at the same time or only by a given user.</p>
-
-  </body>
+ </body>
 </html>
