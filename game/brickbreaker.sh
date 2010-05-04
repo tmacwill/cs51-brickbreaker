@@ -1,3 +1,2 @@
 #!/bin/sh
-
-java -cp ".:*:lib/*" brickBreaker/Start
+java -cp ".:*" brickBreaker/Start

@@ -1,0 +1,1 @@
+java -cp ".;*" brickBreaker/Start

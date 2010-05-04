@@ -73,8 +73,9 @@ public class LevelCatalog {
 	 * @param level
 	 *            the level to add
 	 * 
-	 * @throws FilesystemFailureException 
-	 *             if any errors occur while attempting the operation
+	 * @throws FilesystemFailureException
+	 *             if any filesystem-related errors occur while attempting the
+	 *             operation
 	 */
 	public void addLevel( Level level ) throws FilesystemFailureException {
 		// Compute the ID for the level
