@@ -200,5 +200,8 @@ public class LevelPlayer
             rackets[1].stop(); }
     }
 
+    /**
+     * Returns the level object contained in this LevelPlayer.
+     */
     public Level getLevel() { return level; }
 }

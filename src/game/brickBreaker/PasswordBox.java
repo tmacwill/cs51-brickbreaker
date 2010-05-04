@@ -6,8 +6,11 @@ import java.awt.event.*;
 import brickBreaker.web.*;
 
 /**
+ * Initializes a panel with a username and password prompt, with the option to skip login.
  *
- * @author Jacob
+ * @author Jacob Pritt
+ * @version 4/30/10
+ * @file PasswordBox.java
  */
 public class PasswordBox extends JFrame {
     private static String OK = "Enter";
@@ -20,6 +23,9 @@ public class PasswordBox extends JFrame {
     private JPasswordField passwordField;
 
 
+    /**
+     * PasswordBox constructor
+     */
     public PasswordBox() {
         super("Login");
         setBackground(Color.gray);
@@ -56,6 +62,9 @@ public class PasswordBox extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
+    /**
+     * Returns a panel containing two buttons: "OK" (to check password) and "SKIP" to skip login.
+     */
     private JComponent createButtonPanel() {
         JPanel p = new JPanel(new GridLayout(0,1));
         JButton okButton = new JButton("Enter");
